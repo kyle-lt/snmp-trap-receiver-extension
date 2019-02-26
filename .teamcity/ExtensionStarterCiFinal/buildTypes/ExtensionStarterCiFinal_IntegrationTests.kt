@@ -1,12 +1,15 @@
 package ExtensionStarterCiFinal.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCompose
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 
-object ExtensionStarterCiFinal_Build : BuildType({
-    uuid = "75c498f0-14c7-45a6-a538-53ad0f9b87dc"
-    name = "Build"
+object ExtensionStarterCiFinal_IntegrationTests : BuildType({
+    uuid = "7BE210AD-581F-42A3-9938-FD5482212236"
+    name = "Integration Tests"
 
     vcs {
         root(ExtensionStarterCiFinal.vcsRoots.ExtensionStarterCiFinal_HttpsGithubComAdityajagtiani89extensionStarterCiRefsHead)
@@ -15,7 +18,7 @@ object ExtensionStarterCiFinal_Build : BuildType({
     steps {
         maven {
 
-            goals = "clean install -Pno-integration-tests"
+            goals = "clean install"
             mavenVersion = defaultProvidedVersion()
             jdkHome = "%env.JDK_18%"
         }
@@ -23,12 +26,16 @@ object ExtensionStarterCiFinal_Build : BuildType({
 
     }
 
+    dependencies {
+        dependency(ExtensionStarterCiFinal_Setup) {
+            snapshot {
+
+            }
+        }
+    }
+
     triggers {
         vcs {
         }
     }
-
-    artifactRules = """
-       target/ExtensionStarterCiMonitor-*.zip
-    """.trimIndent()
 })
