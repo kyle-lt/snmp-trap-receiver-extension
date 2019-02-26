@@ -107,9 +107,9 @@ public class ExtStarterMonitor extends ABaseMonitor {
      * @return Number of tasks, i.e. total number of servers to collect metrics from
      */
     @Override
-    protected int getTaskCount() {
-        List<Map<String,String>> servers = (List<Map<String,String>>)getContextConfiguration().getConfigYml().get("servers");
+    protected List<Map<String, ?>> getServers() {
+        List<Map<String,?>> servers = (List<Map<String,?>>)getContextConfiguration().getConfigYml().get("servers");
         AssertUtils.assertNotNull(servers, "The 'servers' section in config.yml is not initialised");
-        return servers.size();
+        return servers;
     }
 }
