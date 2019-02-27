@@ -15,11 +15,18 @@ package com.appdynamics.extensions.extensionstarter;
 import com.appdynamics.extensions.AMonitorTaskRunnable;
 import com.appdynamics.extensions.MetricWriteHelper;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
+import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
+import com.appdynamics.extensions.extensionstarter.events.EventsManager;
 import com.appdynamics.extensions.metrics.Metric;
 import com.appdynamics.extensions.util.AssertUtils;
+import com.google.common.collect.Lists;
+import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +112,13 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
             }
         }
         metricWriteHelper.transformAndPrintMetrics(metrics);
+
+        try {
+            publishEvents();
+        }
+        catch (Exception e) {
+            logger.error("An error was encountered while generating and publishing events");
+        }
     }
 
     /**
@@ -120,5 +134,9 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         Metric metric = new Metric(metricName, String.valueOf(20), metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName,
                 metricProperties);
         metrics.add(metric);
+    }
+
+    private void publishEvents() throws Exception {
+        new EventsManager().generateAndPublishEvents(configuration.getContext().getEventsServiceDataManager());
     }
 }

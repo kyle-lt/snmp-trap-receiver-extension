@@ -79,21 +79,22 @@ derivedMetrics:
 # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
 # If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
 controllerInfo:
-  controllerHost: "" # -Dappdynamics.controller.hostName
-  controllerPort: 8090 # -Dappdynamics.controller.port
-  controllerSslEnabled: false # -Dappdynamics.controller.ssl.enabled
-  enableOrchestration: false # N/A
-  uniqueHostId: "" # -Dappdynamics.agent.uniqueHostId
-  username: "" # -Dappdynamics.agent.monitors.controller.username
-  password: "" # -Dappdynamics.agent.monitors.controller.password
-  encryptedPassword: "" # -Dappdynamics.agent.monitors.controller.encryptedPassword
-  accountAccessKey: "" # -Dappdynamics.agent.accountAccessKey
-  account: "customer1" # -Dappdynamics.agent.accountName
-  machinePath: "" # -Dappdynamics.machine.agent.hierarchyPath
-  simEnabled: false # -Dappdynamics.sim.enabled
-  applicationName: "" # -Dappdynamics.agent.applicationName
-  tierName: "" # -Dappdynamics.agent.tierName
-  nodeName: "" # -Dappdynamics.agent.nodeName
+  controllerHost: "ec2-54-202-144-212.us-west-2.compute.amazonaws.com"
+  controllerPort: 8090
+  account: "customer1"
+  username: "admin"
+  password: "admin"
+  encryptedPassword: ""
+  encryptionKey: ""
+  controllerSslEnabled: false
+  enableOrchestration: false
+  uniqueHostId: ""
+  accountAccessKey: "${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY}"
+  machinePath: ""
+  simEnabled: true
+  applicationName: ""
+  tierName: ""
+  nodeName: ""
 
 metricPathReplacements:
 - replace: "&"
@@ -103,11 +104,11 @@ metricPathReplacements:
 
 # This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
 eventsServiceParameters:
-  host: ""
+  host: "ec2-34-221-206-45.us-west-2.compute.amazonaws.com"
   port: 9080
-  globalAccountName: ""
-  eventsApiKey: ""
-  useSsl: false
+  globalAccountName: "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0"
+  eventsApiKey: "4a5c3998-8914-4a57-a2f2-920cd76c08ad"
+  useSSL: false
 
 enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
 
