@@ -121,5 +121,4 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
                 metricProperties);
         metrics.add(metric);
     }
-
 }

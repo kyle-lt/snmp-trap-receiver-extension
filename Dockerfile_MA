@@ -1,7 +1,7 @@
 FROM vishakasekar/machineagent:latest AS MA
 RUN pwd
-ADD target/ExtensionStarterCiMonitor-*.zip /opt/appdynamics/monitors
-RUN unzip -q "/opt/appdynamics/monitors/ExtensionStarterCiMonitor-*.zip" -d /opt/appdynamics/monitors
+ADD target/Extension-Starter-Ci-*.zip /opt/appdynamics/monitors
+RUN unzip -q "/opt/appdynamics/monitors/Extension-Starter-Ci-*.zip" -d /opt/appdynamics/monitors
 COPY /src/integration-test/resources/conf/config_ci.yml /opt/appdynamics/monitors/ExtensionStarterCiMonitor/config.yml
 RUN find /opt/appdynamics/monitors/ -name '*.zip' -delete
 CMD ["sh", "-c", "java ${MACHINE_AGENT_PROPERTIES} -jar /opt/appdynamics/machineagent.jar"]

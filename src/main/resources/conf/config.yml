@@ -61,3 +61,38 @@ metrics:
       multiplier: ""
       convert:
       delta:
+
+metricPathReplacements:
+  - replace: "Percent"
+    replaceWith: "%"
+  - replace: "OneMinuteRate"
+    replaceWith: "1 min Rate"
+
+
+
+# Generate a custom dashboard based on the provided template
+customDashboard:
+  enabled: false
+  dashboardName: ""
+
+  # Update the path to the dashboard file.
+  pathToSIMDashboard: ""
+  #pathToNormalDashboard: "monitors/SampleMonitor/normalDashboard.json"
+
+controllerInfo:
+  controllerHost: ""
+  controllerPort: 8090
+  account: ""
+  username: ""
+  password: ""
+  encryptedPassword: ""
+  encryptionKey: ""
+  controllerSslEnabled: false
+  enableOrchestration: false
+  uniqueHostId: ""
+  accountAccessKey: ""
+  machinePath: ""
+  simEnabled: true
+  applicationName: ""
+  tierName: ""
+  nodeName: ""
