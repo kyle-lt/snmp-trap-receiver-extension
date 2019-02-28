@@ -54,7 +54,7 @@ connection:
 
 metrics:
 - IncomingRequests:
-    alias: "Incoming Requests"
+    alias:
     aggregationType: "AVERAGE"
     timeRollUpType: "AVERAGE"
     clusterRollUpType: "INDIVIDUAL"
@@ -66,15 +66,21 @@ metrics:
     aggregationType: "AVERAGE"
     timeRollUpType: "AVERAGE"
     clusterRollUpType: "INDIVIDUAL"
-    multiplier: ""
+    multiplier: "5"
     convert:
     delta:
 
 
 derivedMetrics:
 - derivedMetricPath: "Total Number of Requests"
-  formula: "Incoming Requests + Outgoing Requests"
+  formula: "IncomingRequests + Outgoing Requests"
 
+customDashboard:
+  enabled: true
+  dashboardName: "Extension Starter BTD Dashboard"
+  # Update the path to the dashboard file.
+  pathToSIMDashboard: "/opt/appdynamics/monitors/ExtensionStarterCIMonitor/ExtensionStarterBTDDashboard.json"
+  #pathToNormalDashboard: "monitors/SampleMonitor/normalDashboard.json"
 
 # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
 # If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
@@ -111,13 +117,3 @@ eventsServiceParameters:
   useSSL: false
 
 enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
-
-# Generate a custom dashboard based on the provided template
-customDashboard:
-  enabled: true
-  dashboardName: "Sample Monitor Dashboard"
-  sslCertCheckEnabled: true
-  # Update the path to the dashboard file.
-  pathToSIMDashboard: "monitors/SampleMonitor/SIMDashboard.json"
-  pathToNormalDashboard: "monitors/SampleMonitor/normalDashboard.json"
-  periodicDashboardCheckInSeconds: 300

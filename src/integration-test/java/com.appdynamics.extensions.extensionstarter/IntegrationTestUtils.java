@@ -25,12 +25,12 @@ public class IntegrationTestUtils {
     static CustomDashboardAPIService customDashboardAPIService;
     static final Logger logger = ExtensionsLoggerFactory.getLogger(IntegrationTestUtils.class);
 
-    public static MetricAPIService setUpMetricAPIService (File configFile, File installDir){
+    public static MetricAPIService setUpMetricAPIService(File configFile, File installDir) {
 
         Map<String, ?> config = YmlReader.readFromFileAsMap(configFile);
         config = ConfigProcessor.process(config);
         Map controllerInfoMap = (Map) config.get("controllerInfo");
-        if(controllerInfoMap == null) {
+        if (controllerInfoMap == null) {
             controllerInfoMap = Maps.newHashMap();
         }
         controllerInfoMap.put(ENCRYPTION_KEY, config.get(ENCRYPTION_KEY));
@@ -53,16 +53,14 @@ public class IntegrationTestUtils {
         } catch (Exception e) {
             logger.error("Unable to initialize the ControllerModule properly.....the ControllerClient and ControllerAPIService will be set to null", e);
         }
-
-        //TODO: check if this is ok
         return null;
     }
 
-    public static CustomDashboardAPIService setUpCustomDashBoardAPIService (File configFile, File installDir){
+    public static CustomDashboardAPIService setUpCustomDashBoardAPIService(File configFile, File installDir) {
         Map<String, ?> config = YmlReader.readFromFileAsMap(configFile);
         config = ConfigProcessor.process(config);
         Map controllerInfoMap = (Map) config.get("controllerInfo");
-        if(controllerInfoMap == null) {
+        if (controllerInfoMap == null) {
             controllerInfoMap = Maps.newHashMap();
         }
         controllerInfoMap.put(ENCRYPTION_KEY, config.get(ENCRYPTION_KEY));
@@ -86,9 +84,6 @@ public class IntegrationTestUtils {
             logger.error("Unable to initialize the ControllerModule properly.....the ControllerClient and ControllerAPIService will be set to null", e);
         }
 
-        //TODO: check if this is ok
         return null;
     }
-
-
 }
