@@ -72,8 +72,8 @@ metrics:
 
 
 derivedMetrics:
-- derivedMetricPath: "Custom Metrics|Extension Starter CI|Total Number of Requests"
-  formula: "Custom Metrics|Extension Starter CI|Incoming Requests + Custom Metrics|Extension Starter CI|Outgoing Requests"
+- derivedMetricPath: "Total Number of Requests"
+  formula: "Incoming Requests + Outgoing Requests"
 
 
 # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
