@@ -1,15 +1,8 @@
 package ExtensionStarterCiFinal.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
-
-
-import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.exec
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
-
 
 object ExtensionStarterCiFinal_Stop : BuildType({
     uuid = "adc25bd3-02fb-4561-b335-2d344494f9d2"
@@ -24,15 +17,6 @@ object ExtensionStarterCiFinal_Stop : BuildType({
             path = "make"
             arguments = "dockerStop"
         }
-
-    }
-
-    dependencies {
-        dependency(ExtensionStarterCiFinal_Setup) {
-            snapshot {
-
-            }
-        }
     }
 
     triggers {
@@ -40,4 +24,8 @@ object ExtensionStarterCiFinal_Stop : BuildType({
         }
     }
 
+    dependencies {
+        snapshot(ExtensionStarterCiFinal_Setup) {
+        }
+    }
 })

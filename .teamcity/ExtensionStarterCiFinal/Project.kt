@@ -15,11 +15,10 @@ object Project : Project({
 
     vcsRoot(ExtensionStarterCiFinal_HttpsGithubComAdityajagtiani89extensionStarterCiRefsHead)
 
-    buildType(ExtensionStarterCiFinal_Build)
     buildType(ExtensionStarterCiFinal_Setup)
-    buildType(ExtensionStarterCiFinal_IntegrationTests)
     buildType(ExtensionStarterCiFinal_Stop)
-
+    buildType(ExtensionStarterCiFinal_IntegrationTests)
+    buildType(ExtensionStarterCiFinal_Build)
 
     features {
         versionedSettings {
@@ -32,11 +31,5 @@ object Project : Project({
             storeSecureParamsOutsideOfVcs = true
         }
     }
-
-    buildTypesOrder = arrayListOf(
-            ExtensionStarterCiFinal_Build,
-            ExtensionStarterCiFinal_Setup,
-            ExtensionStarterCiFinal_IntegrationTests,
-            ExtensionStarterCiFinal_Stop
-    )
+    buildTypesOrder = arrayListOf(ExtensionStarterCiFinal_Build, ExtensionStarterCiFinal_Setup, ExtensionStarterCiFinal_IntegrationTests, ExtensionStarterCiFinal_Stop)
 })

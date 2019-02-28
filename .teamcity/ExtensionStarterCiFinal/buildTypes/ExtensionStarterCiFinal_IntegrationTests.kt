@@ -1,10 +1,7 @@
 package ExtensionStarterCiFinal.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCompose
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 
 object ExtensionStarterCiFinal_IntegrationTests : BuildType({
@@ -17,25 +14,19 @@ object ExtensionStarterCiFinal_IntegrationTests : BuildType({
 
     steps {
         maven {
-
             goals = "clean install"
             mavenVersion = defaultProvidedVersion()
             jdkHome = "%env.JDK_18%"
-        }
-
-
-    }
-
-    dependencies {
-        dependency(ExtensionStarterCiFinal_Setup) {
-            snapshot {
-
-            }
         }
     }
 
     triggers {
         vcs {
+        }
+    }
+
+    dependencies {
+        snapshot(ExtensionStarterCiFinal_Setup) {
         }
     }
 })
