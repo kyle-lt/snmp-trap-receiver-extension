@@ -53,16 +53,16 @@ connection:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 metrics:
-- CPUUtilization:
-    alias: "Processor Utilization"
+- IncomingRequests:
+    alias: "Incoming Requests"
     aggregationType: "AVERAGE"
     timeRollUpType: "AVERAGE"
     clusterRollUpType: "INDIVIDUAL"
     multiplier: ""
     convert:
     delta:
-- CPUCapacity:
-    alias: "Total CPU Capacity"
+- OutgoingRequests:
+    alias: "Outgoing Requests"
     aggregationType: "AVERAGE"
     timeRollUpType: "AVERAGE"
     clusterRollUpType: "INDIVIDUAL"
@@ -72,8 +72,8 @@ metrics:
 
 
 derivedMetrics:
-- derivedMetricPath: "{x}|{y}|Free Memory"
-  formula: "{x}|{y}|Total CPU Capacity - {x}|{y}|Processor Utilization"
+- derivedMetricPath: "Custom Metrics|Extension Starter CI|Total Number of Requests"
+  formula: "Custom Metrics|Extension Starter CI|Incoming Requests + Custom Metrics|Extension Starter CI|Outgoing Requests"
 
 
 # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
