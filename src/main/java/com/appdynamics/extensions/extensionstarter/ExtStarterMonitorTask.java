@@ -111,6 +111,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
                 buildMetric(metrics, metricName, metricProperties);
             }
         }
+        buildClusterMetrics(metrics);
         metricWriteHelper.transformAndPrintMetrics(metrics);
 
         try {
@@ -119,6 +120,14 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         catch (Exception e) {
             logger.error("An error was encountered while generating and publishing events");
         }
+    }
+
+    private void buildClusterMetrics(List<Metric> metrics) {
+        String baseMetricPath = metricPrefix + DEFAULT_METRIC_SEPARATOR + "Master";
+        Metric metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node1");
+        metrics.add(metric);
+        metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node2");
+        metrics.add(metric);
     }
 
     /**
