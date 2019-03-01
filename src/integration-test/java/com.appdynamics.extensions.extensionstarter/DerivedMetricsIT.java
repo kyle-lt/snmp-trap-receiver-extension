@@ -37,17 +37,16 @@ public class DerivedMetricsIT {
 
     @Test
     public void testDerivedMetricUploadWithClusterMetrics() {
-/*        JsonNode jsonNode = null;
+        JsonNode jsonNode;
         if (metricAPIService != null) {
             jsonNode = metricAPIService.getMetricData("",
-                    "Server%20&%20Infrastructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7CCustom%20Metrics%7CExtension%20Starter%20CI%7CMaster%7CRequests&time-range-type=BEFORE_NOW&duration-in-mins=1440&output=JSON");
+                    "Server%20&%20Infrastructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7CCustom%20Metrics%7CExtension%20Starter%20CI%7CMaster%7CRequests&time-range-type=BEFORE_NOW&duration-in-mins=5&output=JSON");
             Assert.assertNotNull("Cannot connect to controller API", jsonNode);
             if (jsonNode != null) {
-                JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "*", "metricValues", "*", "value");
+                JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "*", "metricValues", "*", "current");
                 int totalNumOfRequests = (valueNode == null) ? 0 : valueNode.get(0).asInt();
-                Assert.assertEquals(totalNumOfRequests, 120);
+                Assert.assertEquals(totalNumOfRequests, 20);
             }
         }
-    }*/
     }
 }

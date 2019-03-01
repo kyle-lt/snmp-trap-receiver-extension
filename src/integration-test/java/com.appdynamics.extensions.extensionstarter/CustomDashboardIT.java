@@ -22,14 +22,14 @@ public class CustomDashboardIT {
     }
 
     @Test
-    public void checkDashboardsUploaded () {
+    public void checkDashboardsUploaded() {
         if (customDashboardAPIService != null) {
             JsonNode allDashboardsNode = customDashboardAPIService.getAllDashboards();
             Assert.assertTrue(isDashboardPresent("Extension Starter BTD Dashboard", allDashboardsNode));
         }
     }
 
-    private boolean isDashboardPresent (String dashboardName, JsonNode existingDashboards) {
+    private boolean isDashboardPresent(String dashboardName, JsonNode existingDashboards) {
         if (existingDashboards != null) {
             for (JsonNode existingDashboard : existingDashboards) {
                 if (dashboardName.equals(getTextValue(existingDashboard.get("name")))) {
