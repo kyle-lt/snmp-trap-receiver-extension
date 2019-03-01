@@ -123,10 +123,12 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
     }
 
     private void buildClusterMetrics(List<Metric> metrics) {
-        String baseMetricPath = metricPrefix + DEFAULT_METRIC_SEPARATOR + "Master";
-        Metric metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node1");
+        String baseMetricPath = metricPrefix + DEFAULT_METRIC_SEPARATOR + "Master" + DEFAULT_METRIC_SEPARATOR;
+        Metric metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node1" +
+                DEFAULT_METRIC_SEPARATOR + "Requests");
         metrics.add(metric);
-        metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node2");
+        metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node2" +
+                DEFAULT_METRIC_SEPARATOR + "Requests" );
         metrics.add(metric);
     }
 
