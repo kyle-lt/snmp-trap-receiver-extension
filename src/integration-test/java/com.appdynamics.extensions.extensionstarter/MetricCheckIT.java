@@ -54,3 +54,5 @@ public class MetricCheckIT {
         }
     }
 }
+
+//todo for config reload - test the abase monitor. call the execute methid and pass in the base yml. have one yml file per module, with some changes in the same module per file. Copy the contents of one file and dump it into the original yml. see if the reload trigger works and verify whether new objects get created.

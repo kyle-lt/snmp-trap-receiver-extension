@@ -76,7 +76,7 @@ derivedMetrics:
     formula: "IncomingRequests + Outgoing Requests"
 
   - derivedMetricPath: "{x}|Requests"
-    formula: "{x}|{y}|Requests + {x}|{y}|Requests"
+    formula: "{x}|{y}|Requests"
     aggregationType: "SUM"
     timeRollUpType: "SUM"
     clusterRollUpType: "COLLECTIVE"
