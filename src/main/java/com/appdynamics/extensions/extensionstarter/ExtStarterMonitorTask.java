@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,6 +108,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
             }
         }
         buildClusterMetrics(metrics);
+        generateMetricsForCharReplacement(metrics);
         metricWriteHelper.transformAndPrintMetrics(metrics);
 
         try {
@@ -149,5 +151,26 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         extensionStarterEventsManager.createSchema();
         extensionStarterEventsManager.updateSchema();
         extensionStarterEventsManager.publishEvents();
+    }
+
+    private void generateMetricsForCharReplacement(List<Metric> metrics) {
+        Metric metric1 = new Metric("Pipe|", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Pipe|" );
+        Metric metric2 = new Metric("Comma,", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Comma," );
+        Metric metric3 = new Metric(":Colon", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|",":Colon" );
+        Metric metric4 = new Metric("Memóry Free", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Memóry Free" );
+        Metric metric5 = new Metric("Memory Üsed", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Memory Üsed" );
+        Metric metric6 = new Metric("Question?Mark", "10", new HashMap<String, Object>(),
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Question?Mark" );
+        metrics.add(metric1);
+        metrics.add(metric2);
+        metrics.add(metric3);
+        metrics.add(metric4);
+        metrics.add(metric5);
+        metrics.add(metric6);
     }
 }

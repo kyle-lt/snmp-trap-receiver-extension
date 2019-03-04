@@ -69,30 +69,7 @@ metrics:
       multiplier: "5"
       convert:
       delta:
-  - Pipe|:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-  - Comma,:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-  - :Colon:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-  - Memóry Free:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-  - Memory Üsed:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-  - Question?Mark:
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
+
 
 derivedMetrics:
   - derivedMetricPath: "Total Number of Requests"
