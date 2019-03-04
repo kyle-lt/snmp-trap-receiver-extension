@@ -16,9 +16,8 @@ public class CustomDashboardIntegrationTests {
 
     @Before
     public void setup() {
-        File installDir = new File("src/integration-test/resources/conf/");
-        File configFile = new File("src/integration-test/resources/conf/config_ci.yml");
-        customDashboardAPIService = IntegrationTestUtils.initializeCustomDashboardAPIService(configFile, installDir);
+
+        customDashboardAPIService = IntegrationTestUtils.initializeCustomDashboardAPIService();
     }
 
     @Test
