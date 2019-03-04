@@ -15,24 +15,19 @@ package com.appdynamics.extensions.extensionstarter;
 import com.appdynamics.extensions.AMonitorTaskRunnable;
 import com.appdynamics.extensions.MetricWriteHelper;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
-import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
-import com.appdynamics.extensions.extensionstarter.events.EventsManager;
+import com.appdynamics.extensions.extensionstarter.events.ExtensionStarterEventsManager;
 import com.appdynamics.extensions.metrics.Metric;
 import com.appdynamics.extensions.util.AssertUtils;
-import com.google.common.collect.Lists;
-import org.apache.commons.io.FileUtils;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.appdynamics.extensions.extensionstarter.util.Constants.*;
+import static com.appdynamics.extensions.extensionstarter.util.Constants.DEFAULT_METRIC_SEPARATOR;
+import static com.appdynamics.extensions.extensionstarter.util.Constants.METRICS;
 
 /**
  * The ExtensionMonitorTask(namely "task") is an instance of {@link Runnable} needs to implement the interface
@@ -148,6 +143,11 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
     }
 
     private void publishEvents() throws Exception {
-        new EventsManager().generateAndPublishEvents(configuration.getContext().getEventsServiceDataManager());
+        ExtensionStarterEventsManager extensionStarterEventsManager = new ExtensionStarterEventsManager(configuration.getContext().getEventsServiceDataManager());
+        extensionStarterEventsManager.createSchema();
+        extensionStarterEventsManager.deleteSchema();
+        extensionStarterEventsManager.createSchema();
+        extensionStarterEventsManager.updateSchema();
+        extensionStarterEventsManager.publishEvents();
     }
 }

@@ -10,7 +10,7 @@ import java.io.File;
 
 import static com.appdynamics.extensions.util.JsonUtils.getTextValue;
 
-public class CustomDashboardIT {
+public class CustomDashboardIntegrationTests {
 
     private CustomDashboardAPIService customDashboardAPIService;
 
@@ -18,11 +18,11 @@ public class CustomDashboardIT {
     public void setup() {
         File installDir = new File("src/integration-test/resources/conf/");
         File configFile = new File("src/integration-test/resources/conf/config_ci.yml");
-        customDashboardAPIService = IntegrationTestUtils.setUpCustomDashBoardAPIService(configFile, installDir);
+        customDashboardAPIService = IntegrationTestUtils.initializeCustomDashboardAPIService(configFile, installDir);
     }
 
     @Test
-    public void checkDashboardsUploaded() {
+    public void testWhetherConfiguredDashboardIsUploadedToController() {
         if (customDashboardAPIService != null) {
             JsonNode allDashboardsNode = customDashboardAPIService.getAllDashboards();
             Assert.assertTrue(isDashboardPresent("Extension Starter BTD Dashboard", allDashboardsNode));

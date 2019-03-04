@@ -1,8 +1,6 @@
 package com.appdynamics.extensions.extensionstarter.events;
 
-import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
-import com.appdynamics.extensions.extensionstarter.ExtStarterMonitorTask;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonNode;
@@ -13,16 +11,31 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.List;
 
-public class EventsManager {
+public class ExtensionStarterEventsManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(EventsManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExtensionStarterEventsManager.class);
+    private EventsServiceDataManager eventsServiceDataManager;
 
-    public void generateAndPublishEvents(EventsServiceDataManager eventsServiceDataManager) throws Exception {
+    public ExtensionStarterEventsManager(EventsServiceDataManager eventsServiceDataManager) {
+        this.eventsServiceDataManager = eventsServiceDataManager;
+    }
+
+    public void createSchema() throws Exception {
         eventsServiceDataManager.createSchema("BTDSchema", FileUtils.readFileToString(new File("src/" +
                 "integration-test/resources/eventsservice/createSchema.json")));
+    }
+
+    public void updateSchema() throws Exception {
         eventsServiceDataManager.updateSchema("BTDSchema", FileUtils.readFileToString(new File("src/integration-test/" +
                 "resources/eventsservice/updateSchema.json")));
-        eventsServiceDataManager.publishEvents("schema1", generateEventsFromFile(new File("src/test/" +
+    }
+
+    public void deleteSchema() {
+        eventsServiceDataManager.deleteSchema("BTDSchema");
+    }
+
+    public void publishEvents() {
+        eventsServiceDataManager.publishEvents("BTDSchema", generateEventsFromFile(new File("src/integration-test/" +
                 "resources/eventsservice/publishEvents.json")));
     }
 

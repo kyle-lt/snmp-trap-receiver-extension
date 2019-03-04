@@ -53,23 +53,46 @@ connection:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 metrics:
-- IncomingRequests:
-    alias:
-    aggregationType: "AVERAGE"
-    timeRollUpType: "AVERAGE"
-    clusterRollUpType: "INDIVIDUAL"
-    multiplier: ""
-    convert:
-    delta:
-- OutgoingRequests:
-    alias: "Outgoing Requests"
-    aggregationType: "AVERAGE"
-    timeRollUpType: "AVERAGE"
-    clusterRollUpType: "INDIVIDUAL"
-    multiplier: "5"
-    convert:
-    delta:
-
+  - IncomingRequests:
+      alias:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+      multiplier: ""
+      convert:
+      delta:
+  - OutgoingRequests:
+      alias: "Outgoing Requests"
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+      multiplier: "5"
+      convert:
+      delta:
+  - Pipe|:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+  - Comma,:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+  - :Colon:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+  - Memóry Free:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+  - Memory Üsed:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
+  - Question?Mark:
+      aggregationType: "AVERAGE"
+      timeRollUpType: "AVERAGE"
+      clusterRollUpType: "INDIVIDUAL"
 
 derivedMetrics:
   - derivedMetricPath: "Total Number of Requests"
@@ -109,10 +132,16 @@ controllerInfo:
   nodeName: ""
 
 metricPathReplacements:
-- replace: "&"
-  replaceWith: ""
-- replace: "percent"
-  replaceWith: "%"
+  - replace: ","
+    replaceWith: "%"
+  - replace: ":"
+    replaceWith: "_"
+  - replace: ":"
+    replaceWith: "#"
+  - replace: "Ü"
+    replaceWith: "U"
+  - replace: "?"
+    replaceWith: "|"
 
 # This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
 eventsServiceParameters:

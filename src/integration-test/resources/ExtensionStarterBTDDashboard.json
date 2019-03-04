@@ -1,7 +1,7 @@
 {
     "schemaVersion": null,
     "dashboardFormatVersion": "4.0",
-    "name": "${DASHBOARD_NAME}",
+    "name": "Extension Starter BTD Dashboard",
     "description": null,
     "properties": null,
     "templateEntityType": "APPLICATION_COMPONENT_NODE",
