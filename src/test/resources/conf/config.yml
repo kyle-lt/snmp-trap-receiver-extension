@@ -70,6 +70,18 @@ metrics:
     convert:
     delta:
 
+metricPathReplacements:
+ - replace: ","
+   replaceWith: "%"
+ - replace: ":"
+   replaceWith: "_"
+ - replace: ":"
+   replaceWith: "#"
+ - replace: "Ü"
+   replaceWith: "U"
+ - replace: "?"
+   replaceWith: "|"
+
 eventsServiceParameters:
   host: "ec2-34-221-206-45.us-west-2.compute.amazonaws.com"
   port: 9080
