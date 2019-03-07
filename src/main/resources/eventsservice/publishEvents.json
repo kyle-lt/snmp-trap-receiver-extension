@@ -1,25 +1,25 @@
 [{
-  "applicationName" : "app1",
+  "appName" : "app1",
   "metricName" : "testName1",
   "metricPath" : "testPath1",
   "metricValue" : "100"
 },{
-  "applicationName" : "app2",
+  "appName" : "app2",
   "metricName" : "testName1",
   "metricPath" : "testPath1",
   "metricValue" : "100"
 },{
-  "applicationName" : "app3",
+  "appName" : "app3",
   "metricName" : "testName1",
   "metricPath" : "testPath1",
   "metricValue" : "100"
 },{
-  "applicationName" : "app4",
+  "appName" : "app4",
   "metricName" : "testName1",
   "metricPath" : "testPath1",
   "metricValue" : "100"
 },{
-  "applicationName" : "app5",
+  "appName" : "app5",
   "metricName" : "testName1",
   "metricPath" : "testPath1",
   "metricValue" : "100"

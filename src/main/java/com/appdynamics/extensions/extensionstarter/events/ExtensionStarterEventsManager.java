@@ -21,12 +21,11 @@ public class ExtensionStarterEventsManager {
     }
 
     public void createSchema() throws Exception {
-        eventsServiceDataManager.createSchema("BTDSchema", FileUtils.readFileToString(new File("src/" +
-                "integration-test/resources/eventsservice/createSchema.json")));
+        eventsServiceDataManager.createSchema("BTDSchema", FileUtils.readFileToString(new File("src/main/resources/eventsservice/createSchema.json")));
     }
 
     public void updateSchema() throws Exception {
-        eventsServiceDataManager.updateSchema("BTDSchema", FileUtils.readFileToString(new File("src/integration-test/" +
+        eventsServiceDataManager.updateSchema("BTDSchema", FileUtils.readFileToString(new File("src/main/" +
                 "resources/eventsservice/updateSchema.json")));
     }
 
@@ -35,8 +34,12 @@ public class ExtensionStarterEventsManager {
     }
 
     public void publishEvents() {
-        eventsServiceDataManager.publishEvents("BTDSchema", generateEventsFromFile(new File("src/integration-test/" +
+        eventsServiceDataManager.publishEvents("BTDSchema", generateEventsFromFile(new File("src/main/" +
                 "resources/eventsservice/publishEvents.json")));
+    }
+
+    public String queryEvents() {
+        return eventsServiceDataManager.querySchema("SELECT appName FROM BTDSCHEMA");
     }
 
     private List<String> generateEventsFromFile(File eventsFromFile) {

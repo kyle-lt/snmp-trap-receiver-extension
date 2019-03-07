@@ -53,15 +53,9 @@ public class ExtStarterTest{
 
     @Test
     public void extStarterMonitorTaskTest() {
-/*        ArgumentCaptor<List> metricCaptor = ArgumentCaptor.forClass(List.class);
+        ArgumentCaptor<List> metricCaptor = ArgumentCaptor.forClass(List.class);
         ExtStarterMonitorTask task = new ExtStarterMonitorTask(monitorContextConfiguration, metricWriteHelper, servers);
         task.run();
         Mockito.verify(metricWriteHelper).transformAndPrintMetrics(metricCaptor.capture());
-        for (Metric metric : (List<Metric>) metricCaptor.getValue()) {
-            Assert.assertEquals(metric.getMetricPath(), "Server|Component:<TIER_ID>|Custom Metrics|Starter|" +
-                    "CPUUtilization");
-            Assert.assertEquals(metric.getMetricProperties().getAlias(), "Processor Utilization");
-            Assert.assertEquals(metric.getMetricValue(), "20");
-        }*/
     }
 }

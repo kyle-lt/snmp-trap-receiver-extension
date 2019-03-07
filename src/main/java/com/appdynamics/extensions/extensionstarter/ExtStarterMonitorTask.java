@@ -145,7 +145,8 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
     }
 
     private void publishEvents() throws Exception {
-        ExtensionStarterEventsManager extensionStarterEventsManager = new ExtensionStarterEventsManager(configuration.getContext().getEventsServiceDataManager());
+        ExtensionStarterEventsManager extensionStarterEventsManager = new ExtensionStarterEventsManager
+                (configuration.getContext().getEventsServiceDataManager());
         extensionStarterEventsManager.createSchema();
         extensionStarterEventsManager.deleteSchema();
         extensionStarterEventsManager.createSchema();

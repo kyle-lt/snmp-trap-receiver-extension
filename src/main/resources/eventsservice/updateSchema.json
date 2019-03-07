@@ -1,8 +1,5 @@
 [
   {
-    "add": {
-      "tierName": "string"
-    },
     "rename": {
       "applicationName": "appName"
     }

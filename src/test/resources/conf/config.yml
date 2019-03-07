@@ -5,18 +5,18 @@
 
 #This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
 #To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
-metricPrefix: Server|Component:<TIER_ID>|Custom Metrics|Starter
+metricPrefix: "Custom Metrics|Extension Starter CI"
 
 servers:
-  - host: https://www.appdynamics.com/
-    name: AppDynamics
-    username: user
-    password: welcome
+- host: https://www.appdynamics.com/
+  name: AppDynamics
+  username: user
+  password: welcome
 
-  - host: https://www.yahoo.com/
-    name: Yahoo
-    username: user
-    passwordEncrypted: C043Fag+LKEZM0AQTWPy2g==
+- host: https://www.yahoo.com/
+  name: Yahoo
+  username: user
+  passwordEncrypted: C043Fag+LKEZM0AQTWPy2g==
 
 # number of concurrent tasks
 numberOfThreads: 1
@@ -53,16 +53,23 @@ connection:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 metrics:
-  - CPUUtilization:
-      alias: "Processor Utilization"
-      aggregationType: "AVERAGE"
-      timeRollUpType: "AVERAGE"
-      clusterRollUpType: "INDIVIDUAL"
-      multiplier: ""
-      convert:
-      delta:
+- IncomingRequests:
+    alias:
+    aggregationType: "AVERAGE"
+    timeRollUpType: "AVERAGE"
+    clusterRollUpType: "INDIVIDUAL"
+    multiplier: ""
+    convert:
+    delta:
+- OutgoingRequests:
+    alias: "Outgoing Requests"
+    aggregationType: "AVERAGE"
+    timeRollUpType: "AVERAGE"
+    clusterRollUpType: "INDIVIDUAL"
+    multiplier: "5"
+    convert:
+    delta:
 
-# This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
 eventsServiceParameters:
   host: "ec2-34-221-206-45.us-west-2.compute.amazonaws.com"
   port: 9080

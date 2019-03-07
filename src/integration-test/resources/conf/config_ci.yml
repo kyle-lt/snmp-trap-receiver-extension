@@ -89,7 +89,6 @@ customDashboard:
 #  sslCertCheckEnabled: true
   # Update the path to the dashboard file.
   pathToSIMDashboard: "monitors/ExtensionStarterCiMonitor/ExtensionStarterBTDDashboard.json"
-  pathToNormalDashboard: "monitors/SampleMonitor/normalDashboard.json"
   periodicDashboardCheckInSeconds: 60
 
 # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
