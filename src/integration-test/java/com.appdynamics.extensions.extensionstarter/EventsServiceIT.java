@@ -21,8 +21,8 @@ import java.util.Map;
 
 import static com.appdynamics.extensions.eventsservice.utils.Constants.*;
 
-public class EventsServiceIntegrationTests {
-    private static final Logger logger = ExtensionsLoggerFactory.getLogger(EventsServiceIntegrationTests.class);
+public class EventsServiceIT {
+    private static final Logger logger = ExtensionsLoggerFactory.getLogger(EventsServiceIT.class);
 
     private CloseableHttpClient httpClient;
     private HttpHost httpHost;

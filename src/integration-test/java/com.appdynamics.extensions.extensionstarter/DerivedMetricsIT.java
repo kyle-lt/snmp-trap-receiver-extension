@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static com.appdynamics.extensions.extensionstarter.IntegrationTestUtils.initializeMetricAPIService;
 
-public class DerivedMetricsIntegrationTests {
+public class DerivedMetricsIT {
 
     private MetricAPIService metricAPIService;
 

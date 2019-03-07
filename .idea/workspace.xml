@@ -3,13 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="24992523-412b-451f-816a-d138eee8587b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/integration-test/resources/eventsservice/queryOP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/integration-test/resources/eventsservice/queryResults.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitorTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitorTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/DerivedMetricsIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/DerivedMetricsIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricUploadIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricUploadIT.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,9 +30,9 @@
           <entry key="Dockerfile_MA" value="1" />
           <entry key="Makefile" value="1" />
           <entry key="class" value="7" />
-          <entry key="java" value="37" />
+          <entry key="java" value="40" />
           <entry key="json" value="6" />
-          <entry key="kt" value="1" />
+          <entry key="kt" value="3" />
           <entry key="queryOP" value="2" />
           <entry key="xml" value="1" />
           <entry key="yml" value="8" />
@@ -44,9 +42,9 @@
         <counts>
           <entry key="CLASS" value="7" />
           <entry key="Dockerfile" value="1" />
-          <entry key="JAVA" value="37" />
+          <entry key="JAVA" value="40" />
           <entry key="JSON" value="6" />
-          <entry key="Kotlin" value="1" />
+          <entry key="Kotlin" value="3" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="8" />
@@ -55,7 +53,8 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="3" />
-          <entry key="java" value="925" />
+          <entry key="dummy" value="6" />
+          <entry key="java" value="1008" />
           <entry key="json" value="1" />
           <entry key="xml" value="1" />
           <entry key="yml" value="14" />
@@ -63,9 +62,9 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="925" />
+          <entry key="JAVA" value="1008" />
           <entry key="JSON" value="1" />
-          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="PLAIN_TEXT" value="9" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="14" />
         </counts>
@@ -75,6 +74,15 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIT.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="108" column="5" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="588">
@@ -83,63 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitorTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-926">
-              <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricUploadIntegrationTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/events/ExtensionStarterEventsManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
-              <folding>
-                <element signature="e#1565#1566#0" expanded="true" />
-                <element signature="e#1657#1658#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/appdynamics/appd-exts-commons/2.2.0-SNAPSHOT/appd-exts-commons-2.2.0-SNAPSHOT-sources.jar!/com/appdynamics/extensions/eventsservice/EventsServiceDataManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="89" selection-start-line="89" selection-end-line="89" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+            <state relative-caret-position="307">
+              <caret line="286" column="20" lean-forward="true" selection-start-line="286" selection-start-column="20" selection-end-line="286" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -154,11 +110,51 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
               <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/appdynamics/extensions/extensionstarter/ExtStarterTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIT.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+              <folding>
+                <element signature="e#493#494#0" expanded="true" />
+                <element signature="e#595#596#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/buildTypes/ExtensionStarterCiFinal_Setup.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/buildTypes/ExtensionStarterCiFinal_IntegrationTests.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -168,6 +164,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>properties</find>
+      <find>integration</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -194,6 +191,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/appdynamics/extensions/extensionstarter/ExtStarterMonitorTask.java" />
         <option value="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java" />
         <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIntegrationTests.java" />
+        <option value="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIntegrationTests.java" />
       </list>
     </option>
   </component>
@@ -336,6 +335,34 @@
             <path>
               <item name="extension-starter-ci" type="b2602c69:ProjectViewProjectNode" />
               <item name="extension-starter-ci" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extension-starter-ci" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extension-starter-ci" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extension-starter-ci" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extension-starter-ci" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="extensionstarter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extension-starter-ci" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extension-starter-ci" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extension-starter-ci" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extension-starter-ci" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -346,7 +373,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551999607057" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552000588223" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
@@ -366,7 +393,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.EventsServiceIntegrationTests">
+  <component name="RunManager" selected="JUnit.EventsServiceIT">
     <configuration name="ExtStarterMonitor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.ExtStarterMonitor" />
       <module name="extension-starter-ci" />
@@ -380,7 +407,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventsServiceIntegrationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventsServiceIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="extension-starter-ci" />
       <extension name="coverage">
         <pattern>
@@ -389,12 +416,12 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.appdynamics.extensions.extensionstarter" />
-      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIntegrationTests" />
+      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIT" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventsServiceIntegrationTests.testWhetherEventsArePublished" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventsServiceIT.testWhetherEventsArePublished" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="extension-starter-ci" />
       <extension name="coverage">
         <pattern>
@@ -403,14 +430,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.appdynamics.extensions.extensionstarter" />
-      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIntegrationTests" />
+      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIT" />
       <option name="METHOD_NAME" value="testWhetherEventsArePublished" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventsServiceIntegrationTests.testWhetherQueriesAreRun" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventsServiceIT.testWhetherQueriesAreRun" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="extension-starter-ci" />
       <extension name="coverage">
         <pattern>
@@ -419,14 +446,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.appdynamics.extensions.extensionstarter" />
-      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIntegrationTests" />
+      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIT" />
       <option name="METHOD_NAME" value="testWhetherQueriesAreRun" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventsServiceIntegrationTests.testWhetherSchemaIsCreated" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventsServiceIT.testWhetherSchemaIsCreated" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="extension-starter-ci" />
       <extension name="coverage">
         <pattern>
@@ -435,7 +462,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.appdynamics.extensions.extensionstarter" />
-      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIntegrationTests" />
+      <option name="MAIN_CLASS_NAME" value="com.appdynamics.extensions.extensionstarter.EventsServiceIT" />
       <option name="METHOD_NAME" value="testWhetherSchemaIsCreated" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -443,18 +470,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.EventsServiceIntegrationTests" />
-      <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherQueriesAreRun" />
+      <item itemvalue="JUnit.EventsServiceIT" />
+      <item itemvalue="JUnit.EventsServiceIT.testWhetherQueriesAreRun" />
       <item itemvalue="Application.ExtStarterMonitor" />
-      <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherSchemaIsCreated" />
-      <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherEventsArePublished" />
+      <item itemvalue="JUnit.EventsServiceIT.testWhetherSchemaIsCreated" />
+      <item itemvalue="JUnit.EventsServiceIT.testWhetherEventsArePublished" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.EventsServiceIntegrationTests" />
-        <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherSchemaIsCreated" />
-        <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherEventsArePublished" />
-        <item itemvalue="JUnit.EventsServiceIntegrationTests.testWhetherQueriesAreRun" />
+        <item itemvalue="JUnit.EventsServiceIT" />
+        <item itemvalue="JUnit.EventsServiceIT.testWhetherSchemaIsCreated" />
+        <item itemvalue="JUnit.EventsServiceIT.testWhetherEventsArePublished" />
+        <item itemvalue="JUnit.EventsServiceIT.testWhetherQueriesAreRun" />
         <item itemvalue="Application.ExtStarterMonitor" />
       </list>
     </recent_temporary>
@@ -505,7 +532,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2560" height="1377" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="987" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
@@ -513,11 +540,11 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2192216" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23260073" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.3296355" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.26720184" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.3296355" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -568,7 +595,7 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java</url>
+          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIT.java</url>
           <line>88</line>
           <properties />
           <option name="timeStamp" value="27" />
@@ -580,13 +607,13 @@
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java</url>
+          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIT.java</url>
           <line>60</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java</url>
+          <url>file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIT.java</url>
           <line>92</line>
           <properties />
           <option name="timeStamp" value="33" />
@@ -689,14 +716,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIntegrationTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="23" column="35" lean-forward="true" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/DerivedMetricsIntegrationTests.java">
+    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/DerivedMetricsIT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
@@ -710,31 +730,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIntegrationTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/appdynamics/extensions/extensionstarter/ExtStarterTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/conf/config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="66" column="29" lean-forward="true" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/buildTypes/ExtensionStarterCiFinal_IntegrationTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -805,7 +804,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIntegrationTests.java">
+    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/EventsServiceIT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
@@ -822,7 +821,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricUploadIntegrationTests.java">
+    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricUploadIT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
@@ -836,13 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Dockerfile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -853,6 +845,52 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/buildTypes/ExtensionStarterCiFinal_Setup.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/appdynamics/extensions/extensionstarter/ExtStarterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding>
+            <element signature="e#493#494#0" expanded="true" />
+            <element signature="e#595#596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/buildTypes/ExtensionStarterCiFinal_IntegrationTests.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="108" column="5" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="286" column="20" lean-forward="true" selection-start-line="286" selection-start-column="20" selection-end-line="286" selection-end-column="20" />
         </state>
       </provider>
     </entry>

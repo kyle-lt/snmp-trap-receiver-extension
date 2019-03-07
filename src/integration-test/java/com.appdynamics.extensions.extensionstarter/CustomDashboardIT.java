@@ -10,13 +10,13 @@ import java.io.File;
 
 import static com.appdynamics.extensions.util.JsonUtils.getTextValue;
 
-public class CustomDashboardIntegrationTests {
+public class CustomDashboardIT {
 
     private CustomDashboardAPIService customDashboardAPIService;
+    private String dashboardName = "Extension Starter BTD Dashboard";
 
     @Before
     public void setup() {
-
         customDashboardAPIService = IntegrationTestUtils.initializeCustomDashboardAPIService();
     }
 
@@ -24,11 +24,11 @@ public class CustomDashboardIntegrationTests {
     public void testWhetherConfiguredDashboardIsUploadedToController() {
         if (customDashboardAPIService != null) {
             JsonNode allDashboardsNode = customDashboardAPIService.getAllDashboards();
-            Assert.assertTrue(isDashboardPresent("Extension Starter BTD Dashboard", allDashboardsNode));
+            Assert.assertTrue(isDashboardPresent(allDashboardsNode));
         }
     }
 
-    private boolean isDashboardPresent(String dashboardName, JsonNode existingDashboards) {
+    private boolean isDashboardPresent(JsonNode existingDashboards) {
         if (existingDashboards != null) {
             for (JsonNode existingDashboard : existingDashboards) {
                 if (dashboardName.equals(getTextValue(existingDashboard.get("name")))) {
