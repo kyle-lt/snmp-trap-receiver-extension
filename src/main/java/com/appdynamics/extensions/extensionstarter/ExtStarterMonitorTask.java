@@ -110,13 +110,6 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         buildClusterMetrics(metrics);
         generateMetricsForCharReplacement(metrics);
         metricWriteHelper.transformAndPrintMetrics(metrics);
-
-        try {
-            publishEvents();
-        }
-        catch (Exception e) {
-            logger.error("An error was encountered while generating and publishing events");
-        }
     }
 
     private void buildClusterMetrics(List<Metric> metrics) {
@@ -142,16 +135,6 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         Metric metric = new Metric(metricName, String.valueOf(20), metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName,
                 metricProperties);
         metrics.add(metric);
-    }
-
-    private void publishEvents() throws Exception {
-        ExtensionStarterEventsManager extensionStarterEventsManager = new ExtensionStarterEventsManager
-                (configuration.getContext().getEventsServiceDataManager());
-        extensionStarterEventsManager.createSchema();
-        extensionStarterEventsManager.deleteSchema();
-        extensionStarterEventsManager.createSchema();
-        extensionStarterEventsManager.updateSchema();
-        extensionStarterEventsManager.publishEvents();
     }
 
     private void generateMetricsForCharReplacement(List<Metric> metrics) {

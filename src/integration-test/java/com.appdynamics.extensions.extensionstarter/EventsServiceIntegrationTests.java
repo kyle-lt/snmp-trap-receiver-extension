@@ -5,8 +5,6 @@ import com.appdynamics.extensions.extensionstarter.events.ExtensionStarterEvents
 import com.appdynamics.extensions.http.Http4ClientBuilder;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.appdynamics.extensions.yml.YmlReader;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,7 +27,6 @@ public class EventsServiceIntegrationTests {
     private CloseableHttpClient httpClient;
     private HttpHost httpHost;
     private String globalAccountName, eventsApiKey;
-    private EventsServiceDataManager eventsServiceDataManager;
     private ExtensionStarterEventsManager eventsManager;
     private CloseableHttpResponse httpResponse;
 
@@ -44,8 +41,7 @@ public class EventsServiceIntegrationTests {
         boolean useSSL = (Boolean) eventsServiceParameters.get("useSSL");
         httpClient = Http4ClientBuilder.getBuilder(eventsServiceParameters).build();
         httpHost = new HttpHost(eventsServiceHost, eventsServicePort, useSSL ? "https" : "http");
-        eventsServiceDataManager = new EventsServiceDataManager(eventsServiceParameters);
-        eventsManager = new ExtensionStarterEventsManager(eventsServiceDataManager);
+        eventsManager = new ExtensionStarterEventsManager(new EventsServiceDataManager(eventsServiceParameters));
     }
 
     @After
@@ -61,6 +57,7 @@ public class EventsServiceIntegrationTests {
 
     @Test
     public void testWhetherSchemaIsCreated() throws Exception {
+        eventsManager.deleteSchema();
         eventsManager.createSchema();
         CloseableHttpResponse httpResponse = fetchSchemaFromEventsService();
         Assert.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
@@ -76,6 +73,7 @@ public class EventsServiceIntegrationTests {
 
     @Test
     public void testWhetherSchemaIsUpdated() throws Exception {
+        eventsManager.deleteSchema();
         eventsManager.createSchema();
         eventsManager.updateSchema();
         String responseBody = EntityUtils.toString(fetchSchemaFromEventsService().getEntity(), "UTF-8");
@@ -84,47 +82,18 @@ public class EventsServiceIntegrationTests {
 
     @Test
     public void testWhetherEventsArePublished() throws Exception {
-    /*    eventsManager.publishEvents();
-        String op = eventsManager.queryEvents();
-        String actual = FileUtils.readFileToString(new File("src/integration-test/resources/eventsservice/queryOP"));
-        //Assert.assertTrue(StringUtils.containsIgnoreCase(eventsManager.queryEvents(), FileUtils.readFileToString(new File("src/integration-test/resources/eventsservice/queryOP"));
-        Assert.assertTrue(StringUtils.containsIgnoreCase(op, actual));*/
+        eventsManager.deleteSchema();
+        eventsManager.createSchema();
+        eventsManager.updateSchema();
+        eventsManager.publishEvents();
+        Assert.assertTrue(!eventsManager.queryEvents().equals(""));
     }
-
-   /* @Test
-    public void testWhetherSchemaIsCreated() throws Exception {
-        httpResponse = fetchSchemaFromEventsService();
-        Assert.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
-    }
-
-    @Test
-    public void testWhetherSchemaIsUpdated() throws Exception {
-        httpResponse = fetchSchemaFromEventsService();
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-        Assert.assertTrue(responseBody.contains("appName"));
-    }
-
-
-
-    @Test
-    public void testWhetherEventsArePublished() throws Exception {
-
-    }
-
-
-
-*/
 
     private CloseableHttpResponse fetchSchemaFromEventsService() throws Exception {
-        HttpGet httpGet = new HttpGet(buildRequestUri("BTDSchema", SCHEMA_PATH));
+        HttpGet httpGet = new HttpGet(httpHost.toURI() + SCHEMA_PATH + "BTDSchema");
         httpGet.setHeader(ACCOUNT_NAME_HEADER, globalAccountName);
         httpGet.setHeader(API_KEY_HEADER, eventsApiKey);
         httpGet.setHeader(ACCEPT_HEADER, ACCEPTED_CONTENT_TYPE);
         return httpClient.execute(httpGet);
     }
-
-   private String buildRequestUri(String schemaName, String pathParams) {
-       return httpHost.toURI() + pathParams + schemaName;
-   }
-
 }
