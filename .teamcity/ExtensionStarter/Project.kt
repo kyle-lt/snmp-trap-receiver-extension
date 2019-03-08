@@ -20,6 +20,7 @@ object Project : Project({
         param("env.APPDYNAMICS_CONTROLLER_PORT", "8090")
         param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "3.122.230.13")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
+        param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
     }
 
     features {
