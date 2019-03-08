@@ -11,8 +11,8 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCompose
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 
 object ExtensionStarter_Setup : BuildType({
-    uuid = "75c498f0-14c7-45a6-a538-53ad0f9b87df"
-    name = "Build"
+    uuid = "329f1153-3f0f-4714-a44b-8a1790da7692"
+    name = "Setup"
 
     artifactRules = "target/ExtensionStarterCiMonitor-*.zip"
 
