@@ -21,6 +21,7 @@ object Project : Project({
         param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "3.122.230.13")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
         param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
+        password("env.EVENTS_SERVICE_API_KEY", "credentialsJSON:e652455f-881c-4d2f-9062-c2e25d28e7eb")
     }
 
     features {
