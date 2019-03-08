@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="24992523-412b-451f-816a-d138eee8587b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" afterDir="false" />
@@ -59,7 +57,7 @@
           <entry key="dummy" value="6" />
           <entry key="java" value="1008" />
           <entry key="json" value="1" />
-          <entry key="kt" value="115" />
+          <entry key="kt" value="118" />
           <entry key="xml" value="1" />
           <entry key="yml" value="169" />
         </counts>
@@ -68,7 +66,7 @@
         <counts>
           <entry key="JAVA" value="1008" />
           <entry key="JSON" value="1" />
-          <entry key="Kotlin" value="123" />
+          <entry key="Kotlin" value="126" />
           <entry key="PLAIN_TEXT" value="17" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="169" />
@@ -81,8 +79,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="180">
+              <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
               <folding>
                 <element signature="e#37#551#0" expanded="true" />
               </folding>
@@ -105,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="195">
+              <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
               <folding>
                 <element signature="e#37#589#0" expanded="true" />
               </folding>
@@ -117,8 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="195">
+              <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
               <folding>
                 <element signature="e#37#589#0" expanded="true" />
               </folding>
@@ -134,8 +132,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="195">
+              <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
               <folding>
                 <element signature="e#37#589#0" expanded="true" />
               </folding>
@@ -410,7 +408,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552005516495" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552005559313" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
@@ -935,8 +933,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="180">
+          <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
           <folding>
             <element signature="e#37#551#0" expanded="true" />
           </folding>
@@ -945,8 +943,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="195">
+          <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
           <folding>
             <element signature="e#37#589#0" expanded="true" />
           </folding>
@@ -955,8 +953,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="195">
+          <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
           <folding>
             <element signature="e#37#589#0" expanded="true" />
           </folding>
@@ -965,8 +963,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="195">
+          <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
           <folding>
             <element signature="e#37#589#0" expanded="true" />
           </folding>
