@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24992523-412b-451f-816a-d138eee8587b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,7 +33,7 @@
           <entry key="class" value="7" />
           <entry key="java" value="40" />
           <entry key="json" value="6" />
-          <entry key="kt" value="16" />
+          <entry key="kt" value="19" />
           <entry key="queryOP" value="2" />
           <entry key="xml" value="2" />
           <entry key="yml" value="10" />
@@ -40,7 +45,7 @@
           <entry key="Dockerfile" value="1" />
           <entry key="JAVA" value="40" />
           <entry key="JSON" value="6" />
-          <entry key="Kotlin" value="16" />
+          <entry key="Kotlin" value="19" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="XML" value="2" />
           <entry key="YAML" value="10" />
@@ -53,7 +58,7 @@
           <entry key="dummy" value="6" />
           <entry key="java" value="1008" />
           <entry key="json" value="1" />
-          <entry key="kt" value="62" />
+          <entry key="kt" value="104" />
           <entry key="xml" value="1" />
           <entry key="yml" value="169" />
         </counts>
@@ -62,7 +67,7 @@
         <counts>
           <entry key="JAVA" value="1008" />
           <entry key="JSON" value="1" />
-          <entry key="Kotlin" value="70" />
+          <entry key="Kotlin" value="112" />
           <entry key="PLAIN_TEXT" value="17" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="169" />
@@ -75,16 +80,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-              <folding>
-                <element signature="e#37#224#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" column="24" selection-start-line="5" selection-end-line="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
@@ -99,29 +101,43 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="e#37#298#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="14" selection-start-line="6" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="e#37#298#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dockerfile_MA">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -194,16 +210,17 @@
         <option value="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/CustomDashboardIntegrationTests.java" />
         <option value="$PROJECT_DIR$/src/integration-test/java/com.appdynamics.extensions.extensionstarter/MetricCharacterReplacementIntegrationTests.java" />
         <option value="$PROJECT_DIR$/.teamcity/ExtensionStarterCiFinal/Project.kt" />
-        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" />
-        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" />
         <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests" />
-        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" />
-        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" />
         <option value="$PROJECT_DIR$/.teamcity/pom.xml" />
         <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/src/test/resources/conf/config.yml" />
         <option value="$PROJECT_DIR$/src/integration-test/resources/conf/config_ci.yml" />
         <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/Project.kt" />
+        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt" />
+        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt" />
+        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt" />
+        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt" />
+        <option value="$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt" />
       </list>
     </option>
   </component>
@@ -225,9 +242,9 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
-    <option name="width" value="1206" />
+    <option name="width" value="1680" />
     <option name="height" value="987" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -390,7 +407,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552004702089" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552005248848" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
@@ -550,10 +567,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1206" height="987" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="987" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31013745" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22039072" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -832,13 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/appdynamics/extensions/extensionstarter/ExtStarterTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -856,23 +866,6 @@
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-          <folding>
-            <element signature="e#37#262#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -880,23 +873,6 @@
           <folding>
             <element signature="e#37#262#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#37#224#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
@@ -940,6 +916,47 @@
           <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#26#518#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/vcsRoots/ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Build.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="24" selection-start-line="5" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_IntegrationTests.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#37#298#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Setup.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="14" selection-start-line="6" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.teamcity/ExtensionStarter/buildTypes/ExtensionStarter_Stop.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#37#298#0" expanded="true" />
           </folding>
         </state>
       </provider>
