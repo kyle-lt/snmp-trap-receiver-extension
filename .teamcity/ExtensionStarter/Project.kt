@@ -17,6 +17,7 @@ object Project : Project({
 
     params {
         password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "credentialsJSON:65747919-6823-4341-8a84-db15e792b3d7")
+        param("env.APPDYNAMICS_CONTROLLER_PORT", "8090")
         param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "3.122.230.13")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
     }
