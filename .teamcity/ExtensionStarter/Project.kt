@@ -15,6 +15,10 @@ object Project : Project({
 
     vcsRoot(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
 
+    params {
+        param("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "a4c3657a-5177-48fe-8ec5-c0f383694251")
+    }
+
     features {
         versionedSettings {
             id = "PROJECT_EXT_25"
