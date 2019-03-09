@@ -32,7 +32,7 @@ public class EventsServiceIT {
 
     @Before
     public void setup() {
-        Map<String, ?> eventsServiceParameters = (Map) YmlReader.readFromFile(new File("/Users/aj89/repos/appdynamics/extensions/extension-starter-ci/src/integration-test/resources/conf/config_ci.yml"))
+        Map<String, ?> eventsServiceParameters = (Map) YmlReader.readFromFile(new File("src/integration-test/resources/conf/config_ci.yml"))
                 .get("eventsServiceParameters");
         String eventsServiceHost = (String) eventsServiceParameters.get("host");
         int eventsServicePort = (Integer) eventsServiceParameters.get("port");
