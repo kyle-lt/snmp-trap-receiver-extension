@@ -125,12 +125,10 @@ metricPathReplacements:
 
 # This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
 eventsServiceParameters:
-  host: "ec2-34-221-206-45.us-west-2.compute.amazonaws.com"
+  host: "${EVENTS_SERVICE_HOST}"
   port: 9080
-  globalAccountName: "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0"
+  globalAccountName: "{$GLOBAL_ACCOUNT_NAME}"
   eventsApiKey: "${EVENTS_SERVICE_API_KEY}"
   useSSL: false
 
 enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
-
-#todo - move events service parameters to env variables on teamcity
