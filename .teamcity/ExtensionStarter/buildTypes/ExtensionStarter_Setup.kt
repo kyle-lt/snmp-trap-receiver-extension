@@ -14,8 +14,6 @@ object ExtensionStarter_Setup : BuildType({
     uuid = "329f1153-3f0f-4714-a44b-8a1790da7692"
     name = "Setup"
 
-    artifactRules = "target/ExtensionStarterCiMonitor-*.zip"
-
     vcs {
         root(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
     }

@@ -14,8 +14,6 @@ object ExtensionStarter_Stop : BuildType({
     uuid = "bdc25bd3-02fb-4563-b335-2d344494f9d2"
     name = "Stop"
 
-    artifactRules = "target/ExtensionStarterCiMonitor-*.zip"
-
     vcs {
         root(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
     }

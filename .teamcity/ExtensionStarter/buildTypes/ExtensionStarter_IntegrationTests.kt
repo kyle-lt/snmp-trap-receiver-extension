@@ -14,8 +14,6 @@ object ExtensionStarter_IntegrationTests : BuildType({
     uuid = "7BE210A4-781F-82B3-9938-FD5482212236"
     name = "Integration Tests"
 
-    artifactRules = "target/ExtensionStarterCiMonitor-*.zip"
-
     vcs {
         root(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
     }

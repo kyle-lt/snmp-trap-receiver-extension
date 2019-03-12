@@ -7,6 +7,9 @@ services:
       - APPDYNAMICS_CONTROLLER_HOST_NAME
       - APPDYNAMICS_CONTROLLER_SSL_ENABLED
       - APPDYNAMICS_CONTROLLER_PORT
+      - EVENTS_SERVICE_HOST
+      - GLOBAL_ACCOUNT_NAME
+      - EVENTS_SERVICE_API_KEY
       - MACHINE_AGENT_PROPERTIES=-Dappdynamics.sim.enabled=true -Dappdynamics.docker.enabled=false
 
     build:
