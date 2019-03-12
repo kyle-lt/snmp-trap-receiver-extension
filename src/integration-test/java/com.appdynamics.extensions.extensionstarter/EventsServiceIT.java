@@ -12,6 +12,7 @@ package com.appdynamics.extensions.extensionstarter;
  * Created by Aditya Jagtiani on 12/15/17.
  */
 
+import com.appdynamics.extensions.conf.processor.ConfigProcessor;
 import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
 import com.appdynamics.extensions.extensionstarter.events.ExtensionStarterEventsManager;
 import com.appdynamics.extensions.http.Http4ClientBuilder;
@@ -42,8 +43,10 @@ public class EventsServiceIT {
 
     @Before
     public void setup() {
-        Map<String, ?> eventsServiceParameters = (Map) YmlReader.readFromFile(new File("src/integration-test/resources/conf/config_ci.yml"))
-                .get("eventsServiceParameters");
+        File configFile = new File("src/integration-test/resources/conf/config_ci.yml");
+        Map<String, ?> config = YmlReader.readFromFileAsMap(configFile);
+        config = ConfigProcessor.process(config);
+        Map<String, ?> eventsServiceParameters = (Map)config.get("eventsServiceParameters");
         String eventsServiceHost = (String) eventsServiceParameters.get("host");
         int eventsServicePort = (Integer) eventsServiceParameters.get("port");
         globalAccountName = (String) eventsServiceParameters.get("globalAccountName");
