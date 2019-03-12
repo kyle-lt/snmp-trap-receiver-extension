@@ -1,58 +1,59 @@
-### ANY CHANGES TO THIS FILE DOES NOT REQUIRE A RESTART ###
 
-#This will create this metric in all the tiers, under this path
-#metricPrefix: Custom Metrics|Starter
+  ### ANY CHANGES TO THIS FILE DOES NOT REQUIRE A RESTART ###
 
-#This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
-#To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
-metricPrefix: "Custom Metrics|Extension Starter CI"
+  #This will create this metric in all the tiers, under this path
+  #metricPrefix: Custom Metrics|Starter
 
-servers:
-- host: https://www.appdynamics.com/
-  name: AppDynamics
-  username: user
-  password: welcome
+  #This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
+  #To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
+  metricPrefix: "Custom Metrics|Extension Starter CI"
 
-- host: https://www.yahoo.com/
-  name: Yahoo
-  username: user
-  passwordEncrypted: C043Fag+LKEZM0AQTWPy2g==
+  servers:
+  - host: https://www.appdynamics.com/
+    name: AppDynamics
+    username: user
+    password: welcome
 
-# number of concurrent tasks
-numberOfThreads: 1
-encryptionKey: welcome
+  - host: https://www.yahoo.com/
+    name: Yahoo
+    username: user
+    passwordEncrypted: C043Fag+LKEZM0AQTWPy2g==
 
-connection:
-  socketTimeout: 2000
-  connectTimeout: 2000
-  sslCertCheckEnabled: false
-  sslVerifyHostname: false
-  sslProtocols: ["TLSv1"]
+  # number of concurrent tasks
+  numberOfThreads: 1
+  encryptionKey: welcome
 
-#proxy:
-#  uri: http://localhost:9090
-#  username: proxyyuser
-#  password: proxypassword
+  connection:
+    socketTimeout: 2000
+    connectTimeout: 2000
+    sslCertCheckEnabled: false
+    sslVerifyHostname: false
+    sslProtocols: ["TLSv1"]
 
-#taskSchedule:
-#  numberOfThreads: 1
-#  taskDelaySeconds: 300
+  #proxy:
+  #  uri: http://localhost:9090
+  #  username: proxyyuser
+  #  password: proxypassword
 
-# below section shows how to configure metrics you want to pull and how to list metric's qualifiers
+  #taskSchedule:
+  #  numberOfThreads: 1
+  #  taskDelaySeconds: 300
 
-#                                      List of metrics
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#Glossary of terms(These terms are used as properties for each metric):
-#   alias
-#   aggregationType
-#   timeRollUpType
-#   clusterRollUpType                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-#   multiplier
-#   convert
-#   delta
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # below section shows how to configure metrics you want to pull and how to list metric's qualifiers
 
-metrics:
+  #                                      List of metrics
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #Glossary of terms(These terms are used as properties for each metric):
+  #   alias
+  #   aggregationType
+  #   timeRollUpType
+  #   clusterRollUpType                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+  #   multiplier
+  #   convert
+  #   delta
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  metrics:
   - IncomingRequests:
       alias:
       aggregationType: "AVERAGE"
@@ -71,7 +72,7 @@ metrics:
       delta:
 
 
-derivedMetrics:
+  derivedMetrics:
   - derivedMetricPath: "Total Number of Requests"
     formula: "IncomingRequests + Outgoing Requests"
 
@@ -82,36 +83,36 @@ derivedMetrics:
     clusterRollUpType: "COLLECTIVE"
 
 
-# Generate a custom dashboard based on the provided template
-customDashboard:
-  enabled: true
-  dashboardName: "Extension Starter BTD Dashboard"
-#  sslCertCheckEnabled: true
-  # Update the path to the dashboard file.
-  pathToSIMDashboard: "monitors/ExtensionStarterCiMonitor/ExtensionStarterBTDDashboard.json"
-  periodicDashboardCheckInSeconds: 60
+  # Generate a custom dashboard based on the provided template
+  customDashboard:
+    enabled: true
+    dashboardName: "Extension Starter BTD Dashboard"
+    #  sslCertCheckEnabled: true
+    # Update the path to the dashboard file.
+    pathToSIMDashboard: "monitors/ExtensionStarterCiMonitor/ExtensionStarterBTDDashboard.json"
+    periodicDashboardCheckInSeconds: 60
 
-# If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
-# If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
-controllerInfo:
-  controllerHost: "${APPDYNAMICS_CONTROLLER_HOST_NAME}"
-  controllerPort: 8090
-  account: "customer1"
-  username: "admin"
-  password: "admin"
-  encryptedPassword: ""
-  encryptionKey: ""
-  controllerSslEnabled: false
-  enableOrchestration: false
-  uniqueHostId: ""
-  accountAccessKey: "${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY}"
-  machinePath: ""
-  simEnabled: true
-  applicationName: ""
-  tierName: ""
-  nodeName: ""
+  # If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
+  # If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
+  controllerInfo:
+    controllerHost: "${APPDYNAMICS_CONTROLLER_HOST_NAME}"
+    controllerPort: 8090
+    account: "customer1"
+    username: "admin"
+    password: "admin"
+    encryptedPassword: ""
+    encryptionKey: ""
+    controllerSslEnabled: false
+    enableOrchestration: false
+    uniqueHostId: ""
+    accountAccessKey: "${APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY}"
+    machinePath: ""
+    simEnabled: true
+    applicationName: ""
+    tierName: ""
+    nodeName: ""
 
-metricPathReplacements:
+  metricPathReplacements:
   - replace: ","
     replaceWith: "%"
   - replace: ":"
@@ -123,12 +124,12 @@ metricPathReplacements:
   - replace: "?"
     replaceWith: "|"
 
-# This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
-eventsServiceParameters:
-  host: "${EVENTS_SERVICE_HOST}"
-  port: 9080
-  globalAccountName: "{$GLOBAL_ACCOUNT_NAME}"
-  eventsApiKey: "${EVENTS_SERVICE_API_KEY}"
-  useSSL: false
+  # This field contains the various parameters required to initiate a connection and send data to the AppDynamics Events Service.
+  eventsServiceParameters:
+    host: "${EVENTS_SERVICE_HOST}"
+    port: 9080
+    globalAccountName: "${GLOBAL_ACCOUNT_NAME}"
+    eventsApiKey: "${EVENTS_SERVICE_API_KEY}"
+    useSSL: false
 
-enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
+  enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.

@@ -1,4 +1,16 @@
+/*
+ *   Copyright 2019. AppDynamics LLC and its affiliates.
+ *   All Rights Reserved.
+ *   This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+ *   The copyright notice above does not evidence any actual or intended publication of such source code.
+ *
+ */
+
 package com.appdynamics.extensions.extensionstarter;
+
+/**
+ * Created by Aditya Jagtiani on 12/15/17.
+ */
 
 import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
 import com.appdynamics.extensions.extensionstarter.events.ExtensionStarterEventsManager;
@@ -10,7 +22,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +39,6 @@ public class EventsServiceIT {
     private HttpHost httpHost;
     private String globalAccountName, eventsApiKey;
     private ExtensionStarterEventsManager eventsManager;
-    private CloseableHttpResponse httpResponse;
 
     @Before
     public void setup() {
@@ -44,23 +54,13 @@ public class EventsServiceIT {
         eventsManager = new ExtensionStarterEventsManager(new EventsServiceDataManager(eventsServiceParameters));
     }
 
-    @After
-    public void teardown() {
-        if (httpResponse != null) {
-            try {
-                httpResponse.close();
-            } catch (Exception ex) {
-                logger.error("Error encountered while closing the HTTP response", ex);
-            }
-        }
-    }
-
     @Test
     public void testWhetherSchemaIsCreated() throws Exception {
         eventsManager.deleteSchema();
         eventsManager.createSchema();
         CloseableHttpResponse httpResponse = fetchSchemaFromEventsService();
         Assert.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+        httpResponse.close();
     }
 
     @Test
@@ -68,7 +68,7 @@ public class EventsServiceIT {
         eventsManager.deleteSchema();
         CloseableHttpResponse httpResponse = fetchSchemaFromEventsService();
         Assert.assertEquals(404, httpResponse.getStatusLine().getStatusCode());
-
+        httpResponse.close();
     }
 
     @Test
