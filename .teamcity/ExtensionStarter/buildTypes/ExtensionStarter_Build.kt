@@ -13,8 +13,6 @@ object ExtensionStarter_Build : BuildType({
     uuid = "75c498f0-14c7-45a6-a538-53ad0f9b87dc"
     name = "Build"
 
-    //artifactRules = "target/ExtensionStarterCiMonitor-*.zip"
-
     vcs {
         root(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
     }
@@ -31,4 +29,8 @@ object ExtensionStarter_Build : BuildType({
         vcs {
         }
     }
+
+    artifactRules = """
+       target/Extension-Starter-Ci-*.zip
+    """.trimIndent()
 })
