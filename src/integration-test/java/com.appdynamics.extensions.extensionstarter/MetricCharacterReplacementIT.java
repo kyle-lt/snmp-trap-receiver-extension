@@ -19,6 +19,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.appdynamics.extensions.extensionstarter.Constants.*;
 import static com.appdynamics.extensions.extensionstarter.IntegrationTestUtils.initializeMetricAPIService;
 
 public class MetricCharacterReplacementIT {
@@ -32,10 +33,7 @@ public class MetricCharacterReplacementIT {
     @Test
     public void testDefaultCharacterReplacement() {
         if (metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("", "Server%20&%" +
-                    "20Infrastructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%" +
-                    "7CRoot%7CCustom%20Metrics%7CExtension%20Starter%20CI%7CCharacter%20Replacement%7CPipe&time-range-" +
-                    "type=BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", DEFAULT_METRIC_CHAR_REPLACEMENT_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
@@ -47,12 +45,9 @@ public class MetricCharacterReplacementIT {
     }
 
     @Test
-    public void testDefaultCharacterOverrides() {
+    public void testDefaultCharacterReplacementWhenOverriden() {
         if (metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("", "Server%20&%20Infras" +
-                    "tructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7" +
-                    "CCustom%20Metrics%7CExtension%20Starter%20CI%7CCharacter%20Replacement%7CComma%25&time-range-type=" +
-                    "BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", DEFAULT_REPLACEMENT_OVERRIDDEN_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
@@ -66,14 +61,11 @@ public class MetricCharacterReplacementIT {
     @Test
     public void testWhenMultipleReplacementsAreConfiguredForSameCharacterThenLastOneIsUsed () {
         if (metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("", "Server%20&%20Infras" +
-                    "tructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%" +
-                    "7CCustom%20Metrics%7CExtension%20Starter%20CI%7CCharacter%20Replacement%7CComma%25&time-range-type=" +
-                    "BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", MULTIPLE_CHAR_REPLACEMENT_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
-                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|Comma%\"", metricName);
+                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|#Colon\"", metricName);
             } else {
                 Assert.fail("Failed to connect to the Controller API");
             }
@@ -84,14 +76,11 @@ public class MetricCharacterReplacementIT {
     @Test
     public void testWhenReplacementForNonAsciiCharacterIsPresent() {
         if (metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("", "Server%20&%20Infrast" +
-                    "ructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7C" +
-                    "Custom%20Metrics%7CExtension%20Starter%20CI%7CCharacter%20Replacement%7CComma%25&time-range-type=" +
-                    "BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", NON_ASCII_REPLACEMENT_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
-                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|Comma%\"", metricName);
+                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|Memory Used\"", metricName);
             } else {
                 Assert.fail("Failed to connect to the Controller API");
             }
@@ -99,25 +88,17 @@ public class MetricCharacterReplacementIT {
     }
 
     @Test
-    public void testWhenReplacementForNonAsciiCharacterIsAbsent() {
+    public void testWhenReplacementForCharacterIsInvalid() {
         if (metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("", "Server%20&%20Infras" +
-                    "tructure%20Monitoring/metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7C" +
-                    "Custom%20Metrics%7CExtension%20Starter%20CI%7CCharacter%20Replacement%7CComma%25&time-range-type=B" +
-                    "EFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", INVALID_CHAR_REPLACEMENT_ENDPPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
-                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|Comma%\"", metricName);
+                Assert.assertEquals("\"Custom Metrics|Extension Starter CI|Character Replacement|QuestionMark\"", metricName);
             } else {
                 Assert.fail("Failed to connect to the Controller API");
             }
         }
-    }
-
-    @Test
-    public void testWhenInvalidReplacementConfiguredForAsciiCharacter() {
-
     }
 }
 

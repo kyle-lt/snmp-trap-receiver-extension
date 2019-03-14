@@ -19,6 +19,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.appdynamics.extensions.extensionstarter.Constants.DEFAULT_METRIC_UPLOAD_ENDPOINT;
+import static com.appdynamics.extensions.extensionstarter.Constants.METRIC_WITH_PROPS_ENDPOINT;
 import static com.appdynamics.extensions.extensionstarter.IntegrationTestUtils.initializeMetricAPIService;
 
 public class MetricUploadIT {
@@ -33,9 +35,7 @@ public class MetricUploadIT {
     @Test
     public void testMetricUpload() {
         if(metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("","Server%20&%20Infrastructure%20Monitoring/" +
-                    "metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7CCustom%20Metrics%7CExtensi" +
-                    "on%20Starter%20CI%7CIncomingRequests&time-range-type=BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("", DEFAULT_METRIC_UPLOAD_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "*", "metricValues", "*", "value");
                 int cpuUtilization = (valueNode == null) ? 0 : valueNode.get(0).asInt();
@@ -50,9 +50,7 @@ public class MetricUploadIT {
     @Test
     public void testMetricUploadWithAliasMultiplier() {
         if(metricAPIService != null) {
-            JsonNode jsonNode = metricAPIService.getMetricData("","Server%20&%20Infrastructure%20Monitoring/" +
-                    "metric-data?metric-path=Application%20Infrastructure%20Performance%7CRoot%7CCustom%20Metrics%7CExtens" +
-                    "ion%20Starter%20CI%7COutgoing%20Requests&time-range-type=BEFORE_NOW&duration-in-mins=5&output=JSON");
+            JsonNode jsonNode = metricAPIService.getMetricData("",METRIC_WITH_PROPS_ENDPOINT);
             if (jsonNode != null) {
                 JsonNode valueNode = JsonUtils.getNestedObject(jsonNode, "metricName");
                 String metricName = (valueNode == null) ? "" : valueNode.get(0).toString();
