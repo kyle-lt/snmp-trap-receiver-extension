@@ -1,5 +1,18 @@
 version: '2'
 services:
+
+  controller:
+    build:
+      context: .
+      dockerfile: Dockerfile_Controller
+    ports:
+      - "8080:8080"
+      - "9080:9080"
+
+    volumes:
+      - /:/hostroot:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
   machine:
     environment:
       - APPDYNAMICS_AGENT_ACCOUNT_NAME
