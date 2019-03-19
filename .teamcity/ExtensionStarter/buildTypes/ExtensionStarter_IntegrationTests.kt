@@ -15,7 +15,11 @@ object ExtensionStarter_IntegrationTests : BuildType({
     name = "Integration Tests"
 
     vcs {
-        root(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
+        root(extensionstarterci)
+    }
+
+    requirements {
+        equals("teamcity.agent.hostname", "ip-10-143-10-127")
     }
 
     steps {

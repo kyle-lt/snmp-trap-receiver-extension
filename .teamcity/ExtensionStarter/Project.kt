@@ -13,10 +13,10 @@ import ExtensionStarter.vcsRoots.*
 object Project : Project({
     uuid = "85c0e0f7-336b-42d1-84ad-8abe32b64865"
     id("ExtensionStarter")
-    parentId("_Root")
+    parentId("AE")
     name = "Extension Starter"
 
-    vcsRoot(ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit)
+    vcsRoot(extensionstarterci)
 
     buildType(ExtensionStarter_Setup)
     buildType(ExtensionStarter_Stop)
@@ -39,7 +39,7 @@ object Project : Project({
             id = "PROJECT_EXT_25"
             mode = VersionedSettings.Mode.ENABLED
             buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_SETTINGS_FROM_VCS
-            rootExtId = "${ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit.id}"
+            rootExtId = "${extensionstarterci.id}"
             showChanges = false
             settingsFormat = VersionedSettings.Format.KOTLIN
             storeSecureParamsOutsideOfVcs = true

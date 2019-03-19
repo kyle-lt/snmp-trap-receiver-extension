@@ -1,4 +1,4 @@
-FROM vishakasekar/machineagent:latest AS MA
+FROM dtr.corp.appdynamics.com/appdynamics/machine-agent AS MA
 RUN pwd
 ADD target/Extension-Starter-Ci-*.zip /opt/appdynamics/monitors
 RUN unzip -q "/opt/appdynamics/monitors/Extension-Starter-Ci-*.zip" -d /opt/appdynamics/monitors
