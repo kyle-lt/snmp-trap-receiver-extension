@@ -1,7 +1,6 @@
 package ExtensionStarter
 
 import ExtensionStarter.vcsRoots.*
-import ExtensionStarter.vcsRoots.ExtensionStarter_GitGithubComAdityajagtiani89extensionStarterCiGit
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.Project
 import jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures.VersionedSettings
