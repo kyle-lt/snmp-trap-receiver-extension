@@ -36,7 +36,7 @@ object Project : Project({
 
     features {
         versionedSettings {
-            id = "PROJECT_EXT_25"
+            id = "PROJECT_EXT_16"
             mode = VersionedSettings.Mode.ENABLED
             buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_SETTINGS_FROM_VCS
             rootExtId = "${extensionstarterci.id}"
