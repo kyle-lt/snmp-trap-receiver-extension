@@ -40,9 +40,9 @@ object Project : Project({
             mode = VersionedSettings.Mode.ENABLED
             buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_SETTINGS_FROM_VCS
             rootExtId = "${extensionstarterci.id}"
-            showChanges = false
+            showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN
-            storeSecureParamsOutsideOfVcs = true
+
         }
     }
 
