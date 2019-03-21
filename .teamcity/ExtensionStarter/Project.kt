@@ -23,9 +23,9 @@ object Project : Project({
     buildType(ExtensionStarter_Build)
 
     params {
-        password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "credentialsJSON:65747919-6823-4341-8a84-db15e792b3d7")
-        param("env.APPDYNAMICS_CONTROLLER_PORT", "8090")
-        param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "3.122.230.13")
+        password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "zxxae5b77700e4d524b40b3477e9e3668df")
+        param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
+        param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "%teamcity.agent.hostname%")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
         param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
         param("env.GLOBAL_ACCOUNT_NAME", "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0")
