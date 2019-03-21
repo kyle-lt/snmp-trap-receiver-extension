@@ -43,7 +43,17 @@ object ExtensionStarter_Setup : BuildType({
     }
 
     dependencies {
-        snapshot(ExtensionStarter_Build) {
+        dependency(ExtensionStarter_Build) {
+
+            snapshot{
+
+            }
+
+            artifacts {
+                artifactRules = """
+                target/Extension-Starter-Ci-*.zip => target
+            """.trimIndent()
+            }
         }
     }
 })

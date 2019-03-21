@@ -35,6 +35,6 @@ object ExtensionStarter_Build : BuildType({
     }
 
     artifactRules = """
-       target/Extension-Starter-Ci-*.zip
+       target/Extension-Starter-Ci-*.zip => target
     """.trimIndent()
 })
