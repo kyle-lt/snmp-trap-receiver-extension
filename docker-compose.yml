@@ -19,9 +19,6 @@ services:
       - EVENTS_SERVICE_API_KEY
       - MACHINE_AGENT_PROPERTIES=-Dappdynamics.sim.enabled=true -Dappdynamics.docker.enabled=false
 
-    depends_on:
-      - controller
-
     build:
       context: .
       dockerfile: Dockerfile_MA
