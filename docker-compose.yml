@@ -16,7 +16,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
     command: >
-      /bin/bash -c "sleep 10;"
+      /bin/bash -c "sleep 600;
+        echo CONTROLLER WAIT ENDED!;"
 
   machine:
     environment:
