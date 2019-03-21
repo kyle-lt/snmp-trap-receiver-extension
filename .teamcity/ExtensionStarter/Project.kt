@@ -18,8 +18,8 @@ object Project : Project({
     vcsRoot(extensionstarterci)
 
     buildType(ExtensionStarter_Setup)
-    buildType(ExtensionStarter_Stop)
-    buildType(ExtensionStarter_IntegrationTests)
+//    buildType(ExtensionStarter_Stop)
+//    buildType(ExtensionStarter_IntegrationTests)
     buildType(ExtensionStarter_Build)
 
     params {
@@ -46,7 +46,5 @@ object Project : Project({
     }
 
     buildTypesOrder = arrayListOf(ExtensionStarter_Build,
-            ExtensionStarter_Setup,
-            ExtensionStarter_IntegrationTests,
-            ExtensionStarter_Stop)
+            ExtensionStarter_Setup)
 })
