@@ -6,7 +6,7 @@
  *
  */
 
-package java.com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.extensionstarter;
 
 import com.appdynamics.extensions.AMonitorJob;
 import com.appdynamics.extensions.MetricWriteHelper;
