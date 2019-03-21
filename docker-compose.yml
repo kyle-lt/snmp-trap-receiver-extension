@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_Controller
+
+
     ports:
       - "8080:8080"
       - "9080:9080"
@@ -12,6 +14,9 @@ services:
     volumes:
       - /:/hostroot:ro
       - /var/run/docker.sock:/var/run/docker.sock
+
+    command: >
+      /bin/bash -c "sleep 10;"
 
   machine:
     environment:
@@ -24,6 +29,9 @@ services:
       - GLOBAL_ACCOUNT_NAME
       - EVENTS_SERVICE_API_KEY
       - MACHINE_AGENT_PROPERTIES=-Dappdynamics.sim.enabled=true -Dappdynamics.docker.enabled=false
+
+    depends_on:
+      - controller
 
     build:
       context: .
