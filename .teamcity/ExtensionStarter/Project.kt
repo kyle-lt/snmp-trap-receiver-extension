@@ -23,7 +23,7 @@ object Project : Project({
     buildType(ExtensionStarter_Build)
 
     params {
-        password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "zxxae5b77700e4d524b40b3477e9e3668df")
+        password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "zxxae5b77700e4d524b0f17c60975f42d1a")
         param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
         param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "172.28.1.1")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
