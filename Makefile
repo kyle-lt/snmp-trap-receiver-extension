@@ -6,7 +6,7 @@ docker-clean:
 	-docker rmi `docker images -q -f dangling=true`
 
 
-DOCKER_STOP=sudo docker-compose --file docker-compose.yml down
+DOCKER_STOP=docker-compose --file docker-compose.yml down
 
 dockerRun: ## Run MA in docker
 	@echo starting container ##################%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&
