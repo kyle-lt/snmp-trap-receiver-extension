@@ -8,9 +8,10 @@ services:
       testing_net:
         ipv4_address: 172.28.1.1
     ports:
-      - "8080:8080"
+      - "8080"
 
   machine:
+    container_name: machine
     environment:
       - APPDYNAMICS_AGENT_ACCOUNT_NAME
       - APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
