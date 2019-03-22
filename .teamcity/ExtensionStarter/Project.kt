@@ -25,7 +25,7 @@ object Project : Project({
     params {
         password("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "zxxae5b77700e4d524b40b3477e9e3668df")
         param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
-        param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "%teamcity.agent.hostname%")
+        param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "172.28.1.1")
         param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
         param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
         param("env.GLOBAL_ACCOUNT_NAME", "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0")
