@@ -23,10 +23,10 @@ object Project : Project({
     buildType(ExtensionStarter_Build)
 
     params {
-        param("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "SJ5b2m7d1$354")
-        param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
-        param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "172.28.1.1")
-        param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
+        //param("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "SJ5b2m7d1$354")
+       // param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
+        //param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "172.28.1.1")
+        //param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
         param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
         param("env.GLOBAL_ACCOUNT_NAME", "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0")
         param("env.EVENTS_SERVICE_HOST", "ec2-34-221-206-45.us-west-2.compute.amazonaws.com")
