@@ -6,6 +6,7 @@ services:
     container_name: controller
     ports:
       - "8080:8080"
+      - "9080:9080"
 
   machine:
     container_name: machine
