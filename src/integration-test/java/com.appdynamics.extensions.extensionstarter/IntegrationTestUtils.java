@@ -63,6 +63,7 @@ class IntegrationTestUtils {
         if (controllerInfoMap == null) {
             controllerInfoMap = Maps.newHashMap();
         }
+        controllerInfoMap.put("controllerHost","localhost");
         controllerInfoMap.put(ENCRYPTION_KEY, config.get(ENCRYPTION_KEY));
         try {
             ControllerInfo controllerInfo = ControllerInfoFactory.initialize(controllerInfoMap, installDir);
