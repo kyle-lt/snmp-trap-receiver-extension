@@ -121,6 +121,8 @@
     replaceWith: "#"
   - replace: "\u00dc"
     replaceWith: "U"
+  - replace: "\u00f3"
+    replaceWith: "o"
   - replace: "?"
     replaceWith: "|"
 

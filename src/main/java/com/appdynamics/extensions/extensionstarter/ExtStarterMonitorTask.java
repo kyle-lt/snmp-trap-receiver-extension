@@ -146,7 +146,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         Metric metric4 = new Metric("Memóry Free", "10", new HashMap<String, Object>(),
                 "Custom Metrics|Extension Starter CI|Character Replacement|","Memóry Free" );
         Metric metric5 = new Metric("Memory Üsed", "10", new HashMap<String, Object>(),
-                "Custom Metrics|Extension Starter CI|Character Replacement|","Memory \\u00dcsed" );
+                "Custom Metrics|Extension Starter CI|Character Replacement|","Memory \u00dcsed" );
         Metric metric6 = new Metric("Question?Mark", "10", new HashMap<String, Object>(),
                 "Custom Metrics|Extension Starter CI|Character Replacement|","Question?Mark" );
         metrics.add(metric1);
