@@ -18,8 +18,8 @@ object Project : Project({
     vcsRoot(extensionstarterci)
 
     buildType(ExtensionStarter_Setup)
-//    buildType(ExtensionStarter_Stop)
-//    buildType(ExtensionStarter_IntegrationTests)
+    buildType(ExtensionStarter_Stop)
+    buildType(ExtensionStarter_IntegrationTests)
     buildType(ExtensionStarter_Build)
 
     params {

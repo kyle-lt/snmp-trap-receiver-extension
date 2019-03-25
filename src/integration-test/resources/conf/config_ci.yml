@@ -96,10 +96,10 @@
   # If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
   controllerInfo:
     controllerHost: "${APPDYNAMICS_CONTROLLER_HOST_NAME}"
-    controllerPort: 8090
+    controllerPort: 8080
     account: "customer1"
-    username: "admin"
-    password: "admin"
+    username: "user1"
+    password: "welcome"
     encryptedPassword: ""
     encryptionKey: ""
     controllerSslEnabled: false
