@@ -119,7 +119,7 @@
     replaceWith: "_"
   - replace: ":"
     replaceWith: "#"
-  - replace: "Ü"
+  - replace: "\u00dc"
     replaceWith: "U"
   - replace: "?"
     replaceWith: "|"
