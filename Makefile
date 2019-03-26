@@ -15,7 +15,7 @@ dockerRun: ## Run MA in docker
 	rm events-service-api-store.properties
 	rm .events-service-api-store.properties.swp
 	docker cp controller:/root/paworkspace/events-service/processor/conf/events-service-api-store.properties .
-    $(eval EVENTS_SERVICE_API_KEY=$(shell sh -c "cat events-service-api-store.properties | grep ad.accountmanager.key.controller|cut -d'=' -f2"))
+	$(eval EVENTS_SERVICE_API_KEY=$(shell sh -c "cat events-service-api-store.properties | grep ad.accountmanager.key.controller|cut -d'=' -f2"))
     echo $(EVENTS_SERVICE_API_KEY)
 	APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY='SJ5b2m7d1$$354' APPDYNAMICS_AGENT_ACCOUNT_NAME=$(APPDYNAMICS_AGENT_ACCOUNT_NAME) APPDYNAMICS_CONTROLLER_HOST_NAME=$(APPDYNAMICS_CONTROLLER_HOST_NAME) APPDYNAMICS_CONTROLLER_PORT=$(APPDYNAMICS_CONTROLLER_PORT) APPDYNAMICS_CONTROLLER_SSL_ENABLED=$(APPDYNAMICS_CONTROLLER_SSL_ENABLED) EVENTS_SERVICE_HOST=$(EVENTS_SERVICE_HOST) GLOBAL_ACCOUNT_NAME=$(GLOBAL_ACCOUNT_NAME) EVENTS_SERVICE_API_KEY=$(EVENTS_SERVICE_API_KEY) docker-compose --file docker-compose.yml up --force-recreate -d --build machine
 	@echo started container ##################%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&
