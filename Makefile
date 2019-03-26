@@ -10,8 +10,8 @@ DOCKER_STOP=docker-compose --file docker-compose.yml down
 
 dockerRun: ## Run MA in docker
 	@echo starting container ##################%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&
-    docker-compose --file docker-compose.yml up --force-recreate -d --build controller
-    sleep 600
+	docker-compose --file docker-compose.yml up --force-recreate -d --build controller
+	sleep 600
 	docker cp controller:/root/paworkspace/events-service/processor/conf/events-service-api-store.properties .
 	export EVENTS_SERVICE_HOST=$(cat events-service-api-store.properties | grep ad.accountmanager.key.controller|cut -d'=' -f2)
 	@echo $(EVENTS_SERVICE_HOST)
