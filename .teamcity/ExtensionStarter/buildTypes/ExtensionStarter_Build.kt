@@ -18,7 +18,7 @@ object ExtensionStarter_Build : BuildType({
     }
 
     requirements {
-        equals("teamcity.agent.hostname", "ip-10-143-10-127")
+        equals("teamcity.agent.hostname", "ip-10-143-10-80")
     }
 
     steps {
