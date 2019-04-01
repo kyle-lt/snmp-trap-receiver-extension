@@ -15,9 +15,9 @@ dockerRun: ## Run MA in docker
 	## wait until it installs controller and ES
 	sleep 600
 	## bash into the controller controller, change props to enable port 9200
-	docker exec -it controller /bin/bash -c "sed -i s/ad.es.node.http.enabled=false/ad.es.node.http.enabled=true/g events-service/processor/conf/events-service-api-store.properties"
+	docker exec controller /bin/bash -c "sed -i s/ad.es.node.http.enabled=false/ad.es.node.http.enabled=true/g events-service/processor/conf/events-service-api-store.properties"
 	## restart ES to make the changes reflect
-	docker exec -it controller /bin/bash -c "pa/platform-admin/bin/platform-admin.sh submit-job --platform-name AppDynamicsPlatform --service events-service --job restart-cluster"
+	docker exec controller /bin/bash -c "pa/platform-admin/bin/platform-admin.sh submit-job --platform-name AppDynamicsPlatform --service events-service --job restart-cluster"
 	sleep 60
 	## start machine agent
 	docker-compose --file docker-compose.yml up --force-recreate -d --build machine
