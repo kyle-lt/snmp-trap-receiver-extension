@@ -28,7 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import static com.appdynamics.extensions.eventsservice.utils.Constants.*;
@@ -36,21 +39,29 @@ import static com.appdynamics.extensions.eventsservice.utils.Constants.*;
 public class EventsServiceIT {
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(EventsServiceIT.class);
 
-    private CloseableHttpClient httpClient;
+    private CloseableHttpClient httpClient, httpClientEventsServiceApiKeys;
     private HttpHost httpHost;
     private String globalAccountName, eventsApiKey;
     private ExtensionStarterEventsManager eventsManager;
 
+
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         File configFile = new File("src/integration-test/resources/conf/config_ci.yml");
         Map<String, ?> config = YmlReader.readFromFileAsMap(configFile);
         config = ConfigProcessor.process(config);
-        Map<String, ?> eventsServiceParameters = (Map)config.get("eventsServiceParameters");
+        Map<String, Object> eventsServiceParameters = (Map)config.get("eventsServiceParameters");
         String eventsServiceHost = (String) eventsServiceParameters.get("host");
         int eventsServicePort = (Integer) eventsServiceParameters.get("port");
-        globalAccountName = (String) eventsServiceParameters.get("globalAccountName");
-        eventsApiKey = (String) eventsServiceParameters.get("eventsApiKey");
+        Runtime.getRuntime().exec("chmod 755 src/integration-test/resources/conf/apikeys.sh");
+        ProcessBuilder pb = new ProcessBuilder("src/integration-test/resources/conf/apikeys.sh");
+        Process process = pb.start();
+        InputStream is = process.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        globalAccountName = reader.readLine();
+        eventsApiKey=reader.readLine();
+        eventsServiceParameters.put("globalAccountName", globalAccountName);
+        eventsServiceParameters.put("eventsApiKey",eventsApiKey);
         boolean useSSL = (Boolean) eventsServiceParameters.get("useSSL");
         httpClient = Http4ClientBuilder.getBuilder(eventsServiceParameters).build();
         httpHost = new HttpHost(eventsServiceHost, eventsServicePort, useSSL ? "https" : "http");
@@ -93,6 +104,7 @@ public class EventsServiceIT {
     }
 
     private CloseableHttpResponse fetchSchemaFromEventsService() throws Exception {
+
         HttpGet httpGet = new HttpGet(httpHost.toURI() + SCHEMA_PATH + "BTDSchema");
         httpGet.setHeader(ACCOUNT_NAME_HEADER, globalAccountName);
         httpGet.setHeader(API_KEY_HEADER, eventsApiKey);

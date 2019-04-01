@@ -130,8 +130,8 @@
   eventsServiceParameters:
     host: "localhost"
     port: 9080
-    globalAccountName: "${GLOBAL_ACCOUNT_NAME}"
-    eventsApiKey: "${EVENTS_SERVICE_API_KEY}"
+    globalAccountName: ""
+    eventsApiKey: ""
     useSSL: false
 
   enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.

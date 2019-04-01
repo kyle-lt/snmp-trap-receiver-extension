@@ -2,7 +2,7 @@
 docker-clean:
 	@echo "Remove all non running containers"
 	-docker rm `docker ps -q -f status=exited`
-	@echo "Delete all untagged/dangling (<none>) images"
+	@echo "Delete all untagged/dangling images"
 	-docker rmi `docker images -q -f dangling=true`
 
 
@@ -10,11 +10,17 @@ DOCKER_STOP=docker-compose --file docker-compose.yml down
 
 dockerRun: ## Run MA in docker
 	@echo starting container ##################%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&
+	## start controller
 	docker-compose --file docker-compose.yml up --force-recreate -d --build controller
+	## wait until it installs controller and ES
 	sleep 600
-	docker cp controller:/root/paworkspace/events-service/processor/conf/events-service-api-store.properties .
-	$(eval EVENTS_SERVICE_API_KEY=$(shell sh -c "cat events-service-api-store.properties | grep ad.accountmanager.key.controller|cut -d'=' -f2"))
-	APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY='SJ5b2m7d1$$354' APPDYNAMICS_AGENT_ACCOUNT_NAME=$(APPDYNAMICS_AGENT_ACCOUNT_NAME) APPDYNAMICS_CONTROLLER_HOST_NAME=$(APPDYNAMICS_CONTROLLER_HOST_NAME) APPDYNAMICS_CONTROLLER_PORT=$(APPDYNAMICS_CONTROLLER_PORT) APPDYNAMICS_CONTROLLER_SSL_ENABLED=$(APPDYNAMICS_CONTROLLER_SSL_ENABLED) EVENTS_SERVICE_HOST=$(EVENTS_SERVICE_HOST) GLOBAL_ACCOUNT_NAME=$(GLOBAL_ACCOUNT_NAME) EVENTS_SERVICE_API_KEY=$(EVENTS_SERVICE_API_KEY) docker-compose --file docker-compose.yml up --force-recreate -d --build machine
+	## bash into the controller controller, change props to enable port 9200
+	docker exec -it controller /bin/bash -c "sed -i s/ad.es.node.http.enabled=false/ad.es.node.http.enabled=true/g events-service/processor/conf/events-service-api-store.properties"
+	## restart ES to make the changes reflect
+	docker exec -it controller /bin/bash -c "pa/platform-admin/bin/platform-admin.sh submit-job --platform-name AppDynamicsPlatform --service events-service --job restart-cluster"
+	sleep 60
+	## start machine agent
+	docker-compose --file docker-compose.yml up --force-recreate -d --build machine
 	@echo started container ##################%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&
 
 dockerStop:
