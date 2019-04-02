@@ -25,6 +25,7 @@ dockerRun: ## Run MA in docker
 
 dockerStop:
     ## stop and remove all containers
+	sleep 60
 	@echo remove containers and images
 	docker stop machine controller
 	docker rm machine controller
