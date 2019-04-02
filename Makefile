@@ -25,12 +25,12 @@ dockerRun: ## Run MA in docker
 
 dockerStop:
     ## stop and remove all containers
-    @echo removing containers and images
+	@echo remove containers and images
 	docker stop machine controller
 	docker rm machine controller
 	docker rmi dtr.corp.appdynamics.com/appdynamics/machine-agent:latest
 	docker rmi dtr.corp.appdynamics.com/appdynamics/enterprise-console:latest
-	@echo remove unused networks
+	@echo remove containers and images
 	## always remove all unused networks, will cause a leak otherwise
 	docker network prune
 
