@@ -23,6 +23,12 @@ object ExtensionStarter_IntegrationTests : BuildType({
     }
 
     steps {
+
+        exec {
+            path = "make"
+            arguments = "wait"
+        }
+
         maven {
             goals = "clean install"
             mavenVersion = defaultProvidedVersion()

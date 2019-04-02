@@ -31,10 +31,16 @@ dockerStop:
 	docker rmi dtr.corp.appdynamics.com/appdynamics/machine-agent:latest
 	docker rmi dtr.corp.appdynamics.com/appdynamics/enterprise-console:latest
 	@echo remove containers and images
-	## always remove all unused networks, will cause a leak otherwise
-	docker network prune
+	## always remove all unused networks, will cause a leak otherwise. use --force when running on TC
+	docker network prune --force
 
 sleep:
 	@echo Waiting for 5 minutes to read the metrics
 	sleep 300
+	@echo Wait finished
+
+wait:
+	@echo Waiting for 1 minute before running Integration Tests
+	## Running Integration Tests without the 1 min sleep may return null values
+	sleep 60
 	@echo Wait finished
