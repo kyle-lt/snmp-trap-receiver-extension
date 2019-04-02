@@ -24,8 +24,8 @@ object ExtensionStarter_Stop : BuildType({
 
     steps {
         exec {
-            path = "make"
-            arguments = "dockerStop"
+            //path = "make"
+            //arguments = "dockerStop"
         }
     }
 
