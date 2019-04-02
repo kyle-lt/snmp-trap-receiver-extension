@@ -1,4 +1,4 @@
-FROM dtr.corp.appdynamics.com/appdynamics/machine-agent AS MA
+FROM dtr.corp.appdynamics.com/appdynamics/machine-agent:latest AS MA
 RUN pwd
 RUN apt-get update && \
     apt-get install -y openjdk-8-jdk && \
