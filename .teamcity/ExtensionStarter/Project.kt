@@ -22,17 +22,6 @@ object Project : Project({
     buildType(ExtensionStarter_IntegrationTests)
     buildType(ExtensionStarter_Build)
 
-    params {
-        //param("env.APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY", "SJ5b2m7d1$354")
-       // param("env.APPDYNAMICS_CONTROLLER_PORT", "8080")
-        //param("env.APPDYNAMICS_CONTROLLER_HOST_NAME", "172.28.1.1")
-        //param("env.APPDYNAMICS_AGENT_ACCOUNT_NAME", "customer1")
-        //param("env.APPDYNAMICS_CONTROLLER_SSL_ENABLED", "false")
-        //aram("env.GLOBAL_ACCOUNT_NAME", "customer1_70a0b3c7-3f29-4b30-afea-f6e173520cd0")
-        //param("env.EVENTS_SERVICE_HOST", "ec2-34-221-206-45.us-west-2.compute.amazonaws.com")
-        //password("env.EVENTS_SERVICE_API_KEY", "zxx9cf37a23c0e67c886aa07f398cf34e391044ba0fc0a044601f0ae7ee4b51ba06ef5650b72c2525ed")
-    }
-
     features {
         versionedSettings {
             id = "PROJECT_EXT_16"
@@ -46,5 +35,7 @@ object Project : Project({
     }
 
     buildTypesOrder = arrayListOf(ExtensionStarter_Build,
-            ExtensionStarter_Setup)
+            ExtensionStarter_Setup,
+            ExtensionStarter_IntegrationTests,
+            ExtensionStarter_Stop)
 })
