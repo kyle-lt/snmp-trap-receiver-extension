@@ -35,7 +35,15 @@ object ExtensionStarter_Stop : BuildType({
     }
 
     dependencies {
-        snapshot(ExtensionStarter_Setup) {
+        dependency(ExtensionStarter_Setup) {
+            snapshot{
+
+            }
+        }
+        dependency(ExtensionStarter_IntegrationTests) {
+            snapshot{
+
+            }
         }
     }
 })
