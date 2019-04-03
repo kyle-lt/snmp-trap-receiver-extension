@@ -23,10 +23,10 @@ object ExtensionStarter_Stop : BuildType({
     }
 
     steps {
-        //exec {
-            //path = "make"
-            //arguments = "dockerStop"
-        //}
+        exec {
+            path = "make"
+            arguments = "dockerStop"
+        }
     }
 
     triggers {
