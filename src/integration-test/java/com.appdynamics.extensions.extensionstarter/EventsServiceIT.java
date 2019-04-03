@@ -100,6 +100,7 @@ public class EventsServiceIT {
         eventsManager.createSchema();
         eventsManager.updateSchema();
         eventsManager.publishEvents();
+        Thread.sleep(5000);
         Assert.assertTrue(!eventsManager.queryEvents().equals(""));
     }
 
