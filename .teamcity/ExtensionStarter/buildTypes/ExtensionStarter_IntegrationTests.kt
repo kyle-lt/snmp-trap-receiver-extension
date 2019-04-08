@@ -19,7 +19,7 @@ object ExtensionStarter_IntegrationTests : BuildType({
     }
 
     requirements {
-        equals("teamcity.agent.hostname", "ip-10-143-10-80")
+        matches("env.AGENT_OS", "Windows")
     }
 
     steps {
