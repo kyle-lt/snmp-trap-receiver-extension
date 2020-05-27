@@ -6,7 +6,7 @@
  *
  */
 
-package com.appdynamics.extensions.extensionstarter.util;
+package com.appdynamics.extensions.snmptrapreceiverextension.util;
 
 /**
  * A utility class for storing defaults that are used throughout the project

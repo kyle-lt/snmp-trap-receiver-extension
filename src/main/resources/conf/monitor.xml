@@ -7,25 +7,25 @@
   -->
 
 <monitor>
-    <name>ExtensionStarter</name>
+    <name>SnmpTrapReceiver</name>
     <type>managed</type>
-    <description>Starter template to gather data from an http source</description>
+    <description>Receive SNMP Traps and sends custom events</description>
     <monitor-configuration>
     </monitor-configuration>
     <monitor-run-task>
-        <execution-style>periodic</execution-style>
+        <execution-style>continuous</execution-style>
         <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
-        <name>ExtensionStarter Monitor Run Task</name>
-        <display-name>ExtensionStarter Task</display-name>
-        <description>ExtensionStarter Task</description>
+        <name>SnmpTrapReceiver Monitor Run Task</name>
+        <display-name>SnmpTrapReceiver Monitor Task</display-name>
+        <description>SnmpTrapReceiver Monitor Task</description>
         <type>java</type>
         <execution-timeout-in-secs>120</execution-timeout-in-secs>
         <task-arguments>
-            <argument name="config-file" is-required="true" default-value="monitors/ExtensionStarterCiMonitor/config.yml" />
+            <argument name="config-file" is-required="true" default-value="monitors/SnmpTrapReceiver/config.yml" />
         </task-arguments>
         <java-task>
-            <classpath>extension-starter-ci.jar</classpath>
-            <impl-class>com.appdynamics.extensions.extensionstarter.ExtStarterMonitor</impl-class>
+            <classpath>snmp-trap-receiver-extension.jar</classpath>
+            <impl-class>com.appdynamics.extensions.snmptrapreceiverextension.SnmpTrapReceiver</impl-class>
         </java-task>
     </monitor-run-task>
 </monitor>

@@ -1,22 +1,16 @@
-FROM dtr.corp.appdynamics.com/appdynamics/machine-agent:latest AS MA
-RUN pwd
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
+FROM appdynamics/machine-agent-analytics:latest AS MA
 
-# Fix certificate issues
-RUN apt-get update && \
-    apt-get install ca-certificates-java && \
-    apt-get clean && \
-    update-ca-certificates -f;
+RUN apt-get update && \ 
+    apt-get install -y unzip && \
+    apt-get install -y curl && \
+    apt-get install -y vim
 
-# Setup JAVA_HOME
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
+ADD target/Snmp-Trap-Receiver-Extension-*.zip /opt/appdynamics/monitors
+RUN unzip -q "/opt/appdynamics/monitors/Snmp-Trap-Receiver-Extension-*.zip" -d /opt/appdynamics/monitors
+RUN find /opt/appdynamics/monitors/ -name '*.zip' -delete
 
-ADD target/Extension-Starter-Ci-*.zip /opt/appdynamics/machine-agent/monitors
-RUN unzip -q "/opt/appdynamics/machine-agent/monitors/Extension-Starter-Ci-*.zip" -d /opt/appdynamics/machine-agent/monitors
-COPY /src/integration-test/resources/conf/config_ci.yml /opt/appdynamics/machine-agent/monitors/ExtensionStarterCiMonitor/config.yml
-RUN find /opt/appdynamics/machine-agent/monitors/ -name '*.zip' -delete
-CMD ["sh", "-c", "java ${MACHINE_AGENT_PROPERTIES} -jar /opt/appdynamics/machine-agent/machineagent.jar"]
+# Turn on DEBUG LOGGING
+RUN sed -i "s|<Logger name=\"com.singularity\" level=\"info\" additivity=\"false\">|<Logger name=\"com.singularity\" level=\"debug\" additivity=\"false\">|" /opt/appdynamics/conf/logging/log4j.xml
+RUN sed -i "s|<Logger name=\"com.appdynamics\" level=\"info\" additivity=\"false\">|<Logger name=\"com.appdynamics\" level=\"debug\" additivity=\"false\">|" /opt/appdynamics/conf/logging/log4j.xml
+
+CMD ["sh", "-c", "java ${MACHINE_AGENT_PROPERTIES} -jar /opt/appdynamics/machineagent.jar"]

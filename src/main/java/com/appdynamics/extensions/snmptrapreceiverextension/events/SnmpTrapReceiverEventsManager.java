@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.extensionstarter.events;
+package com.appdynamics.extensions.snmptrapreceiverextension.events;
 
 import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
 import com.google.common.collect.Lists;
@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.List;
 
-public class ExtensionStarterEventsManager {
+public class SnmpTrapReceiverEventsManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExtensionStarterEventsManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(SnmpTrapReceiverEventsManager.class);
     private EventsServiceDataManager eventsServiceDataManager;
 
-    public ExtensionStarterEventsManager(EventsServiceDataManager eventsServiceDataManager) {
+    public SnmpTrapReceiverEventsManager(EventsServiceDataManager eventsServiceDataManager) {
         this.eventsServiceDataManager = eventsServiceDataManager;
     }
 

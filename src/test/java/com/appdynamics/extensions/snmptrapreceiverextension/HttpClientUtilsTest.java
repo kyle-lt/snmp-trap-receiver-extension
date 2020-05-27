@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 import com.appdynamics.extensions.http.HttpClientUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;

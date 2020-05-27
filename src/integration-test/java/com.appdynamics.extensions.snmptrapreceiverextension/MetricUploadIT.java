@@ -6,7 +6,7 @@
  *
  */
 
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 /**
  * Created by Aditya Jagtiani on 12/15/17.
@@ -19,9 +19,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.appdynamics.extensions.extensionstarter.Constants.DEFAULT_METRIC_UPLOAD_ENDPOINT;
-import static com.appdynamics.extensions.extensionstarter.Constants.METRIC_WITH_PROPS_ENDPOINT;
-import static com.appdynamics.extensions.extensionstarter.IntegrationTestUtils.initializeMetricAPIService;
+import static com.appdynamics.extensions.snmptrapreceiverextension.Constants.DEFAULT_METRIC_UPLOAD_ENDPOINT;
+import static com.appdynamics.extensions.snmptrapreceiverextension.Constants.METRIC_WITH_PROPS_ENDPOINT;
+import static com.appdynamics.extensions.snmptrapreceiverextension.IntegrationTestUtils.initializeMetricAPIService;
 
 public class MetricUploadIT {
 

@@ -6,7 +6,7 @@
  *
  */
 
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 /**
  * Created by Aditya Jagtiani on 12/15/17.

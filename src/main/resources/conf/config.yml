@@ -1,33 +1,26 @@
 ### ANY CHANGES TO THIS FILE DOES NOT REQUIRE A RESTART ###
 
-#This will create this metric in all the tiers, under this path
-#metricPrefix: Custom Metrics|Starter
+#Use this format if using SIM (Server Visibility enabled) Machine Agent
+metricPrefix: "Custom Metrics|SNMP Trap Receiver"
 
+#Use this format if using plain Machine Agent
 #This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
 #To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
-metricPrefix: "Custom Metrics|Extension Starter CI"
+#metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
 
 servers:
-- host: https://www.appdynamics.com/
-  name: AppDynamics
-  username: user
-  password: welcome
-
-- host: https://www.yahoo.com/
-  name: Yahoo
-  username: user
-  passwordEncrypted: C043Fag+LKEZM0AQTWPy2g==
+- host: http://www.localhost.com/
 
 # number of concurrent tasks
 numberOfThreads: 1
-encryptionKey: welcome
+#encryptionKey: welcome
 
-connection:
-  socketTimeout: 2000
-  connectTimeout: 2000
-  sslCertCheckEnabled: false
-  sslVerifyHostname: false
-  sslProtocols: ["TLSv1"]
+#connection:
+#  socketTimeout: 2000
+#  connectTimeout: 2000
+#  sslCertCheckEnabled: false
+#  sslVerifyHostname: false
+#  sslProtocols: ["TLSv1"]
 
 #proxy:
 #  uri: http://localhost:9090
@@ -52,22 +45,22 @@ connection:
 #   delta
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-metrics:
-- IncomingRequests:
-    alias:
-    aggregationType: "AVERAGE"
-    timeRollUpType: "AVERAGE"
-    clusterRollUpType: "INDIVIDUAL"
-    multiplier: ""
-    convert:
-    delta:
-- OutgoingRequests:
-    alias: "Outgoing Requests"
-    aggregationType: "AVERAGE"
-    timeRollUpType: "AVERAGE"
-    clusterRollUpType: "INDIVIDUAL"
-    multiplier: "5"
-    convert:
-    delta:
+#metrics:
+#- IncomingRequests:
+#    alias:
+#    aggregationType: "AVERAGE"
+#    timeRollUpType: "AVERAGE"
+#    clusterRollUpType: "INDIVIDUAL"
+#    multiplier: ""
+#    convert:
+#    delta:
+#- OutgoingRequests:
+#    alias: "Outgoing Requests"
+#    aggregationType: "AVERAGE"
+#    timeRollUpType: "AVERAGE"
+#    clusterRollUpType: "INDIVIDUAL"
+#    multiplier: "5"
+#    convert:
+#    delta:
 
 enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.

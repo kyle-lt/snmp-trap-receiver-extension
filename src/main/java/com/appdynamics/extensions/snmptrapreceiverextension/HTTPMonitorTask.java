@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 import com.appdynamics.extensions.AMonitorTaskRunnable;
 import com.appdynamics.extensions.MetricWriteHelper;
@@ -10,20 +10,20 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.DEFAULT_METRIC_SEPARATOR;
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.METRICS;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static com.appdynamics.extensions.extensionstarter.util.Constants.DEFAULT_METRIC_SEPARATOR;
-import static com.appdynamics.extensions.extensionstarter.util.Constants.METRICS;
 
 /**
  * @author Satish Muddam
  */
 public class HTTPMonitorTask implements AMonitorTaskRunnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExtStarterMonitorTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(SnmpTrapReceiverTask.class);
     private MonitorContextConfiguration configuration;
     private MetricWriteHelper metricWriteHelper;
     private Map<String, String> server;

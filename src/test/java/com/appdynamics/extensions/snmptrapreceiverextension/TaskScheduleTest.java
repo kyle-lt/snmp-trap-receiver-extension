@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 import com.appdynamics.extensions.ABaseMonitor;
 import com.appdynamics.extensions.TasksExecutionServiceProvider;

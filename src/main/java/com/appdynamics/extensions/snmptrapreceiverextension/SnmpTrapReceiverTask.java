@@ -6,7 +6,7 @@
  *
  */
 
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 /**
  * Created by bhuvnesh.kumar on 12/15/17.
@@ -20,14 +20,14 @@ import com.appdynamics.extensions.util.AssertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.DEFAULT_METRIC_SEPARATOR;
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.METRICS;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.appdynamics.extensions.extensionstarter.util.Constants.DEFAULT_METRIC_SEPARATOR;
-import static com.appdynamics.extensions.extensionstarter.util.Constants.METRICS;
 
 /**
  * The ExtensionMonitorTask(namely "task") is an instance of {@link Runnable} needs to implement the interface
@@ -35,21 +35,21 @@ import static com.appdynamics.extensions.extensionstarter.util.Constants.METRICS
  *   {@code onTaskComplete()} method which will be called once the {@code run()} method execution is done.
  *
  */
-public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
+public class SnmpTrapReceiverTask implements AMonitorTaskRunnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExtStarterMonitorTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(SnmpTrapReceiverTask.class);
     private MonitorContextConfiguration configuration;
     private MetricWriteHelper metricWriteHelper;
-    private Map<String, String> server;
+    //private Map<String, String> server;
     private String metricPrefix;
     private List<Map<String, ?>> metricList;
 
 
-    public ExtStarterMonitorTask(MonitorContextConfiguration configuration, MetricWriteHelper metricWriteHelper,
+    public SnmpTrapReceiverTask(MonitorContextConfiguration configuration, MetricWriteHelper metricWriteHelper,
                                  Map<String, String> server) {
         this.configuration = configuration;
         this.metricWriteHelper = metricWriteHelper;
-        this.server = server;
+        //this.server = server;
         this.metricPrefix = configuration.getMetricPrefix();
         this.metricList = (List<Map<String, ?>>) configuration.getConfigYml().get(METRICS);
         AssertUtils.assertNotNull(this.metricList, "The 'metrics' section in config.yml is either null or empty");
@@ -70,7 +70,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
                 + DEFAULT_METRIC_SEPARATOR + " Heart Beat");
         metrics.add(metric);
         metricWriteHelper.transformAndPrintMetrics(metrics);
-        logger.info("Completed task for Server: {}", server.get("name"));
+        //logger.info("Completed task for Server: {}", server.get("name"));
     }
 
     /**
@@ -78,7 +78,8 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
      */
     @Override
     public void run() {
-        logger.info("Created task and started working for Server: {}", server.get("name"));
+        //logger.info("Created task and started working for Server: {}", server.get("name"));
+    	
         /*
          * It is in this function that you can get your metrics and process them and send them to the controller.
          * You can look at the various extensions available on the community site and build your extension based on them.
@@ -106,11 +107,12 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
                 buildMetric(metrics, metricName, metricProperties);
             }
         }
-        buildClusterMetrics(metrics);
-        generateMetricsForCharReplacement(metrics);
+        //buildClusterMetrics(metrics);
+        //generateMetricsForCharReplacement(metrics);
         metricWriteHelper.transformAndPrintMetrics(metrics);
     }
 
+    /*
     private void buildClusterMetrics(List<Metric> metrics) {
         String baseMetricPath = metricPrefix + DEFAULT_METRIC_SEPARATOR + "Master" + DEFAULT_METRIC_SEPARATOR;
         Metric metric = new Metric("Requests", String.valueOf(10), baseMetricPath + "Node1" +
@@ -120,6 +122,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
                 DEFAULT_METRIC_SEPARATOR + "Requests" );
         metrics.add(metric);
     }
+    */
 
     /**
      * Creates a {@code Metric} object and add it to the {@code List<Metrics>}
@@ -136,6 +139,7 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         metrics.add(metric);
     }
 
+    /*
     private void generateMetricsForCharReplacement(List<Metric> metrics) {
         Metric metric1 = new Metric("Pipe|", "10", new HashMap<String, Object>(),
                 "Custom Metrics|Extension Starter CI|Character Replacement|","Pipe|" );
@@ -156,4 +160,5 @@ public class ExtStarterMonitorTask implements AMonitorTaskRunnable {
         metrics.add(metric5);
         metrics.add(metric6);
     }
+    */
 }

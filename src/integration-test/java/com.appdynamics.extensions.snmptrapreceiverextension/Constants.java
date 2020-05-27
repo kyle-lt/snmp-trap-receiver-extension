@@ -1,4 +1,5 @@
-package com.appdynamics.extensions.extensionstarter;
+
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 public class Constants {
 

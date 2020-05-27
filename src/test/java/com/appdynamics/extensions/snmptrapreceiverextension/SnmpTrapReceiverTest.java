@@ -6,7 +6,7 @@
  *
  */
 
-package com.appdynamics.extensions.extensionstarter;
+package com.appdynamics.extensions.snmptrapreceiverextension;
 
 import com.appdynamics.extensions.AMonitorJob;
 import com.appdynamics.extensions.MetricWriteHelper;
@@ -18,15 +18,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.DEFAULT_METRIC_PREFIX;
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.MONITOR_NAME;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.appdynamics.extensions.extensionstarter.util.Constants.DEFAULT_METRIC_PREFIX;
-import static com.appdynamics.extensions.extensionstarter.util.Constants.MONITOR_NAME;
-
 @RunWith(MockitoJUnitRunner.class)
-public class ExtStarterTest {
+public class SnmpTrapReceiverTest {
 
     @Mock
     private MetricWriteHelper metricWriteHelper;
