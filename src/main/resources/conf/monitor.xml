@@ -14,12 +14,11 @@
     </monitor-configuration>
     <monitor-run-task>
         <execution-style>continuous</execution-style>
-        <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
         <name>SnmpTrapReceiver Monitor Run Task</name>
         <display-name>SnmpTrapReceiver Monitor Task</display-name>
         <description>SnmpTrapReceiver Monitor Task</description>
         <type>java</type>
-        <execution-timeout-in-secs>120</execution-timeout-in-secs>
+        <execution-timeout-in-secs>60</execution-timeout-in-secs>
         <task-arguments>
             <argument name="config-file" is-required="true" default-value="monitors/SnmpTrapReceiver/config.yml" />
         </task-arguments>

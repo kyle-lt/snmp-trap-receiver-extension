@@ -11,7 +11,7 @@ package com.appdynamics.extensions.snmptrapreceiverextension.util;
 /**
  * A utility class for storing defaults that are used throughout the project
  */
-public class Constants {
+public class ConstantsTest {
     public static final String DEFAULT_METRIC_PREFIX = "Custom Metrics|ExtensionStarter";
     public static final String DEFAULT_METRIC_SEPARATOR = "|";
     public static final String MONITOR_NAME = "Extension Starter";

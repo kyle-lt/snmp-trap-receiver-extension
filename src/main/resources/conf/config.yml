@@ -10,6 +10,7 @@ metricPrefix: "Custom Metrics|SNMP Trap Receiver"
 
 servers:
 - host: http://www.localhost.com/
+  name: localhost
 
 # number of concurrent tasks
 numberOfThreads: 1
@@ -45,15 +46,15 @@ numberOfThreads: 1
 #   delta
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#metrics:
-#- IncomingRequests:
-#    alias:
-#    aggregationType: "AVERAGE"
-#    timeRollUpType: "AVERAGE"
-#    clusterRollUpType: "INDIVIDUAL"
-#    multiplier: ""
-#    convert:
-#    delta:
+metrics:
+- IncomingRequests:
+    alias: "Incoming Requests"
+    aggregationType: "AVERAGE"
+    timeRollUpType: "AVERAGE"
+    clusterRollUpType: "INDIVIDUAL"
+    multiplier: ""
+    convert:
+    delta:
 #- OutgoingRequests:
 #    alias: "Outgoing Requests"
 #    aggregationType: "AVERAGE"

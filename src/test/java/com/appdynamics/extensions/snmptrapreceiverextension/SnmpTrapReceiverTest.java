@@ -18,8 +18,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.DEFAULT_METRIC_PREFIX;
-import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.MONITOR_NAME;
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.ConstantsTest.DEFAULT_METRIC_PREFIX;
+import static com.appdynamics.extensions.snmptrapreceiverextension.util.ConstantsTest.MONITOR_NAME;
 
 import java.io.File;
 import java.util.HashMap;

@@ -18,14 +18,18 @@ services:
       - APPDYNAMICS_CONTROLLER_SSL_ENABLED=false
       - APPDYNAMICS_CONTROLLER_PORT=8090
         #      - EVENTS_SERVICE_HOST=controller
-      - MACHINE_AGENT_PROPERTIES=-Dappdynamics.sim.enabled=true -Dappdynamics.docker.enabled=false -Dmetric.http.listener=true
+      - MACHINE_AGENT_PROPERTIES=-Dappdynamics.sim.enabled=true -Dappdynamics.docker.enabled=false -Dmetric.http.listener=true -Dmetric.http.listener.host=0.0.0.0
+      - APPDYNAMICS_AGENT_UNIQUE_HOST_ID=SNMP_TRAP_TEST
       - HOSTNAME=SNMP_TRAP_TEST
     ports:
-      - 8293:8293
+      - "8293:8293"
+      #- "16200:16200"
+      - "16200:16200/udp"
+      - "16201:16201/udp"
 
     build:
       context: .
-      dockerfile: Dockerfile_MA
+      dockerfile: Dockerfile
 
 
       #volumes:
