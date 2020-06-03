@@ -14,5 +14,5 @@ RUN find /opt/appdynamics/monitors/ -name '*.zip' -delete
 # Turn on DEBUG LOGGING
 RUN sed -i "s|<Logger name=\"com.singularity\" level=\"info\" additivity=\"false\">|<Logger name=\"com.singularity\" level=\"debug\" additivity=\"false\">|" /opt/appdynamics/conf/logging/log4j.xml
 RUN sed -i "s|<Logger name=\"com.appdynamics\" level=\"info\" additivity=\"false\">|<Logger name=\"com.appdynamics\" level=\"debug\" additivity=\"false\">|" /opt/appdynamics/conf/logging/log4j.xml
-EXPOSE 8293
+
 CMD ["sh", "-c", "java ${MACHINE_AGENT_PROPERTIES} -jar /opt/appdynamics/machineagent.jar"]

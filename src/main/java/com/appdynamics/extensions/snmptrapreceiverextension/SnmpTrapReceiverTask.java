@@ -9,7 +9,7 @@
 package com.appdynamics.extensions.snmptrapreceiverextension;
 
 /**
- * Created by bhuvnesh.kumar on 12/15/17.
+ * Created by Kyle Tully on 05/26/2020
  */
 
 import com.appdynamics.extensions.AMonitorTaskRunnable;
@@ -17,24 +17,31 @@ import com.appdynamics.extensions.MetricWriteHelper;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.metrics.Metric;
 import com.appdynamics.extensions.util.AssertUtils;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.DEFAULT_METRIC_SEPARATOR;
 import static com.appdynamics.extensions.snmptrapreceiverextension.util.Constants.METRICS;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 
 //[kjt] SNMP Trap Receiver Imports
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Iterator;
-import java.util.Vector;
-import java.util.concurrent.CountDownLatch;
 
 import org.snmp4j.CommandResponder;
 import org.snmp4j.CommandResponderEvent;
@@ -47,12 +54,12 @@ import org.snmp4j.mp.MPv1;
 import org.snmp4j.mp.MPv2c;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.security.AuthMD5;
-import org.snmp4j.security.AuthSHA;
+//import org.snmp4j.security.AuthSHA;
 import org.snmp4j.security.Priv3DES;
 import org.snmp4j.security.PrivAES128;
 import org.snmp4j.security.PrivAES192;
 import org.snmp4j.security.PrivAES256;
-import org.snmp4j.security.PrivDES;
+//import org.snmp4j.security.PrivDES;
 import org.snmp4j.security.SecurityModels;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
@@ -67,13 +74,16 @@ import org.snmp4j.transport.DefaultTcpTransportMapping;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 import org.snmp4j.util.MultiThreadedMessageDispatcher;
 import org.snmp4j.util.ThreadPool;
+import org.yaml.snakeyaml.emitter.EmitterException;
 
 /**
- * The ExtensionMonitorTask(namely "task") is an instance of {@link Runnable}
- * needs to implement the interface {@code AMonitorTaskRunnable} instead of
- * {@code Runnable}. This would make the need for overriding
- * {@code onTaskComplete()} method which will be called once the {@code run()}
- * method execution is done.
+ * The SnmpTrapReceiverTask is an instance of {@link Runnable} and needs to
+ * implement the interface {@link AMonitorTaskRunnable} instead of
+ * {@code Runnable}. This requires overriding the {@code onTaskComplete()}
+ * method which will be called once the {@code run()} method execution is done.
+ * 
+ * This particular class also implements {@link CommandResponder} in order to
+ * receive SNMP Traps.
  *
  */
 public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandResponder {
@@ -85,13 +95,25 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private String metricPrefix;
 	private List<Map<String, ?>> metricList;
 
+	// [kjt] Extension Connection Variables
+	private String machineAgentHost;
+	private String machineAgentPort;
+
+	private String snmpListenAddress;
+	private String snmpUsername;
+	private String snmpAuthPassPhrase;
+	private String snmpPrivacyPassPhrase;
+
+	private static final String EVENT_PUBLISHING_URL = "http://localhost:8293/api/v1/events";
+	// private static final String MA_HTTP_URI = "/api/v1/events";
+
 	// [kjt] SNMP Receiver Member Variables
 	private MultiThreadedMessageDispatcher dispatcher;
 	private Snmp snmp = null;
 	private Address listenAddress;
 	private ThreadPool threadPool;
-	//private int n = 0;
-	//private long start = -1;
+	private int incomingTraps;
+	private int outgoingEvents;
 
 	// [kjt] Testing Variable Sets
 	private String test_listenAddress = "udp:0.0.0.0/16200";
@@ -102,9 +124,8 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	// [kjt] SNMP Receiver Methods
 
 	private void snmpRun() {
-		
-		logger.debug("##### snmpRun method called #####");
-		
+
+		logger.debug("***** Calling snmpRun *****");
 		try {
 			init();
 			snmp.addCommandResponder(this);
@@ -116,13 +137,13 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 	private void init() throws UnknownHostException, IOException {
 
-		logger.debug("##### init method called #####");
+		logger.debug("***** Calling init *****");
 
 		threadPool = ThreadPool.create("Trap", 10);
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
 
 		// TRANSPORT
-		listenAddress = GenericAddress.parse(System.getProperty("snmp4j.listenAddress", test_listenAddress));
+		listenAddress = GenericAddress.parse(System.getProperty("snmp4j.listenAddress", this.snmpListenAddress));
 
 		TransportMapping<?> transport;
 		if (listenAddress instanceof UdpAddress) {
@@ -148,81 +169,206 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		snmp.getMessageDispatcher().addMessageProcessingModel(new MPv2c());
 		snmp.getMessageDispatcher().addMessageProcessingModel(new MPv3(usm));
 
-		String username = test_username; // SET THIS
-		String authpassphrase = test_authpassphrase; // SET THIS
-		String privacypassphrase = test_privacypassphrase; // SET THIS
+		String username = this.snmpUsername;
+		String authpassphrase = this.snmpAuthPassPhrase;
+		String privacypassphrase = this.snmpPrivacyPassPhrase;
 
-		snmp.getUSM().addUser( // SET THE SECURITY PROTOCOLS HERE
-				new OctetString(username), new UsmUser(new OctetString(username), AuthMD5.ID,
-						new OctetString(authpassphrase), PrivAES128.ID, new OctetString(privacypassphrase)));
+		// What else do I need to configure in order to cover all authentication
+		// methods? TODO
+
+		snmp.getUSM().addUser(new OctetString(username), new UsmUser(new OctetString(username), AuthMD5.ID,
+				new OctetString(authpassphrase), PrivAES128.ID, new OctetString(privacypassphrase)));
 
 		snmp.listen();
 	}
 
-	public void processPdu(CommandResponderEvent crEvent) {
+	/**
+	 * This method processes the protocol data unit (PDU) which contains the trap
+	 * information that will be sent to AppD as a Custom Event.
+	 */
+	public synchronized void processPdu(CommandResponderEvent e) {
 
-		logger.debug("##### processPdu method called #####");
+		PDU pdu = e.getPDU();
+		logger.debug("pdu.toString(): " + pdu.toString());
 
-		PDU pdu = crEvent.getPDU();
-		if (pdu.getType() == PDU.V1TRAP) {
+		// Increment Trap counter
+		incomingTraps++;
 
-			PDUv1 pduV1 = (PDUv1) pdu;
-			logger.debug("===== NEW SNMP 1 TRAP RECEIVED ====");
-			logger.debug("agentAddr " + pduV1.getAgentAddress().toString());
-			logger.debug("enterprise " + pduV1.getEnterprise().toString());
-			logger.debug("timeStamp" + String.valueOf(pduV1.getTimestamp()));
-			logger.debug("genericTrap" + String.valueOf(pduV1.getGenericTrap()));
-			logger.debug("specificTrap " + String.valueOf(pduV1.getSpecificTrap()));
-			logger.debug("snmpVersion " + String.valueOf(PDU.V1TRAP));
-			logger.debug("communityString " + new String(crEvent.getSecurityName()));
-
-		} else if (pdu.getType() == PDU.TRAP) {
-
-			logger.debug("===== NEW SNMP 2/3 TRAP RECEIVED ====");
-			logger.debug("errorStatus " + String.valueOf(pdu.getErrorStatus()));
-			logger.debug("errorIndex " + String.valueOf(pdu.getErrorIndex()));
-			logger.debug("requestID " + String.valueOf(pdu.getRequestID()));
-			logger.debug("snmpVersion " + String.valueOf(PDU.TRAP));
-			logger.debug("communityString " + new String(crEvent.getSecurityName()));
-
-		}
-
-		Vector<? extends VariableBinding> varBinds = pdu.getVariableBindings();
+		// Extract Variable Bindings
+		List<? extends VariableBinding> varBinds = pdu.getVariableBindings();
 		if (varBinds != null && !varBinds.isEmpty()) {
-			Iterator<? extends VariableBinding> varIter = varBinds.iterator();
 
-			StringBuilder resultset = new StringBuilder();
-			resultset.append("-----");
+			Iterator<? extends VariableBinding> varIter = varBinds.iterator();
+			JsonArray jsonArr = null;
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+			JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+			JsonObjectBuilder jsonDetailsObjectBuilder = Json.createObjectBuilder();
+
+			jsonObjectBuilder.add("eventSeverity", "INFO").add("type", "SNMP Trap").add("summaryMessage", "SNMP Trap")
+					.add("properties", Json.createObjectBuilder());
+
+			if (pdu.getType() == PDU.V1TRAP) {
+
+				PDUv1 pduV1 = (PDUv1) pdu;
+
+				jsonDetailsObjectBuilder.add("Type", String.valueOf(pduV1.getType()))
+						.add("AgentAddress", pduV1.getAgentAddress().toString())
+						.add("Enterprise", pduV1.getEnterprise().toString())
+						.add("TimeStamp", String.valueOf(pduV1.getTimestamp()))
+						.add("GenericTrap", String.valueOf(pduV1.getGenericTrap()))
+						.add("SpecificTrap", String.valueOf(pduV1.getSpecificTrap()))
+						.add("SnmpVersion", String.valueOf(PDU.V1TRAP)).add("SnmpVersion", String.valueOf(PDU.V1TRAP))
+						.add("CommunityString", new String(e.getSecurityName()));
+
+				logger.debug("SNMP v1 TRAP RECEIVED");
+				logger.debug("Type " + String.valueOf(pduV1.getType()));
+				logger.debug("AgentAddress " + pduV1.getAgentAddress().toString());
+				logger.debug("Enterprise " + pduV1.getEnterprise().toString());
+				logger.debug("TimeStamp" + String.valueOf(pduV1.getTimestamp()));
+				logger.debug("GenericTrap" + String.valueOf(pduV1.getGenericTrap()));
+				logger.debug("SpecificTrap " + String.valueOf(pduV1.getSpecificTrap()));
+				logger.debug("SnmpVersion " + String.valueOf(PDU.V1TRAP));
+				logger.debug("CommunityString " + new String(e.getSecurityName()));
+
+			} else if (pdu.getType() == PDU.TRAP) {
+
+				jsonDetailsObjectBuilder.add("ErrorStatus", String.valueOf(pdu.getErrorStatus()))
+						.add("ErrorStatusText", String.valueOf(pdu.getErrorStatusText()))
+						.add("ErrorIndex", String.valueOf(pdu.getErrorIndex()))
+						.add("RequestID", String.valueOf(pdu.getRequestID()))
+						.add("MaxRepetitions", String.valueOf(pdu.getMaxRepetitions()))
+						.add("NonRepeaters", String.valueOf(pdu.getNonRepeaters()))
+						.add("SnmpVersion", String.valueOf(PDU.V1TRAP))
+						.add("CommunityString", new String(e.getSecurityName()));
+
+				logger.debug("SNMP v2/v3 TRAP RECEIVED");
+				logger.debug("ErrorStatus " + String.valueOf(pdu.getErrorStatus()));
+				logger.debug("ErrorStatusText " + String.valueOf(pdu.getErrorStatusText()));
+				logger.debug("ErrorIndex " + String.valueOf(pdu.getErrorIndex()));
+				logger.debug("RequestID " + String.valueOf(pdu.getRequestID()));
+				logger.debug("MaxRepetitions " + String.valueOf(pdu.getMaxRepetitions()));
+				logger.debug("NonRepeaters " + String.valueOf(pdu.getNonRepeaters()));
+				logger.debug("SnmpVersion " + String.valueOf(PDU.TRAP));
+				logger.debug("CommunityString " + new String(e.getSecurityName()));
+
+			}
+
+			int counter = 0;
 			while (varIter.hasNext()) {
 				VariableBinding vb = varIter.next();
 
-				String syntaxstr = vb.getVariable().getSyntaxString();
-				int syntax = vb.getVariable().getSyntax();
-				logger.debug("OID: " + vb.getOid());
-				logger.debug("Value: " + vb.getVariable());
-				logger.debug("syntaxstring: " + syntaxstr);
-				logger.debug("syntax: " + syntax);
+				jsonDetailsObjectBuilder.add(Integer.toString(counter) + "_OID", vb.getOid().toString())
+						.add(Integer.toString(counter) + "_Value", vb.getVariable().toString())
+						.add(Integer.toString(counter) + "_SyntaxString_", vb.getVariable().getSyntaxString())
+						.add(Integer.toString(counter) + "_Syntax_", Integer.toString(vb.getVariable().getSyntax()));
+
+				logger.debug(Integer.toString(counter) + "_OID: " + vb.getOid());
+				logger.debug(Integer.toString(counter) + "_Value: " + vb.getVariable());
+				logger.debug(Integer.toString(counter) + "_SyntaxString: " + vb.getVariable().getSyntaxString());
+				logger.debug(Integer.toString(counter) + "_Syntax: " + Integer.toString(vb.getVariable().getSyntax()));
+				counter++;
+
 			}
 
+			jsonObjectBuilder.add("details", jsonDetailsObjectBuilder);
+
+			jsonArr = jsonArrayBuilder.add(jsonObjectBuilder).build();
+
+			sendEvent(jsonArr);
 		}
-		logger.debug("==== TRAP END ===");		
+		logger.debug("TRAP END ");
 	}
 
+	private void sendEvent(JsonArray json) {
+
+		logger.debug("JSON Body String: " + json.toString());
+
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpPost httpPost = new HttpPost(EVENT_PUBLISHING_URL);
+		StringEntity stringEntity = null;
+
+		try {
+			stringEntity = new StringEntity(json.toString());
+		} catch (Exception e) {
+			logger.error("Error while creating StringEntity", e);
+		}
+
+		httpPost.setEntity(stringEntity);
+		httpPost.setHeader("Content-Type", "application/json");
+		// httpPost.setHeader("Accept", "application/json");
+
+		try {
+			HttpResponse response = httpClient.execute(httpPost);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode >= 200 && statusCode < 300) {
+				outgoingEvents++;
+				logger.info("Event published to controller");
+			} else {
+				logger.error("Unexpected response : " + response);
+			}
+		} catch (IOException e) {
+			logger.error("Error while posting event to controller", e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
 	public SnmpTrapReceiverTask(MonitorContextConfiguration configuration, MetricWriteHelper metricWriteHelper,
 			Map<String, String> server) {
 
-		logger.debug("##### SnmpTrapReceiverTask method called #####");
+		logger.debug("***** Calling SnmpTrapReceiverTask *****");
 
 		this.configuration = configuration;
 		this.metricWriteHelper = metricWriteHelper;
 		this.server = server;
 		this.metricPrefix = configuration.getMetricPrefix();
 		this.metricList = (List<Map<String, ?>>) configuration.getConfigYml().get(METRICS);
+		Map<String, ?> configYaml = (Map<String, ?>) configuration.getConfigYml();
 
-		logger.debug("##### test_listenAddress1 = " + test_listenAddress + " #####");
-		logger.debug("##### test_username1 = " + test_username + " #####");
-		logger.debug("##### test_authpassphrase1 = " + test_authpassphrase + " #####");
-		logger.debug("##### test_privacypassphrase1 = " + test_privacypassphrase + " #####");
+		// Retrieve configurations for the Machine Agent HTTP Listener Host and Port
+		try {
+			//logger.debug("### machineAgentConnection YAML: " + configYaml.get("machineAgentConnection"));
+			Map<String, ?> machineAgentConnMaps = (Map<String, ?>) configYaml.get("machineAgentConnection");
+			logger.debug("### MachineAgentConnMaps YAML: " + machineAgentConnMaps);
+			String maHostYaml = (String) machineAgentConnMaps.get("host");
+			//String maPortYaml = (String) machineAgentConnMaps.get("port");
+			//this.machineAgentHost = (String) machineAgentConnMaps.get("host");
+			//this.machineAgentPort = (String) machineAgentConnMaps.get("port");
+			logger.debug("### MachineAgent Host YAML: " + maHostYaml);
+			//logger.debug("### MachineAgent Port YAML: " + maPortYaml);
+			logger.debug("### Machine Agent Host: " + (String) machineAgentConnMaps.get("host"));
+			logger.debug("### Machine Agent Port: " + (String) machineAgentConnMaps.get("port"));
+		} catch (EmitterException e) {
+			logger.error("Failed to capture Machine Agent Connection Config from yaml", e);
+		}
+		
+		
+
+		// this.machineAgentHost = (String) machineAgentConn.get("host");
+		// this.machineAgentPort = (String) machineAgentConn.get("port");
+
+		// Retrieve configurations for the SNMP Listener Address and Security settings
+		// Map<String, ?> snmpConn = (Map<String, ?>)
+		// configuration.getConfigYml().get("snmpConnection");
+
+		this.snmpListenAddress = test_listenAddress;
+		this.snmpUsername = test_username;
+		this.snmpAuthPassPhrase = test_authpassphrase;
+		this.snmpPrivacyPassPhrase = test_privacypassphrase;
+
+		// this.snmpListenAddress = (String) snmpConn.get("snmpProtocol") + ":" +
+		// (String) snmpConn.get("snmpIP") + "/" +
+		// (String) snmpConn.get("snmpPort");
+
+		// this.snmpUsername = (String) snmpConn.get("snmpUsername");
+		// this.snmpAuthPassPhrase = (String) snmpConn.get("snmpAuthPassPhrase");
+		// this.snmpPrivacyPassPhrase = (String) snmpConn.get("privacypassphrase");
+
+		logger.debug("Machine Agent Host = " + this.machineAgentHost);
+		logger.debug("Machine Agent Port = " + this.machineAgentPort);
+		logger.debug("SNMP Listen Address = " + this.snmpListenAddress);
+		logger.debug("SNMP Username = " + this.snmpUsername);
+		logger.debug("SNMP Auth Pass Phrase = " + this.snmpAuthPassPhrase);
+		logger.debug("SNMP Privacy Pass Phrase = " + this.snmpPrivacyPassPhrase);
 
 		AssertUtils.assertNotNull(this.metricList, "The 'metrics' section in config.yml is either null or empty");
 	}
@@ -230,51 +376,51 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	/**
 	 * This method contains the main business logic of the extension.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 
-		logger.debug("##### Debug messages look like this #####");
-        logger.info("***** Info messages look like this *****");
-
-        logger.debug("##### run method called #####");
-		logger.info("***** Creating new SnmpTrapReceiverTask to listen for SNMP Traps *****");
-		logger.info("***** Created task and started working for Server: {}", server.get("name") + " *****");
+		logger.info("Creating new SnmpTrapReceiverTask to listen for SNMP Traps");
+		logger.debug("***** Calling Run *****");
+		// logger.info("Created task and started working for Server: {}",
+		// server.get("name"));
 
 		this.snmpRun();
 
-		/*
-		 * It is in this function that you can get your metrics and process them and
-		 * send them to the controller. You can look at the various extensions available
-		 * on the community site and build your extension based on them.
-		 *
-		 */
-
-		/*
-		 * Once you have collected the required metrics you can send them to the metric
-		 * browser as shown in the below example. In this example, let's assume that you
-		 * have pulled a metric called CPU Utilization, refer config.yml to configure
-		 * what metrics you need to collect, you will create a metric object and add it
-		 * to a list. The list hold all the metric object and using the method shown in
-		 * example you can send all the metrics to the metric browser. NOTE: the
-		 * underlying piece of code is designed to handle the specific way in which the
-		 * 'metrics' section of config.yml is structured, please modify it according to
-		 * your structure definition in config.yml
-		 */
 		// get list of metrics to pull from 'metrics' section in config.yml
 		// iterate through all the metrics and add them to a list
-		List<Metric> metrics = new ArrayList<>();
-		for (Map<String, ?> metricType : metricList) {
-			for (Map.Entry<String, ?> entry : metricType.entrySet()) {
-				// get details of the specific metric, in this example 'CPUUtilization' metric
-				// in config.yml
-				String metricName = entry.getKey();
-				logger.info("Building metric for {}", metricName);
-				Map<String, ?> metricProperties = (Map<String, ?>) entry.getValue();
-				buildMetric(metrics, metricName, metricProperties);
+
+		// This Task is running continuously, so we'll manage sending the metrics
+		// every minute here manually. We iterate through the metrics
+		incomingTraps = 0;
+		outgoingEvents = 0;
+
+		while (true) {
+			// Iterate through metrics defined in config.yml and build them
+			List<Metric> metrics = new ArrayList<>();
+			for (Map<String, ?> metricType : metricList) {
+				for (Map.Entry<String, ?> entry : metricType.entrySet()) {
+					String metricName = entry.getKey();
+					logger.info("Building metric for {}", metricName);
+					Map<String, ?> metricProperties = (Map<String, ?>) entry.getValue();
+					buildMetric(metrics, metricName, metricProperties);
+				}
+			}
+
+			// Print metrics to log
+			metricWriteHelper.transformAndPrintMetrics(metrics);
+
+			// Reset counters
+			incomingTraps = 0;
+			outgoingEvents = 0;
+
+			// Now that metrics are done, wait 60000ms (60s)
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e) {
+				logger.error("Sleep failed", e);
 			}
 		}
-		// generateMetricsForCharReplacement(metrics);
-		metricWriteHelper.transformAndPrintMetrics(metrics);
 	}
 
 	/**
@@ -285,16 +431,23 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	 */
 	private void buildMetric(List<Metric> metrics, String metricName, Map<String, ?> metricProperties) {
 
-		logger.debug("##### buildMetric method called #####");
+		Metric metric;
 
-		// this example uses a hardcoded value (20),
-		// use the value that you get for your metrics, you can modify the method
-		// signature to
-		// pass the actual value of the metric
-		// You can look at the various extensions available on the community site for
-		// further understanding
-		Metric metric = new Metric(metricName, String.valueOf(20), metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName,
-				metricProperties);
+		switch (metricName) {
+		case "IncomingTraps":
+			metric = new Metric(metricName, String.valueOf(incomingTraps),
+					metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName, metricProperties);
+			break;
+		case "OutgoingEvents":
+			metric = new Metric(metricName, String.valueOf(outgoingEvents),
+					metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName, metricProperties);
+			break;
+		// Heart Beat
+		default:
+			metric = new Metric(metricName, String.valueOf(1), metricPrefix + DEFAULT_METRIC_SEPARATOR + metricName,
+					metricProperties);
+		}
+
 		metrics.add(metric);
 	}
 
@@ -305,38 +458,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	@Override
 	public void onTaskComplete() {
 
-		logger.debug("##### onTaskComplete method called #####");
-
-		/*
-		 * Below code shows an example of how to print metrics
-		 */
-		List<Metric> metrics = new ArrayList<>();
-
-		// This creates the Heart Beat Metric with default properties
-		Metric metric = new Metric("Heart Beat", String.valueOf(BigInteger.ONE),
-				metricPrefix + DEFAULT_METRIC_SEPARATOR + " Heart Beat");
-		metrics.add(metric);
-		metricWriteHelper.transformAndPrintMetrics(metrics);
 		logger.info("Completed task for Server: {}", server.get("name"));
 	}
-	/*
-	 * private void generateMetricsForCharReplacement(List<Metric> metrics) { Metric
-	 * metric1 = new Metric("Pipe|", "10", new HashMap<String, Object>(),
-	 * "Custom Metrics|Extension Starter CI|Character Replacement|","Pipe|" );
-	 * Metric metric2 = new Metric("Comma,", "10", new HashMap<String, Object>(),
-	 * "Custom Metrics|Extension Starter CI|Character Replacement|","Comma," );
-	 * Metric metric3 = new Metric(":Colon", "10", new HashMap<String, Object>(),
-	 * "Custom Metrics|Extension Starter CI|Character Replacement|",":Colon" );
-	 * Metric metric4 = new Metric("Memóry Free", "10", new HashMap<String,
-	 * Object>(),
-	 * "Custom Metrics|Extension Starter CI|Character Replacement|","Memóry Free" );
-	 * Metric metric5 = new Metric("Memory Üsed", "10", new HashMap<String,
-	 * Object>(), "Custom Metrics|Extension Starter CI|Character Replacement|"
-	 * ,"Memory \u00dcsed" ); Metric metric6 = new Metric("Question?Mark", "10", new
-	 * HashMap<String, Object>(),
-	 * "Custom Metrics|Extension Starter CI|Character Replacement|","Question?Mark"
-	 * ); metrics.add(metric1); metrics.add(metric2); metrics.add(metric3);
-	 * metrics.add(metric4); metrics.add(metric5); metrics.add(metric6); }
-	 */
 
 }

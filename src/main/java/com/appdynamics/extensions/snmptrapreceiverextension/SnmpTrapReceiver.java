@@ -93,15 +93,14 @@ public class SnmpTrapReceiver extends ABaseMonitor {
 	 *                                      the tasks and wait on all of them to
 	 *                                      finish and does the finish up work).
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doRun(TasksExecutionServiceProvider tasksExecutionServiceProvider) {
 		
-		logger.debug("##### Debug messages look like this #####");
-        logger.info("***** Info messages look like this *****");
+		logger.debug("***** Calling doRun method *****");
 		
-		logger.debug("##### doRun method called #####");
 		
-		// reading a value from the config.yml file
+		// reading the server value from the config.yml file
 		List<Map<String, String>> servers = (List<Map<String, String>>) getContextConfiguration().getConfigYml().get("servers");
 		AssertUtils.assertNotNull(servers, "The 'servers' section in config.yml is not initialized");
 		/*
@@ -109,15 +108,20 @@ public class SnmpTrapReceiver extends ABaseMonitor {
 		 * from each artifact concurrently
 		 */
 		for (Map<String, String> server : servers) {
-			logger.info("***** STARTING TASK FOR SERVER" + server.get("name") + " *****");
+			logger.info("***** STARTING TASK FOR SERVER " + server.get("name") + " *****");
 			
+			logger.debug("***** Creating task object *****");
 			SnmpTrapReceiverTask task = new SnmpTrapReceiverTask(getContextConfiguration(),
 					tasksExecutionServiceProvider.getMetricWriteHelper(), server);
+			
+			logger.debug("***** Submitting task object *****");
 			tasksExecutionServiceProvider.submit(server.get("name"), task);
+			logger.debug("***** task submitted *****");
 		}
 
 		CountDownLatch infiniteWait = new CountDownLatch(1);
 		try {
+			logger.debug("***** Trying infinitewait *****");
 			infiniteWait.await();
 		} catch (InterruptedException e) {
 			logger.error("Failed to wait indefinitely ", e);
@@ -132,10 +136,11 @@ public class SnmpTrapReceiver extends ABaseMonitor {
 	 *
 	 * @return Number of tasks, i.e. total number of servers to collect metrics from
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<Map<String, ?>> getServers() {
 		
-		logger.debug("##### getServers method called #####");
+		//logger.debug("##### getServers method called #####");
 		
 		List<Map<String, ?>> servers = (List<Map<String, ?>>) getContextConfiguration().getConfigYml().get("servers");
 		AssertUtils.assertNotNull(servers, "The 'servers' section in config.yml is not initialised");

@@ -1,36 +1,55 @@
 ### ANY CHANGES TO THIS FILE DOES NOT REQUIRE A RESTART ###
 
-#Use this format if using SIM (Server Visibility enabled) Machine Agent
+# Use this format if using SIM (Server Visibility enabled) Machine Agent
 metricPrefix: "Custom Metrics|SNMP Trap Receiver"
 
-#Use this format if using plain Machine Agent
-#This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
-#To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
+# Use this format if using plain Machine Agent
+# This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
+# To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
 #metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
 
+# This "servers" section will not alter the behavior of the extension in any way, but is required by the implemented interface.
 servers:
 - host: http://www.localhost.com/
   name: localhost
 
 # number of concurrent tasks
 numberOfThreads: 1
-#encryptionKey: welcome
 
-#connection:
-#  socketTimeout: 2000
-#  connectTimeout: 2000
-#  sslCertCheckEnabled: false
-#  sslVerifyHostname: false
-#  sslProtocols: ["TLSv1"]
+# Machine Agent HTTP Listener
+machineAgentConnection:
+  host: localhost
+  port: 8293
 
-#proxy:
-#  uri: http://localhost:9090
-#  username: proxyyuser
-#  password: proxypassword
+# SNMP Trap Receiver Connection
+snmpConnection:
+  snmpProtocol: udp
+  snmpIP: 0.0.0.0
+  snmpPort: 16200
+  snmpUsername: username
+  snmpAuthPassPhrase: authpassphrase
+  snmpPrivacyPassPhrase: privacypassphrase
 
-#taskSchedule:
-#  numberOfThreads: 1
-#  taskDelaySeconds: 300
+customDashboard:
+  enabled: false
+  
+controllerInfo:
+  controllerHost: "192.168.86.40"
+  controllerPort: 8090
+  account: "customer1"
+  username: "user1"
+  password: "welcome"
+  encryptedPassword: ""
+  encryptionKey: ""
+  controllerSslEnabled: false
+  enableOrchestration: false
+  uniqueHostId: ""
+  accountAccessKey: ""
+  machinePath: ""
+  simEnabled: true
+  applicationName: ""
+  tierName: ""
+  nodeName: ""
 
 # below section shows how to configure metrics you want to pull and how to list metric's qualifiers
 
@@ -46,22 +65,32 @@ numberOfThreads: 1
 #   delta
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+# IncomingTraps should equal OutgoingEvents
+
 metrics:
-- IncomingRequests:
-    alias: "Incoming Requests"
+- IncomingTraps:
+    alias: "Incoming Traps"
     aggregationType: "AVERAGE"
     timeRollUpType: "AVERAGE"
     clusterRollUpType: "INDIVIDUAL"
     multiplier: ""
     convert:
     delta:
-#- OutgoingRequests:
-#    alias: "Outgoing Requests"
-#    aggregationType: "AVERAGE"
-#    timeRollUpType: "AVERAGE"
-#    clusterRollUpType: "INDIVIDUAL"
-#    multiplier: "5"
-#    convert:
-#    delta:
+- OutgoingEvents:
+    alias: "Outgoing Events"
+    aggregationType: "AVERAGE"
+    timeRollUpType: "AVERAGE"
+    clusterRollUpType: "INDIVIDUAL"
+    multiplier: ""
+    convert:
+    delta:
+- HeartBeat:
+    alias: "HeartBeat"
+    aggregationType: "AVERAGE"
+    timeRollUpType: "AVERAGE"
+    clusterRollUpType: "INDIVIDUAL"
+    multiplier: ""
+    convert:
+    delta:
 
 enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
