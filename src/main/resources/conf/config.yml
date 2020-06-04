@@ -18,17 +18,17 @@ numberOfThreads: 1
 
 # Machine Agent HTTP Listener
 machineAgentConnection:
-  host: localhost
-  port: 8293
+  host: "localhost"
+  port: "8293"
 
 # SNMP Trap Receiver Connection
 snmpConnection:
-  snmpProtocol: udp
-  snmpIP: 0.0.0.0
-  snmpPort: 16200
-  snmpUsername: username
-  snmpAuthPassPhrase: authpassphrase
-  snmpPrivacyPassPhrase: privacypassphrase
+  snmpProtocol: "udp"
+  snmpIP: "0.0.0.0"
+  snmpPort: "16200"
+  snmpUsername: "username"
+  snmpAuthPassPhrase: "authpassphrase"
+  snmpPrivacyPassPhrase: "privacypassphrase"
 
 customDashboard:
   enabled: false

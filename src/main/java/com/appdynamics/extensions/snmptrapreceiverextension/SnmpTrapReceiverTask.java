@@ -54,12 +54,12 @@ import org.snmp4j.mp.MPv1;
 import org.snmp4j.mp.MPv2c;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.security.AuthMD5;
-//import org.snmp4j.security.AuthSHA;
+import org.snmp4j.security.AuthSHA;
 import org.snmp4j.security.Priv3DES;
 import org.snmp4j.security.PrivAES128;
 import org.snmp4j.security.PrivAES192;
 import org.snmp4j.security.PrivAES256;
-//import org.snmp4j.security.PrivDES;
+import org.snmp4j.security.PrivDES;
 import org.snmp4j.security.SecurityModels;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
@@ -84,6 +84,8 @@ import org.yaml.snakeyaml.emitter.EmitterException;
  * 
  * This particular class also implements {@link CommandResponder} in order to
  * receive SNMP Traps.
+ * 
+ * @author kjt
  *
  */
 public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandResponder {
@@ -95,10 +97,9 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private String metricPrefix;
 	private List<Map<String, ?>> metricList;
 
-	// [kjt] Extension Connection Variables
+	// Extension Connection Variables - read from config.yml
 	private String machineAgentHost;
 	private String machineAgentPort;
-
 	private String snmpListenAddress;
 	private String snmpUsername;
 	private String snmpAuthPassPhrase;
@@ -107,7 +108,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private static final String EVENT_PUBLISHING_URL = "http://localhost:8293/api/v1/events";
 	// private static final String MA_HTTP_URI = "/api/v1/events";
 
-	// [kjt] SNMP Receiver Member Variables
+	// SNMP Receiver Member Variables
 	private MultiThreadedMessageDispatcher dispatcher;
 	private Snmp snmp = null;
 	private Address listenAddress;
@@ -115,17 +116,16 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private int incomingTraps;
 	private int outgoingEvents;
 
-	// [kjt] Testing Variable Sets
-	private String test_listenAddress = "udp:0.0.0.0/16200";
-	private String test_username = "username";
-	private String test_authpassphrase = "authpassphrase";
-	private String test_privacypassphrase = "privacypassphrase";
+	// Testing Variable Sets
+	// private String test_listenAddress = "udp:0.0.0.0/16200";
+	// private String test_username = "username";
+	// private String test_authpassphrase = "authpassphrase";
+	// private String test_privacypassphrase = "privacypassphrase";
 
 	// [kjt] SNMP Receiver Methods
 
 	private void snmpRun() {
 
-		logger.debug("***** Calling snmpRun *****");
 		try {
 			init();
 			snmp.addCommandResponder(this);
@@ -135,14 +135,16 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		}
 	}
 
+	/**
+	 * The init function
+	 * 
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	private void init() throws UnknownHostException, IOException {
-
-		logger.debug("***** Calling init *****");
 
 		threadPool = ThreadPool.create("Trap", 10);
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
-
-		// TRANSPORT
 		listenAddress = GenericAddress.parse(System.getProperty("snmp4j.listenAddress", this.snmpListenAddress));
 
 		TransportMapping<?> transport;
@@ -153,12 +155,16 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		}
 
 		// V3 SECURITY
+		// What else do I need to configure in order to cover all authentication
+		// methods? TODO
 		USM usm = new USM(SecurityProtocols.getInstance().addDefaultProtocols(),
 				new OctetString(MPv3.createLocalEngineID()), 0);
 
+		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES128());
 		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES192());
 		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES256());
 		SecurityProtocols.getInstance().addPrivacyProtocol(new Priv3DES());
+		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivDES());
 
 		usm.setEngineDiscoveryEnabled(true);
 
@@ -173,18 +179,22 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		String authpassphrase = this.snmpAuthPassPhrase;
 		String privacypassphrase = this.snmpPrivacyPassPhrase;
 
-		// What else do I need to configure in order to cover all authentication
-		// methods? TODO
-
 		snmp.getUSM().addUser(new OctetString(username), new UsmUser(new OctetString(username), AuthMD5.ID,
 				new OctetString(authpassphrase), PrivAES128.ID, new OctetString(privacypassphrase)));
+
+		// snmp.getUSM().addUser(new OctetString(username), new UsmUser(new
+		// OctetString(username), AuthSHA.ID,
+		// new OctetString(authpassphrase), PrivAES192.ID, new
+		// OctetString(privacypassphrase)));
 
 		snmp.listen();
 	}
 
 	/**
 	 * This method processes the protocol data unit (PDU) which contains the trap
-	 * information that will be sent to AppD as a Custom Event.
+	 * information that will be sent to AppD as a Custom Event. It builds a JSON
+	 * Array and calls the {@link sendEvent} method to eventually send the even to
+	 * the AppD Controller.
 	 */
 	public synchronized void processPdu(CommandResponderEvent e) {
 
@@ -202,11 +212,20 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			JsonArray jsonArr = null;
 			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 			JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+			JsonObjectBuilder jsonPropertiesObjectBuilder = Json.createObjectBuilder();
 			JsonObjectBuilder jsonDetailsObjectBuilder = Json.createObjectBuilder();
 
-			jsonObjectBuilder.add("eventSeverity", "INFO").add("type", "SNMP Trap").add("summaryMessage", "SNMP Trap")
-					.add("properties", Json.createObjectBuilder());
+			// Build the basic properties required for a Custom Event
+			jsonObjectBuilder.add("eventSeverity", "INFO").add("type", "SNMP Trap").add("summaryMessage", "SNMP Trap");
 
+			//jsonObjectBuilder.add("eventSeverity", "INFO").add("type", "SNMP Trap").add("summaryMessage", "SNMP Trap")
+			//		.add("properties", Json.createObjectBuilder());
+
+			// Build the properties section, which can be used to filter the Custom Events
+			jsonPropertiesObjectBuilder.add("Type", "SnmpTrap");
+			jsonObjectBuilder.add("properties", jsonPropertiesObjectBuilder);
+
+			// Build the details section, which contains the metadata for the Custom Event
 			if (pdu.getType() == PDU.V1TRAP) {
 
 				PDUv1 pduV1 = (PDUv1) pdu;
@@ -259,8 +278,8 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 				jsonDetailsObjectBuilder.add(Integer.toString(counter) + "_OID", vb.getOid().toString())
 						.add(Integer.toString(counter) + "_Value", vb.getVariable().toString())
-						.add(Integer.toString(counter) + "_SyntaxString_", vb.getVariable().getSyntaxString())
-						.add(Integer.toString(counter) + "_Syntax_", Integer.toString(vb.getVariable().getSyntax()));
+						.add(Integer.toString(counter) + "_SyntaxString", vb.getVariable().getSyntaxString())
+						.add(Integer.toString(counter) + "_Syntax", Integer.toString(vb.getVariable().getSyntax()));
 
 				logger.debug(Integer.toString(counter) + "_OID: " + vb.getOid());
 				logger.debug(Integer.toString(counter) + "_Value: " + vb.getVariable());
@@ -271,7 +290,6 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			}
 
 			jsonObjectBuilder.add("details", jsonDetailsObjectBuilder);
-
 			jsonArr = jsonArrayBuilder.add(jsonObjectBuilder).build();
 
 			sendEvent(jsonArr);
@@ -279,9 +297,13 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		logger.debug("TRAP END ");
 	}
 
+	/**
+	 * The sendEvent method is called by the {@link processPdu} method. It sends the
+	 * Custom Event to the Machine Agent HTTP listener.
+	 */
 	private void sendEvent(JsonArray json) {
 
-		logger.debug("JSON Body String: " + json.toString());
+		logger.debug("JSON Custom Event Body String: " + json.toString());
 
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(EVENT_PUBLISHING_URL);
@@ -302,7 +324,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode >= 200 && statusCode < 300) {
 				outgoingEvents++;
-				logger.info("Event published to controller");
+				logger.info("SNMP Trap Event published to controller");
 			} else {
 				logger.error("Unexpected response : " + response);
 			}
@@ -311,11 +333,13 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		}
 	}
 
+	/**
+	 * The SnmpTrapReceiverTask initializes the private member variables for the
+	 * SNMP Receiver and validates them.
+	 */
 	@SuppressWarnings("unchecked")
 	public SnmpTrapReceiverTask(MonitorContextConfiguration configuration, MetricWriteHelper metricWriteHelper,
 			Map<String, String> server) {
-
-		logger.debug("***** Calling SnmpTrapReceiverTask *****");
 
 		this.configuration = configuration;
 		this.metricWriteHelper = metricWriteHelper;
@@ -325,76 +349,61 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		Map<String, ?> configYaml = (Map<String, ?>) configuration.getConfigYml();
 
 		// Retrieve configurations for the Machine Agent HTTP Listener Host and Port
-		try {
-			//logger.debug("### machineAgentConnection YAML: " + configYaml.get("machineAgentConnection"));
-			Map<String, ?> machineAgentConnMaps = (Map<String, ?>) configYaml.get("machineAgentConnection");
-			logger.debug("### MachineAgentConnMaps YAML: " + machineAgentConnMaps);
-			String maHostYaml = (String) machineAgentConnMaps.get("host");
-			//String maPortYaml = (String) machineAgentConnMaps.get("port");
-			//this.machineAgentHost = (String) machineAgentConnMaps.get("host");
-			//this.machineAgentPort = (String) machineAgentConnMaps.get("port");
-			logger.debug("### MachineAgent Host YAML: " + maHostYaml);
-			//logger.debug("### MachineAgent Port YAML: " + maPortYaml);
-			logger.debug("### Machine Agent Host: " + (String) machineAgentConnMaps.get("host"));
-			logger.debug("### Machine Agent Port: " + (String) machineAgentConnMaps.get("port"));
-		} catch (EmitterException e) {
-			logger.error("Failed to capture Machine Agent Connection Config from yaml", e);
-		}
-		
-		
-
-		// this.machineAgentHost = (String) machineAgentConn.get("host");
-		// this.machineAgentPort = (String) machineAgentConn.get("port");
+		Map<String, String> machineAgentConnMaps = (Map<String, String>) configYaml.get("machineAgentConnection");
+		logger.debug("YAML machineAgentConnection: " + machineAgentConnMaps);
+		this.machineAgentHost = machineAgentConnMaps.get("host");
+		this.machineAgentPort = machineAgentConnMaps.get("port");
+		logger.debug("YAML Machine Agent Host: " + this.machineAgentHost);
+		logger.debug("YAML Machine Agent Port: " + this.machineAgentPort);
 
 		// Retrieve configurations for the SNMP Listener Address and Security settings
-		// Map<String, ?> snmpConn = (Map<String, ?>)
-		// configuration.getConfigYml().get("snmpConnection");
+		Map<String, String> snmpConnMaps = (Map<String, String>) configYaml.get("snmpConnection");
+		logger.debug("YAML snmpConnection: " + snmpConnMaps);
 
-		this.snmpListenAddress = test_listenAddress;
-		this.snmpUsername = test_username;
-		this.snmpAuthPassPhrase = test_authpassphrase;
-		this.snmpPrivacyPassPhrase = test_privacypassphrase;
-
-		// this.snmpListenAddress = (String) snmpConn.get("snmpProtocol") + ":" +
-		// (String) snmpConn.get("snmpIP") + "/" +
-		// (String) snmpConn.get("snmpPort");
-
-		// this.snmpUsername = (String) snmpConn.get("snmpUsername");
-		// this.snmpAuthPassPhrase = (String) snmpConn.get("snmpAuthPassPhrase");
-		// this.snmpPrivacyPassPhrase = (String) snmpConn.get("privacypassphrase");
-
-		logger.debug("Machine Agent Host = " + this.machineAgentHost);
-		logger.debug("Machine Agent Port = " + this.machineAgentPort);
-		logger.debug("SNMP Listen Address = " + this.snmpListenAddress);
-		logger.debug("SNMP Username = " + this.snmpUsername);
-		logger.debug("SNMP Auth Pass Phrase = " + this.snmpAuthPassPhrase);
-		logger.debug("SNMP Privacy Pass Phrase = " + this.snmpPrivacyPassPhrase);
+		this.snmpListenAddress = (String) snmpConnMaps.get("snmpProtocol") + ":" + (String) snmpConnMaps.get("snmpIP")
+				+ "/" + (String) snmpConnMaps.get("snmpPort");
+		this.snmpUsername = (String) snmpConnMaps.get("snmpUsername");
+		this.snmpAuthPassPhrase = (String) snmpConnMaps.get("snmpAuthPassPhrase");
+		this.snmpPrivacyPassPhrase = (String) snmpConnMaps.get("snmpPrivacyPassPhrase");
+		logger.debug("YAML SNMP Listen Address = " + this.snmpListenAddress);
+		logger.debug("YAML SNMP Username = " + this.snmpUsername);
+		logger.debug("YAML SNMP Auth Pass Phrase = " + this.snmpAuthPassPhrase);
+		logger.debug("YAML SNMP Privacy Pass Phrase = " + this.snmpPrivacyPassPhrase);
 
 		AssertUtils.assertNotNull(this.metricList, "The 'metrics' section in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.machineAgentHost,
+				"The 'machineAgentHost' value in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.machineAgentPort,
+				"The 'machineAgentPort' value in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.snmpListenAddress,
+				"The 'snmpListenAddress' value in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.snmpUsername, "The 'snmpUsername' value in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.snmpAuthPassPhrase,
+				"The 'snmpAuthPassPhrase' value in config.yml is either null or empty");
+		AssertUtils.assertNotNull(this.snmpPrivacyPassPhrase,
+				"The 'snmpPrivacyPassPhrase' value in config.yml is either null or empty");
 	}
 
 	/**
-	 * This method contains the main business logic of the extension.
+	 * The run method starts the SNMP receiver (which runs continuously) and sends
+	 * event metrics (incoming trap count, and outgoing event count) to the Machine
+	 * Agent once-per-minute.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 
 		logger.info("Creating new SnmpTrapReceiverTask to listen for SNMP Traps");
-		logger.debug("***** Calling Run *****");
-		// logger.info("Created task and started working for Server: {}",
-		// server.get("name"));
 
+		// Start the SNMP Receiver
 		this.snmpRun();
 
-		// get list of metrics to pull from 'metrics' section in config.yml
-		// iterate through all the metrics and add them to a list
-
-		// This Task is running continuously, so we'll manage sending the metrics
-		// every minute here manually. We iterate through the metrics
+		// Initialize counters for the incoming and outgoing event metrics
 		incomingTraps = 0;
 		outgoingEvents = 0;
 
+		// This Task is running continuously, so we'll manage sending the metrics
+		// every minute here manually, once-per-minute.
 		while (true) {
 			// Iterate through metrics defined in config.yml and build them
 			List<Metric> metrics = new ArrayList<>();
@@ -410,7 +419,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			// Print metrics to log
 			metricWriteHelper.transformAndPrintMetrics(metrics);
 
-			// Reset counters
+			// After sending minute-frequency metrics, reset counters
 			incomingTraps = 0;
 			outgoingEvents = 0;
 
