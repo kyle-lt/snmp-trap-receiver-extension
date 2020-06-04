@@ -27,8 +27,14 @@ snmpConnection:
   snmpIP: "0.0.0.0"
   snmpPort: "16200"
   snmpUsername: "username"
+  # Auth Protocol Options are "SHA" or "MD5"
+  snmpAuthProtocol: "MD5"
   snmpAuthPassPhrase: "authpassphrase"
+  # Privacy/Encryption Protocol Options are "AES128", "AES192", "AES256", "DES", or "3DES"
+  snmpPrivacyProtocol: "AES128"
   snmpPrivacyPassPhrase: "privacypassphrase"
+
+# The combination of MD5 and DES does not work! WTF?
 
 customDashboard:
   enabled: false
