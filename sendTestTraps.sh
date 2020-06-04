@@ -3,18 +3,32 @@
 # Versions 1 and 2c use community string and always go over UDP (as far as I can tell)
 
 # Version 1
-sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.3.6.1.4.1.8072.2.3.2.1 i 123456
+
+# MIB
+#sudo snmptrap -v 1 -c public 127.0.0.1:16200 NET-SNMP-EXAMPLES-MIB::netSnmpExampleHeartbeatNotification "" 6 17 "" netSnmpExampleHeartbeatRate i 123456
+# WORKING!
+
+# Shortened MIB
+#sudo snmptrap -v 1 -c public 127.0.0.1:16200 netSnmpExampleHeartbeatNotification "" 6 17 "" netSnmpExampleHeartbeatRate i 123456
+# WORKING!
+
+# OID
+#sudo snmptrap -v 1 -c public 127.0.0.1:16200 '1.2.3.4.5.6' '192.193.194.195' 6 99 '55' 1.11.12.13.14.15  s "teststring"
+# WORKING!
 
 # Version 2c
 
 # MIB
-#snmptrap -v 2c -c public localhost '' NET-SNMP-EXAMPLES-MIB::netSnmpExampleHeartbeatNotification netSnmpExampleHeartbeatRate i 123456
+#sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' NET-SNMP-EXAMPLES-MIB::netSnmpExampleHeartbeatNotification netSnmpExampleHeartbeatRate i 123456
+# WORKING!
 
 # Shortened MIB
-#snmptrap -v 2c -c public localhost '' netSnmpExampleHeartbeatNotification netSnmpExampleHeartbeatRate i 123456
+#sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' netSnmpExampleHeartbeatNotification netSnmpExampleHeartbeatRate i 123456
+# WORKING!
 
 # OID
-#snmptrap -v 2c -c public localhost '' 1.3.6.1.4.1.8072.2.3.0.1 1.3.6.1.4.1.8072.2.3.2.1 i 123456
+#sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.3.6.1.4.1.8072.2.3.2.1 i 123456
+# WORKING!
 
 # Version 3
 
