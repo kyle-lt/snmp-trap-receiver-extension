@@ -17,18 +17,26 @@ servers:
 numberOfThreads: 1
 
 # Machine Agent HTTP Listener
+# All of the values shoule be strings wrapped in double quotes - see defaults for examples
 machineAgentConnection:
+  # host should remain as localhost, or perhaps loopback "127.0.0.1"
   host: "localhost"
+  # port default matches Machine Agent default of "8293". If using different port for
+  # the machine agent, e.g., passing JVM arg -Dmetric.http.listener.port=8080, port
+  # value should be set as "8080"
   port: "8293"
 
 # SNMP Trap Receiver Connection
+# All of the values shoule be strings wrapped in double quotes - see defaults for examples
 snmpConnection:
+  # snmpProtocol can be "tcp" or "udp"
   snmpProtocol: "udp"
   snmpIP: "0.0.0.0"
+  # Port values less than 1024 require Machine Agent to run as root/sudo
   snmpPort: "16200"
   # The below configurations are for v3 only
   snmpUsername: "username"
-  # Auth Protocol Options are "SHA" or "MD5"
+  # Auth Protocol Options are "MD5" or "SHA"
   snmpAuthProtocol: "MD5"
   snmpAuthPassPhrase: "authpassphrase"
   # Privacy/Encryption Protocol Options are "AES128", "AES192", "AES256", "DES", or "3DES"
