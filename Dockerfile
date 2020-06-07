@@ -1,11 +1,11 @@
 FROM appdynamics/machine-agent-analytics:latest AS MA
 
 RUN apt-get update && \ 
-    apt-get install -y unzip && \
-    apt-get install -y curl && \
-    apt-get install -y vim && \
-    apt-get install -y net-tools && \
-    apt-get install -y netcat
+    apt-get install -y unzip
+#    apt-get install -y curl && \
+#    apt-get install -y vim && \
+#    apt-get install -y net-tools && \
+#    apt-get install -y netcat
 
 ADD target/Snmp-Trap-Receiver-Extension-*.zip /opt/appdynamics/monitors
 RUN unzip -q "/opt/appdynamics/monitors/Snmp-Trap-Receiver-Extension-*.zip" -d /opt/appdynamics/monitors

@@ -26,6 +26,7 @@ snmpConnection:
   snmpProtocol: "udp"
   snmpIP: "0.0.0.0"
   snmpPort: "16200"
+  # The below configurations are for v3 only
   snmpUsername: "username"
   # Auth Protocol Options are "SHA" or "MD5"
   snmpAuthProtocol: "MD5"
