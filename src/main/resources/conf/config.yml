@@ -5,7 +5,7 @@ metricPrefix: "Custom Metrics|SNMP Trap Receiver"
 
 # Use this format if using plain Machine Agent
 # This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
-# To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
+# To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO45/Build+a+Monitoring+Extension+Using+Java
 #metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
 
 # This "servers" section will not alter the behavior of the extension in any way, but is required by the implemented interface.

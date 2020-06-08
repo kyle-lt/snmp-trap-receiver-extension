@@ -77,10 +77,10 @@ import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultTcpTransportMapping;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
-import org.snmp4j.transport.TransportListener;
+//import org.snmp4j.transport.TransportListener;
 import org.snmp4j.util.MultiThreadedMessageDispatcher;
 import org.snmp4j.util.ThreadPool;
-import org.yaml.snakeyaml.emitter.EmitterException;
+//import org.yaml.snakeyaml.emitter.EmitterException;
 
 /**
  * The SnmpTrapReceiverTask is an instance of {@link Runnable} and needs to
@@ -171,25 +171,15 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		} else {
 			transport = new DefaultTcpTransportMapping((TcpAddress) listenAddress);
 		}
-		
-		//TransportListener transportListener = null;
-		//transport.addTransportListener(transportListener);
 
-		// V3 Security
+		// Initialize and configure v3 Security
 		USM usm = new USM(SecurityProtocols.getInstance().addDefaultProtocols(),
 				new OctetString(MPv3.createLocalEngineID()), 0);
 		
-		//USM usm = new USM(SecurityProtocols.getInstance().addDefaultProtocols(),
-		//		new OctetString("Receiver"), 0);
-		
-		// Try to set the local engine ID - probably not correct
-		//OctetString snmpEngineIdOctet = OctetString.fromHexString(this.snmpEngineId); // use this or the below line
-		//OctetString snmpEngineIdOctet = new OctetString(this.snmpEngineId);
-		//USM usm = new USM(SecurityProtocols.getInstance().addDefaultProtocols(), snmpEngineIdOctet, 0);
-		//usm.setLocalEngine(snmpEngineIdOctet, 0, 0);
-		
 		usm.setEngineDiscoveryEnabled(true);
 
+		// Enable the ability to utilize all privacy/encryption protocols
+		// Specific choice of desired protocol is user-provided in config.yml
 		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES128());
 		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES192());
 		SecurityProtocols.getInstance().addPrivacyProtocol(new PrivAES256());
@@ -199,10 +189,14 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		SecurityModels.getInstance().addSecurityModel(usm);
 
 		snmp = new Snmp(dispatcher, transport);
+		
+		// Enable the ability to receive PDUs from all 3 SNMP versions
 		snmp.getMessageDispatcher().addMessageProcessingModel(new MPv1());
 		snmp.getMessageDispatcher().addMessageProcessingModel(new MPv2c());
 		snmp.getMessageDispatcher().addMessageProcessingModel(new MPv3(usm));
 
+		// Set some local variables to use for initializing and configuring the v3 security
+		// All of these values should have been configured in the config.yml if using v3
 		String username = this.snmpUsername;
 		String authpassphrase = this.snmpAuthPassPhrase;
 		String privacypassphrase = this.snmpPrivacyPassPhrase;
@@ -243,7 +237,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 		Boolean isLocalized = false;
 		
-		logger.debug("Adding user for INFORM (not a localized user)."); 
+		// Add User to the USM
 		snmp.getUSM().addUser(new OctetString(username),
 				new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
 						privacyProtocol, new OctetString(privacypassphrase)));
@@ -253,120 +247,6 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		logger.debug("*** SNMP snmp.getUSM().getLocalEngineID() - OctetString: " + snmp.getUSM().getLocalEngineID());
 		logger.debug("*** SNMP.GetUSM.GetUser using snmp.getUSM().getLocalEngineID():           " + snmp.getUSM().getUser(snmp.getUSM().getLocalEngineID(), new OctetString(username)));
 		snmp.listen();
-		
-		// Check for and apply Engine ID for v3 using authPriv or authNoPriv
-		/*
-		if (this.snmpEngineId.contentEquals("")) {
-
-			logger.debug("Engine ID not found, using Engine ID Auto Discovery");
-			snmp.getUSM().addUser(new OctetString(username), new UsmUser(new OctetString(username), authProtocol,
-					new OctetString(authpassphrase), privacyProtocol, new OctetString(privacypassphrase)));
-
-		} else {
-			
-			//logger.debug("Engine ID found, using Engine ID: " + this.snmpEngineId);
-			//OctetString snmpEngineIdOctet = OctetString.fromHexString(this.snmpEngineId);
-			//logger.debug("Engine ID Octet String: " + snmpEngineIdOctet);
-			
-			Boolean isLocalized = false;
-			
-			logger.debug("Adding user for INFORM (not a localized user)."); 
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase)));
-			isLocalized = snmp.getUSM().getUser(new OctetString(snmp.getLocalEngineID()), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			
-			// Kitchen Sink Time!!
-			
-			// Set #1
-			
-			/*
-			
-			logger.debug("Adding a shitload of users, passing in engineIDs as localizedEngineIds");
-			
-			logger.debug("Adding localized user with engineID = 8000137001ac1600026679c864");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("8000137001ac1600026679c864")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("8000137001ac1600026679c864"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("8000137001ac1600026679c864"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 80:00:13:70:01:ac:16:00:02:66:79:c8:64");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80:00:13:70:01:ac:16:00:02:66:79:c8:64")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80:00:13:70:01:ac:16:00:02:66:79:c8:64"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80:00:13:70:01:ac:16:00:02:66:79:c8:64"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 8000137001ac160002");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("8000137001ac160002")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("8000137001ac160002"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("8000137001ac160002"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 80:00:13:70:01:ac:16:00:02");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80:00:13:70:01:ac:16:00:02")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80:00:13:70:01:ac:16:00:02"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80:00:13:70:01:ac:16:00:02"), new OctetString(username)));
-			
-			// Set #2
-			
-			logger.debug("Adding localized user with engineID = 80001f88808aced531ed4dd95e00000000");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80001f88808aced531ed4dd95e00000000")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80001f88808aced531ed4dd95e00000000"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80001f88808aced531ed4dd95e00000000"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 80:00:1f:88:80:8a:ce:d5:31:ed:4d:d9:5e:00:00:00:00");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80:00:1f:88:80:8a:ce:d5:31:ed:4d:d9:5e:00:00:00:00")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80:00:1f:88:80:8a:ce:d5:31:ed:4d:d9:5e:00:00:00:00"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80:00:1f:88:80:8a:ce:d5:31:ed:4d:d9:5e:00:00:00:00"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 80001f88808aced531");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80001f88808aced531")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80001f88808aced531"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80001f88808aced531"), new OctetString(username)));
-			
-			logger.debug("Adding localized user with engineID = 80:00:1f:88:80:8a:ce:d5:31");
-			snmp.getUSM().addUser(new OctetString(username),
-					new UsmUser(new OctetString(username), authProtocol, new OctetString(authpassphrase),
-							privacyProtocol, new OctetString(privacypassphrase), new OctetString("80:00:1f:88:80:8a:ce:d5:31")));
-			isLocalized = snmp.getUSM().getUser(new OctetString("80:00:1f:88:80:8a:ce:d5:31"), new OctetString(username)).getUsmUser().isLocalized();
-			logger.debug("Is this user localized? " + isLocalized.toString());
-			logger.debug("*** SNMP.GetUSM.GetUser: " + snmp.getUSM().getUser(new OctetString("80:00:1f:88:80:8a:ce:d5:31"), new OctetString(username)));
-			
-            
-			
-			// Changing this to use the receiver's engine ID
-			//snmp.getUSM().addLocalizedUser(this.snmpEngineId.getBytes(), new OctetString(username), authProtocol,
-			//		authpassphrase.getBytes(), privacyProtocol, privacypassphrase.getBytes());
-		
-			//snmp.getUSM().addLocalizedUser(snmp.getLocalEngineID(), new OctetString(username), authProtocol,
-			//		authpassphrase.getBytes(), privacyProtocol, privacypassphrase.getBytes());
-			
-			// Just FYI - new OctetString(snmp.getLocalEngineID()) == snmp.getUSM().getLocalEngineID() 
-			//logger.debug("*** SNMP snmp.getUSM().getLocalEngineID() - OctetString: " + snmp.getUSM().getLocalEngineID());
-			//logger.debug("*** SNMP.GetUSM.GetUser using snmp.getUSM().getLocalEngineID():           " + snmp.getUSM().getUser(snmp.getUSM().getLocalEngineID(), new OctetString(username)));
-			
-			//logger.debug("*** SNMP.GetUSM.GetUser using trap sender's snmpEngineIdOctet (provided): " + snmp.getUSM().getUser(snmpEngineIdOctet, new OctetString(username)));
-		}	
-	*/
 
 	}
 
@@ -415,8 +295,8 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 						.add("Enterprise", pduV1.getEnterprise().toString())
 						.add("TimeStamp", String.valueOf(pduV1.getTimestamp()))
 						.add("GenericTrap", String.valueOf(pduV1.getGenericTrap()))
-						.add("SpecificTrap", String.valueOf(pduV1.getSpecificTrap()))
-						.add("SnmpVersion", String.valueOf(PDU.V1TRAP)).add("SnmpVersion", String.valueOf(PDU.V1TRAP))
+						.add("SpecificTrap", String.valueOf(pduV1.getSpecificTrap()))						
+						.add("SnmpVersion", "v1")
 						.add("CommunityString", new String(e.getSecurityName()));
 
 				logger.debug("SNMP v1 TRAP RECEIVED");
@@ -426,18 +306,19 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 				logger.debug("TimeStamp" + String.valueOf(pduV1.getTimestamp()));
 				logger.debug("GenericTrap" + String.valueOf(pduV1.getGenericTrap()));
 				logger.debug("SpecificTrap " + String.valueOf(pduV1.getSpecificTrap()));
-				logger.debug("SnmpVersion " + String.valueOf(PDU.V1TRAP));
+				logger.debug("SnmpVersion v1");
 				logger.debug("CommunityString " + new String(e.getSecurityName()));
 
 			} else if (pdu.getType() == PDU.TRAP || pdu.getType() == PDU.INFORM) {
 
-				jsonDetailsObjectBuilder.add("ErrorStatus", String.valueOf(pdu.getErrorStatus()))
+				jsonDetailsObjectBuilder.add("Type", PDU.getTypeString(pdu.getType()))
+						.add("ErrorStatus", String.valueOf(pdu.getErrorStatus()))
 						.add("ErrorStatusText", String.valueOf(pdu.getErrorStatusText()))
 						.add("ErrorIndex", String.valueOf(pdu.getErrorIndex()))
 						.add("RequestID", String.valueOf(pdu.getRequestID()))
 						.add("MaxRepetitions", String.valueOf(pdu.getMaxRepetitions()))
 						.add("NonRepeaters", String.valueOf(pdu.getNonRepeaters()))
-						.add("SnmpVersion", String.valueOf(PDU.TRAP))
+						.add("SnmpVersion", "v2c/v3")
 						.add("CommunityString", new String(e.getSecurityName()));
 
 				if (pdu.getType() == PDU.INFORM) {
@@ -467,7 +348,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 				logger.debug("RequestID " + String.valueOf(pdu.getRequestID()));
 				logger.debug("MaxRepetitions " + String.valueOf(pdu.getMaxRepetitions()));
 				logger.debug("NonRepeaters " + String.valueOf(pdu.getNonRepeaters()));
-				logger.debug("SnmpVersion " + String.valueOf(PDU.TRAP));
+				logger.debug("SnmpVersion v2c/v3");				
 				logger.debug("CommunityString " + new String(e.getSecurityName()));
 
 			}

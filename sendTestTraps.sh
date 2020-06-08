@@ -20,7 +20,18 @@
         # WORKING!
 
         # OID
-        #sudo snmptrap -v 1 -c public 127.0.0.1:16200 '1.2.3.4.5.6' '192.193.194.195' 6 99 '55' 1.11.12.13.14.15  s "teststring"
+        SNMP_TRAP_V1="sudo snmptrap -v 1 -c public 127.0.0.1:16200 1.3.6.1.4.1.2.3 192.168.86.40 6 99 '55' 1.11.12.13.14.15 s 'v1Trap'"
+        echo "Calling SNMP_TRAP_V1: " $SNMP_TRAP_V1
+        $($SNMP_TRAP_V1)
+        sleep 1
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v1Trap'")
+        if [ -z "$RESULT" ]; then
+                echo "Log not found, check logs!"
+        else
+                echo "Successful log(s) found!"
+                echo "Here are the log entries, be sure to validate the timestamp(s)!"
+                echo "$RESULT"
+        fi
         # WORKING!
 
 # *** Version 2c TRAP ***
@@ -34,7 +45,18 @@
         # WORKING!
 
         # OID
-        #sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.3.6.1.4.1.8072.2.3.2.1 i 123456
+        SNMP_TRAP_V2c="sudo snmptrap -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.11.12.13.14.15 s 'v2cTrap'"
+        echo "Calling SNMP_TRAP_V2c: " $SNMP_TRAP_V2c
+        $($SNMP_TRAP_V2c)
+        sleep 1
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v2cTrap'")
+        if [ -z "$RESULT" ]; then
+                echo "Log not found, check logs!"
+        else
+                echo "Successful log(s) found!"
+                echo "Here are the log entries, be sure to validate the timestamp(s)!"
+                echo "$RESULT"
+        fi
         # WORKING!
 
 # *** Version 2c INFORM ***
@@ -49,6 +71,18 @@
 
         # OID
         #sudo snmpinform -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.3.6.1.4.1.8072.2.3.2.1 i 123456
+        SNMP_INFORM_V2c="sudo snmpinform -v 2c -c public 127.0.0.1:16200 '' 1.3.6.1.4.1.8072.2.3.0.1 1.11.12.13.14.15 s 'v2cInform'"
+        echo "Calling SNMP_INFORM_V2c: " $SNMP_INFORM_V2c
+        $($SNMP_INFORM_V2c)
+        sleep 1
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v2cInform'")
+        if [ -z "$RESULT" ]; then
+                echo "Log not found, check logs!"
+        else
+                echo "Successful log(s) found!"
+                echo "Here are the log entries, be sure to validate the timestamp(s)!"
+                echo "$RESULT"
+        fi
         # Working!
 
 # *** Version 3 Security Variables ***
@@ -88,7 +122,7 @@
         sleep 1
         RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v3Trap'")
         if [ -z "$RESULT" ]; then
-                echo "Successful log not found, check logs!"
+                echo "Log not found, check logs!"
         else
                 echo "Successful log(s) found!"
                 echo "Here are the log entries, be sure to validate the timestamp(s)!"
@@ -134,7 +168,7 @@
         $($SNMP_INFORM)
         RESULT="$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v3Inform'")"
         if [ -z "$RESULT" ]; then
-                echo "Successful log not found, check logs!"
+                echo "Log not found, check logs!"
         else
                 echo "Successful log(s) found!"
                 echo "Here are the log entries, be sure to validate the timestamp(s)!"
