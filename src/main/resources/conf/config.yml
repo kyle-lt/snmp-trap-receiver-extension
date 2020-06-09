@@ -43,8 +43,9 @@ snmpConnection:
   snmpPrivacyProtocol: "AES128"
   snmpPrivacyPassPhrase: "privacypassphrase"
 
-customDashboard:
-  enabled: false
+# Custom Dashboard not implemented in this version of the extension.
+#customDashboard:
+#  enabled: false
   
 # This configuration is not utilized in this current version of the extension.
 #controllerInfo:

@@ -1,14 +1,6 @@
 version: '2'
 services:
 
-        #  controller:
-        #image: dtr.corp.appdynamics.com/appdynamics/enterprise-console:latest
-        #container_name: controller
-        #ports:
-        #- "8080:8080"
-        #- "9080:9080"
-        #- "9200:9200"
-
   machine:
     container_name: machine
     environment:
@@ -30,7 +22,3 @@ services:
       context: .
       dockerfile: Dockerfile
 
-
-      #volumes:
-      #- /:/hostroot:ro
-      #- /var/run/docker.sock:/var/run/docker.sock
