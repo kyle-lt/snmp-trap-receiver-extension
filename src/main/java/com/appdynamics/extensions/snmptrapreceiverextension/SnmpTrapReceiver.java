@@ -70,7 +70,7 @@ public class SnmpTrapReceiver extends ABaseMonitor {
 
 	/**
 	 * Returns the monitor name defined in {@code Constants} Required for
-	 * MonitorConfiguration initialisation
+	 * MonitorConfiguration initialization
 	 *
 	 * @return {@code String} monitor's name
 	 */

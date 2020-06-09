@@ -107,7 +107,6 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private String machineAgentHost;
 	private String machineAgentPort;
 	private String snmpListenAddress;
-	//private String snmpEngineId;
 	private String snmpUsername;
 	private String snmpAuthProtocol;
 	private String snmpAuthPassPhrase;
@@ -144,9 +143,9 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	}
 
 	/**
-	 * The init function intializes the SNMP Listener configs for listen address
-	 * (protocol, IP, port) and security settings (so far, for user, authpassphrase,
-	 * and privacypassphrase).
+	 * The {@code init} function initializes the SNMP Listener configurations for listen 
+	 * address (protocol, IP, port) and security settings ( community string for
+	 * v1 and v2c, and user, authpassphrase, and privacypassphrase for v3).
 	 * 
 	 * @throws UnknownHostException
 	 * @throws IOException
@@ -278,6 +277,8 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			jsonObjectBuilder.add("properties", jsonPropertiesObjectBuilder);
 
 			// Build the details section, which contains the metadata for the Custom Event
+			
+			// Build the details for a V1 TRAP PDU
 			if (pdu.getType() == PDU.V1TRAP) {
 
 				PDUv1 pduV1 = (PDUv1) pdu;
@@ -301,6 +302,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 				logger.debug("SnmpVersion:     v1");
 				logger.debug("CommunityString: " + new String(e.getSecurityName()));
 
+			// Build the details for a V2c or v3 TRAP PDU
 			} else if (pdu.getType() == PDU.TRAP || pdu.getType() == PDU.INFORM) {
 
 				jsonDetailsObjectBuilder.add("Type", PDU.getTypeString(pdu.getType()))
@@ -313,6 +315,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 						.add("SnmpVersion", "v2c/v3")
 						.add("CommunityString", new String(e.getSecurityName()));
 
+				// Build the details for an INFORM PDU
 				if (pdu.getType() == PDU.INFORM) {
 					logger.debug("SNMP v2c/v3 INFORM RECEIVED");
 					logger.debug("Type:            " + PDU.getTypeString(pdu.getType()));
@@ -347,6 +350,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 			}
 
+			// Extract variable bindings from the PDU
 			int counter = 0;
 			while (varIter.hasNext()) {
 				VariableBinding vb = varIter.next();
@@ -364,6 +368,8 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 			}
 
+			// Add details to the JSON payload and place it in a JSON array (which is expected
+			// by the Machine Agent HTTP Listener
 			jsonObjectBuilder.add("details", jsonDetailsObjectBuilder);
 			jsonArr = jsonArrayBuilder.add(jsonObjectBuilder).build();
 
@@ -427,9 +433,9 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 		// Retrieve configurations for the Machine Agent HTTP Listener Host and Port
 		Map<String, String> machineAgentConnMaps = (Map<String, String>) configYaml.get("machineAgentConnection");
-		logger.debug("YAML machineAgentConnection: " + machineAgentConnMaps);
 		this.machineAgentHost = machineAgentConnMaps.get("host");
 		this.machineAgentPort = machineAgentConnMaps.get("port");
+		logger.debug("YAML machineAgentConnection: " + machineAgentConnMaps);
 		logger.debug("YAML Machine Agent Host: " + this.machineAgentHost);
 		logger.debug("YAML Machine Agent Port: " + this.machineAgentPort);
 
@@ -437,16 +443,15 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		Map<String, String> snmpConnMaps = (Map<String, String>) configYaml.get("snmpConnection");
 		logger.debug("YAML snmpConnection: " + snmpConnMaps);
 
+		// Set the member variables from the YAML-provided configurations
 		this.snmpListenAddress = snmpConnMaps.get("snmpProtocol") + ":" + snmpConnMaps.get("snmpIP") + "/"
 				+ snmpConnMaps.get("snmpPort");
-		//this.snmpEngineId = snmpConnMaps.get("snmpEngineId");
 		this.snmpUsername = snmpConnMaps.get("snmpUsername");
 		this.snmpAuthProtocol = snmpConnMaps.get("snmpAuthProtocol");
 		this.snmpAuthPassPhrase = snmpConnMaps.get("snmpAuthPassPhrase");
 		this.snmpPrivacyProtocol = snmpConnMaps.get("snmpPrivacyProtocol");
 		this.snmpPrivacyPassPhrase = snmpConnMaps.get("snmpPrivacyPassPhrase");
 		logger.debug("YAML SNMP Listen Address = " + this.snmpListenAddress);
-		//logger.debug("YAML SNMP Engine ID = " + this.snmpEngineId);
 		logger.debug("YAML SNMP Username = " + this.snmpUsername);
 		logger.debug("YAML SNMP Auth Protocol = " + this.snmpAuthProtocol);
 		logger.debug("YAML SNMP Auth Pass Phrase = " + this.snmpAuthPassPhrase);
