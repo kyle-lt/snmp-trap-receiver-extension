@@ -292,14 +292,14 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 						.add("CommunityString", new String(e.getSecurityName()));
 
 				logger.debug("SNMP v1 TRAP RECEIVED");
-				logger.debug("Type " + String.valueOf(pduV1.getType()));
-				logger.debug("AgentAddress " + pduV1.getAgentAddress().toString());
-				logger.debug("Enterprise " + pduV1.getEnterprise().toString());
-				logger.debug("TimeStamp" + String.valueOf(pduV1.getTimestamp()));
-				logger.debug("GenericTrap" + String.valueOf(pduV1.getGenericTrap()));
-				logger.debug("SpecificTrap " + String.valueOf(pduV1.getSpecificTrap()));
-				logger.debug("SnmpVersion v1");
-				logger.debug("CommunityString " + new String(e.getSecurityName()));
+				logger.debug("Type:            " + String.valueOf(pduV1.getType()));
+				logger.debug("AgentAddress:    " + pduV1.getAgentAddress().toString());
+				logger.debug("Enterprise:      " + pduV1.getEnterprise().toString());
+				logger.debug("TimeStamp:       " + String.valueOf(pduV1.getTimestamp()));
+				logger.debug("GenericTrap:     " + String.valueOf(pduV1.getGenericTrap()));
+				logger.debug("SpecificTrap:    " + String.valueOf(pduV1.getSpecificTrap()));
+				logger.debug("SnmpVersion:     v1");
+				logger.debug("CommunityString: " + new String(e.getSecurityName()));
 
 			} else if (pdu.getType() == PDU.TRAP || pdu.getType() == PDU.INFORM) {
 
@@ -315,6 +315,7 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 				if (pdu.getType() == PDU.INFORM) {
 					logger.debug("SNMP v2c/v3 INFORM RECEIVED");
+					logger.debug("Type:            " + PDU.getTypeString(pdu.getType()));
 
 					PDU response = pdu;
 					response.setType(PDU.RESPONSE);
@@ -332,16 +333,17 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 				} else {
 					logger.debug("SNMP v2/v3 TRAP RECEIVED");
+					logger.debug("Type:            " + PDU.getTypeString(pdu.getType()));
 				}
 
-				logger.debug("ErrorStatus " + String.valueOf(pdu.getErrorStatus()));
-				logger.debug("ErrorStatusText " + String.valueOf(pdu.getErrorStatusText()));
-				logger.debug("ErrorIndex " + String.valueOf(pdu.getErrorIndex()));
-				logger.debug("RequestID " + String.valueOf(pdu.getRequestID()));
-				logger.debug("MaxRepetitions " + String.valueOf(pdu.getMaxRepetitions()));
-				logger.debug("NonRepeaters " + String.valueOf(pdu.getNonRepeaters()));
-				logger.debug("SnmpVersion v2c/v3");				
-				logger.debug("CommunityString " + new String(e.getSecurityName()));
+				logger.debug("ErrorStatus:     " + String.valueOf(pdu.getErrorStatus()));
+				logger.debug("ErrorStatusText: " + String.valueOf(pdu.getErrorStatusText()));
+				logger.debug("ErrorIndex:      " + String.valueOf(pdu.getErrorIndex()));
+				logger.debug("RequestID:       " + String.valueOf(pdu.getRequestID()));
+				logger.debug("MaxRepetitions:  " + String.valueOf(pdu.getMaxRepetitions()));
+				logger.debug("NonRepeaters:    " + String.valueOf(pdu.getNonRepeaters()));
+				logger.debug("SnmpVersion:     v2c/v3");				
+				logger.debug("CommunityString: " + new String(e.getSecurityName()));
 
 			}
 
@@ -354,10 +356,10 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 						.add(Integer.toString(counter) + "_SyntaxString", vb.getVariable().getSyntaxString())
 						.add(Integer.toString(counter) + "_Syntax", Integer.toString(vb.getVariable().getSyntax()));
 
-				logger.debug(Integer.toString(counter) + "_OID: " + vb.getOid());
-				logger.debug(Integer.toString(counter) + "_Value: " + vb.getVariable());
-				logger.debug(Integer.toString(counter) + "_SyntaxString: " + vb.getVariable().getSyntaxString());
-				logger.debug(Integer.toString(counter) + "_Syntax: " + Integer.toString(vb.getVariable().getSyntax()));
+				logger.debug(Integer.toString(counter) + "_OID:           " + vb.getOid());
+				logger.debug(Integer.toString(counter) + "_Value:         " + vb.getVariable());
+				logger.debug(Integer.toString(counter) + "_SyntaxString:  " + vb.getVariable().getSyntaxString());
+				logger.debug(Integer.toString(counter) + "_Syntax:        " + Integer.toString(vb.getVariable().getSyntax()));
 				counter++;
 
 			}

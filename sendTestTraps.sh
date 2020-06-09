@@ -24,7 +24,7 @@
         echo "Calling SNMP_TRAP_V1: " $SNMP_TRAP_V1
         $($SNMP_TRAP_V1)
         sleep 1
-        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v1Trap'")
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value:.*'v1Trap'")
         if [ -z "$RESULT" ]; then
                 echo "Log not found, check logs!"
         else
@@ -49,7 +49,7 @@
         echo "Calling SNMP_TRAP_V2c: " $SNMP_TRAP_V2c
         $($SNMP_TRAP_V2c)
         sleep 1
-        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v2cTrap'")
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value:.*'v2cTrap'")
         if [ -z "$RESULT" ]; then
                 echo "Log not found, check logs!"
         else
@@ -75,7 +75,7 @@
         echo "Calling SNMP_INFORM_V2c: " $SNMP_INFORM_V2c
         $($SNMP_INFORM_V2c)
         sleep 1
-        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v2cInform'")
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value:.*'v2cInform'")
         if [ -z "$RESULT" ]; then
                 echo "Log not found, check logs!"
         else
@@ -120,7 +120,7 @@
         echo "Calling SNMP_TRAP: " $SNMP_TRAP
         $($SNMP_TRAP)
         sleep 1
-        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v3Trap'")
+        RESULT=$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value:.*'v3Trap'")
         if [ -z "$RESULT" ]; then
                 echo "Log not found, check logs!"
         else
@@ -166,7 +166,7 @@
         SNMP_INFORM="$SNMP_INFORM_BASE_CALL $SNMP_INFORM_CALL_DETAILS"
         echo "Calling SNMP_INFORM: " $SNMP_INFORM        
         $($SNMP_INFORM)
-        RESULT="$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value: 'v3Inform'")"
+        RESULT="$(docker exec machine cat /opt/appdynamics/logs/machine-agent.log | grep "SnmpTrapReceiverTask.*Value:.*'v3Inform'")"
         if [ -z "$RESULT" ]; then
                 echo "Log not found, check logs!"
         else
