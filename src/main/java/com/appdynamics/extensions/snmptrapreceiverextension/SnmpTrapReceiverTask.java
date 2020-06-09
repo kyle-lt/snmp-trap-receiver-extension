@@ -124,14 +124,6 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 	private int incomingTraps;
 	private int outgoingEvents;
 
-	// Testing Variable Sets
-	// private String test_listenAddress = "udp:0.0.0.0/16200";
-	// private String test_username = "username";
-	// private String test_authpassphrase = "authpassphrase";
-	// private String test_privacypassphrase = "privacypassphrase";
-
-	// [kjt] SNMP Receiver Methods
-
 	/**
 	 * The snmpRun function makes the call to initialize the SNMP Listener and then
 	 * adds the {@link CommandResponder} in order to process PDUs received by the
