@@ -76,7 +76,7 @@ Alternatively, you can map metrics to a Tier within an application. If doing so,
       # Use this format if using plain Machine Agent
       # This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your       environment.
       # To find the <COMPONENT_ID> in your environment, please follow the instructions [here] (https://docs.appdynamics.com/display/PRO45/Build+a+Monitoring+Extension+Using+Java)
-      #metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
+      metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
     
 Metrics will now be seen under the following metric tree:
 
