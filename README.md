@@ -60,7 +60,6 @@ Please copy all the contents of the config.yml file and go to http://www.yamllin
 
 ## Metrics
 By default, the extension assumes SIM, and uses the following default configuration:
-
     ```
       # Use this format if using SIM (Server Visibility enabled) Machine Agent
       metricPrefix: "Custom Metrics|SNMP Trap Receiver"
@@ -72,10 +71,12 @@ Metrics will be reported under the following metric tree:
 
 Alternatively, you can map metrics to a Tier within an application. If doing so, we strongly recommend using the tier specific metric prefix so that metrics are reported only to a specified tier. Please change the metric prefix in your `config.yaml`
 
-`#metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"`
-
-For instructions on how to find the tier ID, please refer to the `Metric Path` subsection [here](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java).
-
+    ```
+      # Use this format if using plain Machine Agent
+      # This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your       environment.
+      # To find the <COMPONENT_ID> in your environment, please follow the instructions [here] (https://docs.appdynamics.com/display/PRO45/Build+a+Monitoring+Extension+Using+Java)
+      #metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"
+    ```
 Metrics will now be seen under the following metric tree:
 
 `Application Infrastructure Performance|<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver`
@@ -86,10 +87,10 @@ This repo contains some artifacts to ease setup for testing, and issuing test ca
 - Docker-Compose
 - Internet Connection (to pull a Docker image from Docker Hub)
 
-containerDeploy.sh
+### containerDeploy.sh
 - Script to build and deploy a Docker container with a SIM machine agent and this extension.
 
-sendTestTraps.sh
+### sendTestTraps.sh
 - Script to send test TRAPs and INFORMs for all SNMP versions to verify functionality
 
 ## Credentials Encryption
