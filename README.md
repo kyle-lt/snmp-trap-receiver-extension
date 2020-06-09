@@ -59,25 +59,38 @@ Configure the extension by editing the `config.yml` file in `<MACHINE_AGENT_HOME
 Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
 
 ## Metrics
-By default, the metrics will be reported under the following metric tree:
+By default, the extension assumes SIM, and uses the following default configuration:
 
-`Application Infrastructure Performance|Custom Metrics|<YourExtension>|SERVERNAME`
+    ```
+      # Use this format if using SIM (Server Visibility enabled) Machine Agent
+      metricPrefix: "Custom Metrics|SNMP Trap Receiver"
+    ```
+    
+Metrics will be reported under the following metric tree:
 
-This will register metrics to all tiers within the application. We strongly recommend using the tier specific metric prefix so that metrics are reported only to a specified tier. Please change the metric prefix in your `config.yaml`
+`Application Infrastructure Performance|Root|Individual Nodes|<SIM_SERVER_NAME>|Custom Metrics|SNMP Trap Receiver`
 
-`metricPrefix: "Server|Component:<TierID>|Custom Metrics|<YourExtension>|"`
+Alternatively, you can map metrics to a Tier within an application. If doing so, we strongly recommend using the tier specific metric prefix so that metrics are reported only to a specified tier. Please change the metric prefix in your `config.yaml`
+
+`#metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"`
 
 For instructions on how to find the tier ID, please refer to the `Metric Path` subsection [here](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java).
 
 Metrics will now be seen under the following metric tree:
 
-`Application Infrastructure Performance|$TIER|Custom Metrics|<YourExtension>|SERVERNAME|`
+`Application Infrastructure Performance|<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver`
 
-## Testing //TODO
+## Testing
 This repo contains some artifacts to ease setup for testing, and issuing test calls to confirm functionality.  In order to use these artifacts, you'll need:
 - Docker
 - Docker-Compose
 - Internet Connection (to pull a Docker image from Docker Hub)
+
+containerDeploy.sh
+- Script to build and deploy a Docker container with a SIM machine agent and this extension.
+
+sendTestTraps.sh
+- Script to send test TRAPs and INFORMs for all SNMP versions to verify functionality
 
 ## Credentials Encryption
 Please visit [this page](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
@@ -104,13 +117,12 @@ Please provide the following in order for us to assist you better.
 For any support related questions, you can also contact [help@appdynamics.com](mailto:help@appdynamics.com).
 
 ## Contributing
-Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/extension-starter).
+Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/snmp-trap-receiver-extension).
 
 ## Version
 Name |	Version
 ---|---
-Extension Version |	1.2.0
-Controller Compatibility | 3.7 or Later
-Last Update |	06/18/2018
+Extension Version |	1.0.0
+Controller Compatibility | 4.5.x or Later
+Last Update |	06/09/2020
 
-List of Changes to this extension can be found [here](../master/Changelog.md)
