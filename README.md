@@ -91,10 +91,11 @@ This repo contains some artifacts to ease setup for testing, and issuing test ca
 - Internet Connection (to pull a Docker image from Docker Hub)
 
 ### containerDeploy.sh
-- Script to build and deploy a Docker container with a SIM machine agent and this extension.
+- Script to build and deploy a Docker container with a SIM machine agent and this extension with `DEBUG` logging enabled.
+- Edit `docker-compose.yml` to point to your AppD Controller of choice.
 
 ### sendTestTraps.sh
-- Script to send test TRAPs and INFORMs for all SNMP versions to verify functionality
+- Script to send test TRAPs and INFORMs for all SNMP versions to the extension running in the Docker container to verify functionality
 
 ## Credentials Encryption
 Please visit [this page](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
