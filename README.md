@@ -1,9 +1,13 @@
-# Extension Starter
-## Usage
-This is a template to get started with extensions. The `doRun` method in the `ExtStarterMonitor` class is the entry method to get started with your custom extension. This class does the initialization and triggers the execution of the task `ExtStarterMonitorTask` which contains the business logic. Use the `run` method to carry out your main tasks, the tasks are executed in a thread pool. The task class fetches the data through either an HTTP Call / JMX / JDBC connection and then reports metrics to the metric browser.  
+# SNMP Trap Receiver Extension
+## Overview
+This extension runs as a continuous task, managed by 
  
 ## Prerequisites
-In order to use this extension, you do need a [Standalone __JAVA__ Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) or [__SIM__ Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit https://download.appdynamics.com/.
+In order to use this extension, you do need a [Standalone __JAVA__ Machine Agent](https://docs.appdynamics.com/display/PRO45/Standalone+Machine+Agents) or [__SIM__ Agent](https://docs.appdynamics.com/display/PRO45/Server+Visibility).  For more details on downloading these products, please  visit https://download.appdynamics.com/.
+
+In order to build this extension, you'll need:
+- Java 1.8+
+- Maven 3.x
 
 The extension needs to be able to connect to the Product that you want to monitor in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
@@ -14,6 +18,12 @@ The extension needs to be able to connect to the Product that you want to monito
 2. Unzip and copy that directory to `<MACHINE_AGENT_HOME>/monitors`
 
 Please place the extension in the "__monitors__" directory of your __Machine Agent__ installation directory. Do not place the extension in the "__extensions__" directory of your __Machine Agent__ installation directory.
+
+## Testing //TODO
+This repo contains some artifacts to ease setup for testing, and issuing test calls to confirm functionality.  In order to use these artifacts, you'll need:
+- Docker
+- Docker-Compose
+- Internet Connection (to pull a Docker image from Docker Hub)
 
 ## Configuration
 ### config.yml
