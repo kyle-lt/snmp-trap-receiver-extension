@@ -9,28 +9,19 @@ In order to build this extension, you'll need:
 - Java 1.8+
 - Maven 3.x
 
-The extension needs to be able to connect to the Product that you want to monitor in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
-
 ## Installation
 1. Clone this repository to your local repository.
-2. Make the necessary changes to monitor the product for which you are building the extension.
-1. Once you have developed your extension, run `mvn clean install` and find the `<YourExtension>.zip` file in the `target` folder.
-2. Unzip and copy that directory to `<MACHINE_AGENT_HOME>/monitors`
+2. To build, run `mvn clean install` and find the `Snmp-Trap-Receiver-Extension-1.0.zip` file in the `target` folder.
+3. Unzip and copy that directory to `<MACHINE_AGENT_HOME>/monitors`
 
 Please place the extension in the "__monitors__" directory of your __Machine Agent__ installation directory. Do not place the extension in the "__extensions__" directory of your __Machine Agent__ installation directory.
-
-## Testing //TODO
-This repo contains some artifacts to ease setup for testing, and issuing test calls to confirm functionality.  In order to use these artifacts, you'll need:
-- Docker
-- Docker-Compose
-- Internet Connection (to pull a Docker image from Docker Hub)
 
 ## Configuration
 ### config.yml
 Configure the extension by editing the `config.yml` file in `<MACHINE_AGENT_HOME>/monitors/<YourExtension>/`
-1. Configure the "tier" under which the metrics need to be reported. This can be done by changing the value of `<TIER ID>` in
+1. If not using SIM, or if metrics and events should correlate to an Application Tier, configure the "tier" under which the metrics need to be reported. This can be done by changing the value of `<COMPONENT_ID>` in
 
-     `metricPrefix: "Server|Component:<TIER ID>|Custom Metrics|<YourExtensionName>"`
+     `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"`
 
 2. Configure the instances you want to monitor with all required fields.<br/>For example,
  
@@ -76,6 +67,12 @@ For instructions on how to find the tier ID, please refer to the `Metric Path` s
 Metrics will now be seen under the following metric tree:
 
 `Application Infrastructure Performance|$TIER|Custom Metrics|<YourExtension>|SERVERNAME|`
+
+## Testing //TODO
+This repo contains some artifacts to ease setup for testing, and issuing test calls to confirm functionality.  In order to use these artifacts, you'll need:
+- Docker
+- Docker-Compose
+- Internet Connection (to pull a Docker image from Docker Hub)
 
 ## Credentials Encryption
 Please visit [this page](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
