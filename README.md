@@ -18,38 +18,43 @@ Please place the extension in the "__monitors__" directory of your __Machine Age
 
 ## Configuration
 ### config.yml
-Configure the extension by editing the `config.yml` file in `<MACHINE_AGENT_HOME>/monitors/<YourExtension>/`
+Configure the extension by editing the `config.yml` file in `<MACHINE_AGENT_HOME>/monitors/SnmpTrapReceiver/`
 1. If not using SIM, or if metrics and events should correlate to an Application Tier, configure the "tier" under which the metrics need to be reported. This can be done by changing the value of `<COMPONENT_ID>` in
 
      `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|SNMP Trap Receiver"`
 
-2. Configure the instances you want to monitor with all required fields.<br/>For example,
+2. Configure the `machineAgentConnection` to the Machine Agent HTTP Listener.<br/>For example,
  
-     ```
-     servers:
-      - uri: https://www.appdynamics.com/
-        displayName: AppDynamics
-        username: ""
-        password: ""
-
-      - uri: https://www.yahoo.com/
-        displayName: Yahoo
-        username: ""
-        password: ""
-        passwordEncrypted: ""
     ```
- 3. Configure the encyptionKey for encryptionPasswords(only if password encryption required).<br/>For example,
+      # Machine Agent HTTP Listener
+      # All of the values shoule be strings wrapped in double quotes - see defaults for examples
+      # host should remain as localhost, or perhaps loopback "127.0.0.1"
+      host: "localhost"
+      # port default matches Machine Agent default of "8293". If using different port for
+      # the machine agent, e.g., passing JVM arg -Dmetric.http.listener.port=8080, port
+      # value should be set as "8080"
+      port: "8293"
     ```
-    encryptionKey: welcome
+ 3. Configure the `snmpConnection` information where applicable.<br/>For example,
     ```
- 4. Configure the `numberOfThreads` depending on the number of concurrent tasks. For example, if you are monitoring three instances, and each task for each server runs as a single thread then use `numberOfThreads: 3`.
- 5. Configure the metrics section. You can look at [Redis Monitoring Extension](https://github.com/Appdynamics/redis-monitoring-extension) `config.yml` for reference.
- 6. Configure the path to the `config.yml` file by editing the `<task-arguments>` in the `monitor.xml` file in the `<MACHINE_AGENT_HOME>/monitors/SolrMonitor/<YourExtension>/` directory. Below is the sample,
+      # SNMP Trap Receiver Connection
+      # All of the values shoule be strings wrapped in double quotes - see defaults for examples
+      snmpConnection:
+        # snmpProtocol can be "tcp" or "udp"
+        snmpProtocol: "udp"
+        snmpIP: "0.0.0.0"
+        # Port values less than 1024 require Machine Agent to run as root/sudo
+        snmpPort: "16200"
+        # The below configurations are for v3 only - if not using v3, leave as-is
+        snmpUsername: "username"
+        # Auth Protocol Options are "MD5" or "SHA"
+        snmpAuthProtocol: "MD5"
+        snmpAuthPassPhrase: "authpassphrase"
+        # Privacy/Encryption Protocol Options are "AES128", "AES192", "AES256", "DES", or "3DES"
+        snmpPrivacyProtocol: "AES128"
+        snmpPrivacyPassPhrase: "privacypassphrase"
     ```
-    <task-arguments>
-            <argument name="config-file" is-required="true" default-value="monitors/<YourExtension>/config.yml" />
-    </task-arguments>
-    ```
+ 4. When starting the machine agent, pass the [HTTP Listener configurations](https://docs.appdynamics.com/display/PRO45/Standalone+Machine+Agent+HTTP+Listener)
  
 Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
 
