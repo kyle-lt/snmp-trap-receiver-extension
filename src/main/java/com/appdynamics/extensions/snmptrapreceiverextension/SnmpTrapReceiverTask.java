@@ -380,16 +380,12 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			sendEvent(jsonArr);
 			
 			// Adding test code for analytics custom events
-			JsonArray jsonAnalyticsArr = null;
-			JsonArrayBuilder jsonAnalyticsArrayBuilder = Json.createArrayBuilder();
 			JsonObject jsonAnalyticsObject = null;
 			JsonObjectBuilder jsonAnalyticsObjectBuilder = Json.createObjectBuilder();
 			
 			jsonAnalyticsObjectBuilder.add("method", "TRAP").add("version", "3.0").add("kyle", "true");
 			jsonAnalyticsObject = jsonAnalyticsObjectBuilder.build();
-			jsonAnalyticsArr = jsonAnalyticsArrayBuilder.add(jsonAnalyticsObjectBuilder).build();
 			
-			logger.debug("jsonAnalyticsArr.toString() = " + jsonAnalyticsArr.toString());
 			logger.debug("jsonAnalyticsObject.toString() = " + jsonAnalyticsObject.toString());
 			
 			sendAnalyticsEvent(jsonAnalyticsObject.toString());
