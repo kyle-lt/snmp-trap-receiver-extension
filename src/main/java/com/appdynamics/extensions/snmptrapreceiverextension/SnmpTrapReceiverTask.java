@@ -17,6 +17,9 @@ import com.appdynamics.extensions.MetricWriteHelper;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.metrics.Metric;
 import com.appdynamics.extensions.util.AssertUtils;
+//import com.appdynamics.extensions.eventsservice.EventsServiceDataManager;
+
+import com.appdynamics.extensions.snmptrapreceiverextension.events.SnmpTrapReceiverEventsManager;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.HttpResponse;
@@ -374,6 +377,18 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			jsonArr = jsonArrayBuilder.add(jsonObjectBuilder).build();
 
 			sendEvent(jsonArr);
+			
+			// Adding test code for analytics custom events
+			JsonArray jsonAnalyticsArr = null;
+			JsonArrayBuilder jsonAnalyticsArrayBuilder = Json.createArrayBuilder();
+			JsonObjectBuilder jsonAnalyticsObjectBuilder = Json.createObjectBuilder();
+			
+			jsonAnalyticsObjectBuilder.add("method", "TRAP").add("version", "3.0").add("kyle", "true");
+			jsonAnalyticsArr = jsonAnalyticsArrayBuilder.add(jsonAnalyticsObjectBuilder).build();
+			
+			logger.debug("jsonAnalyticsArr.toString() = " + jsonAnalyticsArr.toString());
+			
+			
 		}
 		logger.debug("TRAP END ");
 	}
@@ -416,6 +431,23 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 		}
 	}
 
+	// The sendAnalyticsEvent is called by the {@link processPdu} method. It sends a
+	// Custom Event to the Events Service in the SnmpTrap Custom Analytics Event Schema.
+	private void sendAnalyticsEvent() {
+		
+		SnmpTrapReceiverEventsManager snmpTrapReceiverEventsManager = new SnmpTrapReceiverEventsManager(this.configuration.getContext().getEventsServiceDataManager());
+		
+		try {
+			snmpTrapReceiverEventsManager.createSchema();
+			snmpTrapReceiverEventsManager.publishEvents();
+		}
+		catch (Exception e) {
+			logger.error("Error when publishing events", e);
+		}
+		
+	}
+	
+	
 	/**
 	 * The SnmpTrapReceiverTask initializes the private member variables for the
 	 * SNMP Receiver and validates them.

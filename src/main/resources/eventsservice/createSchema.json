@@ -1,9 +1,8 @@
 {
   "schema":
   {
-    "metricName":"string",
-    "metricPath":"string",
-    "metricValue":"string",
-    "applicationName":"string"
+    "method":"string",
+    "version":"string",
+    "kyle":"boolean"
   }
 }
