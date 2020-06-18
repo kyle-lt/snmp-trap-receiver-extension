@@ -3,6 +3,6 @@
   {
     "method":"string",
     "version":"string",
-    "kyle":"boolean"
+    "kyle":"string"
   }
 }
