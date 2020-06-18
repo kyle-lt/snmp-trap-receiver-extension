@@ -39,6 +39,7 @@ import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 //[kjt] SNMP Trap Receiver Imports
@@ -381,13 +382,17 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 			// Adding test code for analytics custom events
 			JsonArray jsonAnalyticsArr = null;
 			JsonArrayBuilder jsonAnalyticsArrayBuilder = Json.createArrayBuilder();
+			JsonObject jsonAnalyticsObject = null;
 			JsonObjectBuilder jsonAnalyticsObjectBuilder = Json.createObjectBuilder();
 			
 			jsonAnalyticsObjectBuilder.add("method", "TRAP").add("version", "3.0").add("kyle", "true");
+			jsonAnalyticsObject = jsonAnalyticsObjectBuilder.build();
 			jsonAnalyticsArr = jsonAnalyticsArrayBuilder.add(jsonAnalyticsObjectBuilder).build();
 			
 			logger.debug("jsonAnalyticsArr.toString() = " + jsonAnalyticsArr.toString());
+			logger.debug("jsonAnalyticsObject.toString() = " + jsonAnalyticsObject.toString());
 			
+			sendAnalyticsEvent(jsonAnalyticsObject.toString());
 			
 		}
 		logger.debug("TRAP END ");
@@ -433,13 +438,14 @@ public class SnmpTrapReceiverTask implements AMonitorTaskRunnable, CommandRespon
 
 	// The sendAnalyticsEvent is called by the {@link processPdu} method. It sends a
 	// Custom Event to the Events Service in the SnmpTrap Custom Analytics Event Schema.
-	private void sendAnalyticsEvent() {
+	private void sendAnalyticsEvent(String analyticsEventString) {
 		
 		SnmpTrapReceiverEventsManager snmpTrapReceiverEventsManager = new SnmpTrapReceiverEventsManager(this.configuration.getContext().getEventsServiceDataManager());
 		
 		try {
+			
 			snmpTrapReceiverEventsManager.createSchema();
-			snmpTrapReceiverEventsManager.publishEvents();
+			snmpTrapReceiverEventsManager.publishEvents(analyticsEventString);
 		}
 		catch (Exception e) {
 			logger.error("Error when publishing events", e);
