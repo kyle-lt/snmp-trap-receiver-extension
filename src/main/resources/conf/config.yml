@@ -46,7 +46,16 @@ snmpConnection:
 # Custom Dashboard not implemented in this version of the extension.
 #customDashboard:
 #  enabled: false
-  
+
+# Events Service for Analytics Custom Events
+# https://docs.appdynamics.com/display/PRO45/Analytics+Events+API
+eventsServiceParameters:
+  host: "<YOUR_CONTROLLER_URL_HERE>"
+  port: <YOUR_EVENTS_SERVICE_PORT_HERE>
+  globalAccountName: "<YOUR_GLOBAL_ACCOUNT_NAME_HERE>"
+  eventsApiKey: "<YOUR_API_KEY_HERE"
+  useSSL: false
+
 # This configuration is not utilized in this current version of the extension.
 #controllerInfo:
 #  controllerHost: "192.168.86.40"
