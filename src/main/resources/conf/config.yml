@@ -50,10 +50,10 @@ snmpConnection:
 # Events Service for Analytics Custom Events
 # https://docs.appdynamics.com/display/PRO45/Analytics+Events+API
 eventsServiceParameters:
-  host: "192.168.86.40"
-  port: 9080
-  globalAccountName: "customer1_c60204f2-f8c9-40f9-9155-162a513b7900"
-  eventsApiKey: "YOUR_API_KEY_HERE"
+  host: "<YOUR_CONTROLLER_URL_HERE>"
+  port: <YOUR_EVENTS_SERVICE_PORT_HERE>
+  globalAccountName: "<YOUR_GLOBAL_ACCOUNT_NAME_HERE>"
+  eventsApiKey: "<YOUR_API_KEY_HERE"
   useSSL: false
 
 # This configuration is not utilized in this current version of the extension.
